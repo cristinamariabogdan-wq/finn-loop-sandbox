@@ -95,6 +95,7 @@ if (typeof document !== "undefined") {
   const errorsEl = document.getElementById("form-errors");
   const successEl = document.getElementById("form-success");
   const phoneLinkEl = document.getElementById("phone-link");
+  const whatsappSubmitEl = document.getElementById("whatsapp-submit");
 
   if (phoneLinkEl) {
     phoneLinkEl.href = `tel:${PHONE_DISPLAY.replace(/\s+/g, "")}`;
@@ -182,10 +183,13 @@ if (typeof document !== "undefined") {
   }
 
   function wireForm(menu) {
-    if (!formEl) return;
-    formEl.addEventListener("submit", (event) => {
-      event.preventDefault();
-
+    if (!formEl || !whatsappSubmitEl) return;
+    // A real link click, left to the browser's own default navigation, opens
+    // reliably in far more browsers and sandboxed embeds than a script-driven
+    // window.open() — which popup blockers and iframe sandboxes can silently
+    // swallow. So the anchor's href is set here, and only invalid submissions
+    // call preventDefault(); a valid one lets the click's default action run.
+    whatsappSubmitEl.addEventListener("click", (event) => {
       const data = new FormData(formEl);
       const formState = {
         name: data.get("name") || "",
@@ -199,6 +203,7 @@ if (typeof document !== "undefined") {
       const { valid, errors } = validateBooking(formState);
 
       if (!valid) {
+        event.preventDefault();
         if (errorsEl) {
           errorsEl.innerHTML = Object.values(errors)
             .map((message) => `<p class="form-error">${message}</p>`)
@@ -211,8 +216,7 @@ if (typeof document !== "undefined") {
       if (errorsEl) errorsEl.innerHTML = "";
 
       const message = buildWhatsAppMessage(formState, menu);
-      const url = buildWhatsAppUrl(message);
-      window.open(url, "_blank", "noopener");
+      whatsappSubmitEl.href = buildWhatsAppUrl(message);
 
       if (successEl) successEl.textContent = buildConfirmationMessage();
     });
