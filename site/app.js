@@ -126,11 +126,14 @@ if (typeof document !== "undefined") {
       .map(
         (item) => `
         <li class="menu-item">
-          <div class="menu-item__header">
-            <span class="menu-item__name">${item.name}</span>
-            <span class="menu-item__price">${item.priceLabel}</span>
+          ${item.image ? `<img class="menu-item__image" src="${item.image}" alt="${item.name}" width="72" height="72" />` : ""}
+          <div class="menu-item__body">
+            <div class="menu-item__header">
+              <span class="menu-item__name">${item.name}</span>
+              <span class="menu-item__price">${item.priceLabel}</span>
+            </div>
+            <p class="menu-item__description">${item.description}</p>
           </div>
-          <p class="menu-item__description">${item.description}</p>
         </li>`
       )
       .join("");

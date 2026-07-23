@@ -1,0 +1,24 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img">
+  <circle cx="100" cy="100" r="96" fill="#b9772a" />
+  <circle cx="100" cy="100" r="88" fill="#d99a3f" />
+  <circle cx="100" cy="100" r="72" fill="#f3e6c8" />
+  <g>
+    <circle cx="115.5" cy="108.9" r="12" fill="#f6d87a" fill-opacity="0.85" />
+    <circle cx="69.7" cy="106.7" r="15" fill="#f6d87a" fill-opacity="0.85" />
+    <circle cx="123.0" cy="67.2" r="18" fill="#f6d87a" fill-opacity="0.85" />
+    <circle cx="106.2" cy="147.0" r="12" fill="#f6d87a" fill-opacity="0.85" />
+    <circle cx="58.9" cy="65.5" r="15" fill="#f6d87a" fill-opacity="0.85" />
+    <circle cx="159.3" cy="97.5" r="18" fill="#f6d87a" fill-opacity="0.85" />
+    <circle cx="106.7" cy="118.4" r="6" fill="#8ea698" fill-opacity="0.9" />
+    <circle cx="69.9" cy="84.3" r="6" fill="#8ea698" fill-opacity="0.9" />
+    <circle cx="142.3" cy="88.7" r="6" fill="#8ea698" fill-opacity="0.9" />
+    <circle cx="72.1" cy="143.7" r="6" fill="#8ea698" fill-opacity="0.9" />
+    <circle cx="89.8" cy="42.1" r="6" fill="#8ea698" fill-opacity="0.9" />
+    <circle cx="113.7" cy="88.5" r="6" fill="#c98a2b" fill-opacity="0.9" />
+    <circle cx="95.9" cy="130.7" r="6" fill="#c98a2b" fill-opacity="0.9" />
+    <circle cx="77.1" cy="67.2" r="6" fill="#c98a2b" fill-opacity="0.9" />
+    <circle cx="146.2" cy="110.3" r="6" fill="#c98a2b" fill-opacity="0.9" />
+    <circle cx="53.5" cy="126.8" r="6" fill="#c98a2b" fill-opacity="0.9" />
+    <circle cx="117.9" cy="43.4" r="6" fill="#c98a2b" fill-opacity="0.9" />
+  </g>
+</svg>

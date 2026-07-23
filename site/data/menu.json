@@ -3,42 +3,49 @@
     "id": "margherita",
     "name": "Margherita",
     "description": "Sos de roșii, mozzarella, busuioc, ulei de măsline",
-    "price": 35
+    "price": 35,
+    "image": "assets/pizzas/margherita.svg"
   },
   {
     "id": "cotto",
     "name": "Cotto",
     "description": "Sos de roșii, mozzarella, prosciutto cotto, ciuperci la grill",
-    "price": 45
+    "price": 45,
+    "image": "assets/pizzas/cotto.svg"
   },
   {
     "id": "crudo",
     "name": "Crudo",
     "description": "Sos de roșii, mozzarella, prosciutto crudo, cremă de ricotta, cremă de oțet balsamic, rucola",
-    "price": 55
+    "price": 55,
+    "image": "assets/pizzas/crudo.svg"
   },
   {
     "id": "veggie",
     "name": "Veggie",
     "description": "Sos de roșii, mozzarella, ardei, ceapă, vinete, ciuperci la grill",
-    "price": 40
+    "price": 40,
+    "image": "assets/pizzas/veggie.svg"
   },
   {
     "id": "hot",
     "name": "Hot",
     "description": "Sos de roșii, salam picant, cârnați italienesc Nduja, fulgi de chilli opțional",
-    "price": 45
+    "price": 45,
+    "image": "assets/pizzas/hot.svg"
   },
   {
     "id": "white",
     "name": "White",
     "description": "Sos alb cu usturoi, mozzarella, gorgonzola, bacon",
-    "price": 55
+    "price": 55,
+    "image": "assets/pizzas/white.svg"
   },
   {
     "id": "gourmet",
     "name": "Gourmet",
     "description": "Mozzarella, gorgonzola, ceapă caramelizată",
-    "price": 47
+    "price": 47,
+    "image": "assets/pizzas/gourmet.svg"
   }
 ]

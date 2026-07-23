@@ -1,0 +1,24 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img">
+  <circle cx="100" cy="100" r="96" fill="#b9772a" />
+  <circle cx="100" cy="100" r="88" fill="#d99a3f" />
+  <circle cx="100" cy="100" r="72" fill="#b23a2e" />
+  <g>
+    <circle cx="121.6" cy="103.8" r="12" fill="#f6d87a" fill-opacity="0.85" />
+    <circle cx="68.0" cy="120.4" r="15" fill="#f6d87a" fill-opacity="0.85" />
+    <circle cx="112.7" cy="52.7" r="18" fill="#f6d87a" fill-opacity="0.85" />
+    <circle cx="126.8" cy="151.5" r="12" fill="#f6d87a" fill-opacity="0.85" />
+    <circle cx="117.0" cy="109.8" r="11" fill="#8b3a3a" fill-opacity="0.95" />
+    <circle cx="66.8" cy="107.3" r="11" fill="#8b3a3a" fill-opacity="0.95" />
+    <circle cx="125.2" cy="64.1" r="11" fill="#8b3a3a" fill-opacity="0.95" />
+    <circle cx="106.7" cy="151.4" r="11" fill="#8b3a3a" fill-opacity="0.95" />
+    <circle cx="55.0" cy="62.2" r="11" fill="#8b3a3a" fill-opacity="0.95" />
+    <circle cx="79.4" cy="107.5" r="6" fill="#fdfaf3" fill-opacity="1.0" stroke="#e6ddc6" stroke-width="1.5" />
+    <circle cx="117.5" cy="66.3" r="6" fill="#fdfaf3" fill-opacity="1.0" stroke="#e6ddc6" stroke-width="1.5" />
+    <circle cx="112.7" cy="147.3" r="6" fill="#fdfaf3" fill-opacity="1.0" stroke="#e6ddc6" stroke-width="1.5" />
+    <circle cx="51.1" cy="68.8" r="6" fill="#fdfaf3" fill-opacity="1.0" stroke="#e6ddc6" stroke-width="1.5" />
+    <ellipse cx="79.4" cy="92.5" rx="7" ry="3.15" fill="#4c7a3f" transform="rotate(0 79.4 92.5)" />
+    <ellipse cx="135.1" cy="85.5" rx="7" ry="3.15" fill="#4c7a3f" transform="rotate(63 135.1 85.5)" />
+    <ellipse cx="79.3" cy="144.4" rx="7" ry="3.15" fill="#4c7a3f" transform="rotate(126 79.3 144.4)" />
+    <ellipse cx="82.6" cy="44.7" rx="7" ry="3.15" fill="#4c7a3f" transform="rotate(189 82.6 44.7)" />
+  </g>
+</svg>
