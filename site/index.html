@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>And'a Pizza — pizza la eveniment</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <img class="hero__logo" src="assets/logo.png" alt="And'a Pizza" />
+    <p class="hero__tagline">Pizza artizanală, coaptă live la evenimentul tău</p>
+    <a class="button" href="#rezervare">Rezervă</a>
+  </header>
+
+  <section class="despre" id="despre">
+    <h2>Despre noi</h2>
+    <p>
+      Aluatul de pizza este homemade, făcut din două tipuri de făină specială
+      pentru pizza de calitate superioară. Datorită unei fermentări de 24h la
+      rece, aluatul este mai aromat și mult mai digerabil. Pizza este coaptă
+      în cuptor special pe piatră, la o temperatură de aproximativ 500 de
+      grade — direct la evenimentul tău.
+    </p>
+  </section>
+
+  <section class="meniu" id="meniu">
+    <h2>Meniu</h2>
+    <ul class="menu-list" id="menu-list"></ul>
+  </section>
+
+  <section class="rezervare" id="rezervare">
+    <h2>Formular de rezervare</h2>
+    <form id="booking-form" novalidate>
+      <label>
+        Nume
+        <input type="text" name="name" placeholder="Numele tău" />
+      </label>
+      <label>
+        Data evenimentului
+        <input type="date" name="date" />
+      </label>
+      <label>
+        Locație
+        <input type="text" name="location" placeholder="Oraș / adresă" />
+      </label>
+      <label>
+        Nr. persoane aproximativ
+        <input type="number" name="guests" min="1" placeholder="ex: 30" />
+      </label>
+
+      <fieldset>
+        <legend>Alege pizza dorite</legend>
+        <div class="pizza-checklist" id="pizza-checklist"></div>
+      </fieldset>
+
+      <label>
+        Observații
+        <textarea name="notes" placeholder="Detalii suplimentare despre eveniment"></textarea>
+      </label>
+
+      <div id="form-errors" class="form-errors"></div>
+
+      <button type="submit" class="button">Trimite pe WhatsApp</button>
+    </form>
+  </section>
+
+  <footer class="contact" id="contact">
+    <p>Contact: <a id="phone-link" href="#"></a></p>
+    <p>&copy; And'a Pizza</p>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
