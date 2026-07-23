@@ -22,11 +22,11 @@ export function buildMenuViewModel(menu) {
 
 /**
  * Validate the booking form. `date` and `name` are required, along with at
- * least one selected pizza.
- * @param {{date: string, name: string, pizzaIds: string[]}} formState
+ * least one pizza selection with a quantity of 1 or more.
+ * @param {{date: string, name: string, selections: Array<{id: string, qty: number}>}} formState
  * @returns {{valid: boolean, errors: {date?: string, name?: string, pizzas?: string}}}
  */
-export function validateBooking({ date, name, pizzaIds }) {
+export function validateBooking({ date, name, selections }) {
   const errors = {};
 
   if (!date || !date.trim()) {
@@ -35,8 +35,8 @@ export function validateBooking({ date, name, pizzaIds }) {
   if (!name || !name.trim()) {
     errors.name = "Te rugăm să introduci numele tău.";
   }
-  if (!pizzaIds || pizzaIds.length === 0) {
-    errors.pizzas = "Alege cel puțin o pizza.";
+  if (!selections || !selections.some((selection) => selection.qty > 0)) {
+    errors.pizzas = "Alege cel puțin o pizza și o cantitate.";
   }
 
   return { valid: Object.keys(errors).length === 0, errors };
@@ -44,13 +44,19 @@ export function validateBooking({ date, name, pizzaIds }) {
 
 /**
  * Build the Romanian WhatsApp inquiry message from the booking form state.
- * @param {{name: string, date: string, location: string, guests: string, notes: string, pizzaIds: string[]}} formState
+ * Lists quantity and unit price per pizza; Anda totals the order herself.
+ * @param {{name: string, date: string, location: string, guests: string, notes: string, selections: Array<{id: string, qty: number}>}} formState
  * @param {Array<{id: string, name: string, price: number}>} menu
  * @returns {string}
  */
-export function buildWhatsAppMessage({ name, date, location, guests, notes, pizzaIds }, menu) {
-  const chosen = menu.filter((item) => pizzaIds.includes(item.id));
-  const pizzaList = chosen.map((item) => `${item.name} (${formatPrice(item.price)})`).join(", ");
+export function buildWhatsAppMessage({ name, date, location, guests, notes, selections }, menu) {
+  const pizzaList = selections
+    .filter((selection) => selection.qty > 0)
+    .map((selection) => {
+      const item = menu.find((menuItem) => menuItem.id === selection.id);
+      return `${selection.qty} x ${item.name} (${formatPrice(item.price)}/buc)`;
+    })
+    .join(", ");
 
   return [
     "Bună Anda! Aș dori să fac o rezervare pentru un eveniment.",
@@ -125,12 +131,44 @@ if (typeof document !== "undefined") {
     pizzaChecklistEl.innerHTML = items
       .map(
         (item) => `
-        <label class="pizza-check">
-          <input type="checkbox" name="pizza" value="${item.id}" />
-          <span>${item.name} — ${item.priceLabel}</span>
-        </label>`
+        <div class="pizza-check" data-pizza-id="${item.id}">
+          <label class="pizza-check__select">
+            <input type="checkbox" class="pizza-check__box" value="${item.id}" />
+            <span>${item.name} — ${item.priceLabel}</span>
+          </label>
+          <input
+            type="number"
+            class="pizza-check__qty"
+            min="1"
+            value="1"
+            disabled
+            aria-label="Cantitate ${item.name}"
+          />
+        </div>`
       )
       .join("");
+
+    pizzaChecklistEl.querySelectorAll(".pizza-check").forEach((row) => {
+      const checkbox = row.querySelector(".pizza-check__box");
+      const qtyInput = row.querySelector(".pizza-check__qty");
+      checkbox.addEventListener("change", () => {
+        qtyInput.disabled = !checkbox.checked;
+        if (checkbox.checked && (!qtyInput.value || Number(qtyInput.value) < 1)) {
+          qtyInput.value = "1";
+        }
+      });
+    });
+  }
+
+  function gatherPizzaSelections() {
+    if (!pizzaChecklistEl) return [];
+    return Array.from(pizzaChecklistEl.querySelectorAll(".pizza-check"))
+      .filter((row) => row.querySelector(".pizza-check__box").checked)
+      .map((row) => {
+        const id = row.querySelector(".pizza-check__box").value;
+        const qty = parseInt(row.querySelector(".pizza-check__qty").value, 10);
+        return { id, qty: Number.isFinite(qty) && qty > 0 ? qty : 1 };
+      });
   }
 
   function wireForm(menu) {
@@ -145,7 +183,7 @@ if (typeof document !== "undefined") {
         location: data.get("location") || "",
         guests: data.get("guests") || "",
         notes: data.get("notes") || "",
-        pizzaIds: data.getAll("pizza"),
+        selections: gatherPizzaSelections(),
       };
 
       const { valid, errors } = validateBooking(formState);

@@ -160,8 +160,24 @@ legend {
 .pizza-check {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: space-between;
+  gap: 0.75rem;
   font-size: 0.95rem;
+}
+
+.pizza-check__select {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pizza-check__qty {
+  width: 4rem;
+  padding: 0.35rem 0.5rem;
+}
+
+.pizza-check__qty:disabled {
+  opacity: 0.4;
 }
 
 .form-errors {

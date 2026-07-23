@@ -31,18 +31,18 @@ describe("buildMenuViewModel", () => {
 
 describe("validateBooking", () => {
   it("is invalid when date, name, and pizzas are all missing", () => {
-    const { valid, errors } = validateBooking({ date: "", name: "", pizzaIds: [] });
+    const { valid, errors } = validateBooking({ date: "", name: "", selections: [] });
     expect(valid).toBe(false);
     expect(errors.date).toBeTruthy();
     expect(errors.name).toBeTruthy();
     expect(errors.pizzas).toBeTruthy();
   });
 
-  it("is invalid when no pizza is selected", () => {
+  it("is invalid when no pizza has a quantity above zero", () => {
     const { valid, errors } = validateBooking({
       date: "2026-08-01",
       name: "Ana",
-      pizzaIds: [],
+      selections: [],
     });
     expect(valid).toBe(false);
     expect(errors.pizzas).toBeTruthy();
@@ -50,11 +50,11 @@ describe("validateBooking", () => {
     expect(errors.name).toBeUndefined();
   });
 
-  it("is valid when date, name, and at least one pizza are present", () => {
+  it("is valid when date, name, and at least one pizza quantity are present", () => {
     const { valid, errors } = validateBooking({
       date: "2026-08-01",
       name: "Ana",
-      pizzaIds: ["margherita"],
+      selections: [{ id: "margherita", qty: 2 }],
     });
     expect(valid).toBe(true);
     expect(errors).toEqual({});
@@ -62,7 +62,7 @@ describe("validateBooking", () => {
 });
 
 describe("buildWhatsAppMessage", () => {
-  it("includes all fields and the selected pizzas with prices", () => {
+  it("includes all fields and the selected pizzas with quantities and unit prices", () => {
     const message = buildWhatsAppMessage(
       {
         name: "Ana",
@@ -70,7 +70,10 @@ describe("buildWhatsAppMessage", () => {
         location: "Cluj",
         guests: "30",
         notes: "Lângă lac",
-        pizzaIds: ["margherita", "hot"],
+        selections: [
+          { id: "margherita", qty: 3 },
+          { id: "hot", qty: 2 },
+        ],
       },
       menu
     );
@@ -79,14 +82,21 @@ describe("buildWhatsAppMessage", () => {
     expect(message).toContain("Data eveniment: 2026-08-01");
     expect(message).toContain("Locație: Cluj");
     expect(message).toContain("Nr. persoane: 30");
-    expect(message).toContain("Margherita (35 lei)");
-    expect(message).toContain("Hot (45 lei)");
+    expect(message).toContain("3 x Margherita (35 lei/buc)");
+    expect(message).toContain("2 x Hot (45 lei/buc)");
     expect(message).toContain("Observații: Lângă lac");
   });
 
   it("falls back to a dash for optional empty fields", () => {
     const message = buildWhatsAppMessage(
-      { name: "Ana", date: "2026-08-01", location: "", guests: "", notes: "", pizzaIds: ["hot"] },
+      {
+        name: "Ana",
+        date: "2026-08-01",
+        location: "",
+        guests: "",
+        notes: "",
+        selections: [{ id: "hot", qty: 1 }],
+      },
       menu
     );
 
