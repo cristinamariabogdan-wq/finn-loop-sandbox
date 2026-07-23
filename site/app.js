@@ -90,7 +90,6 @@ export const CONTACT = { phoneIntl: PHONE_INTL, phoneDisplay: PHONE_DISPLAY };
 
 if (typeof document !== "undefined") {
   const menuListEl = document.getElementById("menu-list");
-  const pizzaChecklistEl = document.getElementById("pizza-checklist");
   const formEl = document.getElementById("booking-form");
   const errorsEl = document.getElementById("form-errors");
   const successEl = document.getElementById("form-success");
@@ -109,7 +108,6 @@ if (typeof document !== "undefined") {
     })
     .then((menu) => {
       renderMenu(menu);
-      renderPizzaChecklist(menu);
       wireForm(menu);
     })
     .catch(() => {
@@ -125,7 +123,7 @@ if (typeof document !== "undefined") {
     menuListEl.innerHTML = items
       .map(
         (item) => `
-        <li class="menu-item">
+        <li class="menu-item" data-pizza-id="${item.id}">
           ${item.image ? `<img class="menu-item__image" src="${item.image}" alt="${item.name}" width="72" height="72" />` : ""}
           <div class="menu-item__body">
             <div class="menu-item__header">
@@ -133,38 +131,28 @@ if (typeof document !== "undefined") {
               <span class="menu-item__price">${item.priceLabel}</span>
             </div>
             <p class="menu-item__description">${item.description}</p>
+            <div class="menu-item__select">
+              <label class="menu-item__checkbox-label">
+                <input type="checkbox" class="menu-item__box" value="${item.id}" />
+                Adaugă la rezervare
+              </label>
+              <input
+                type="number"
+                class="menu-item__qty"
+                min="1"
+                value="1"
+                disabled
+                aria-label="Cantitate ${item.name}"
+              />
+            </div>
           </div>
         </li>`
       )
       .join("");
-  }
 
-  function renderPizzaChecklist(menu) {
-    if (!pizzaChecklistEl) return;
-    const items = buildMenuViewModel(menu);
-    pizzaChecklistEl.innerHTML = items
-      .map(
-        (item) => `
-        <div class="pizza-check" data-pizza-id="${item.id}">
-          <label class="pizza-check__select">
-            <input type="checkbox" class="pizza-check__box" value="${item.id}" />
-            <span>${item.name} — ${item.priceLabel}</span>
-          </label>
-          <input
-            type="number"
-            class="pizza-check__qty"
-            min="1"
-            value="1"
-            disabled
-            aria-label="Cantitate ${item.name}"
-          />
-        </div>`
-      )
-      .join("");
-
-    pizzaChecklistEl.querySelectorAll(".pizza-check").forEach((row) => {
-      const checkbox = row.querySelector(".pizza-check__box");
-      const qtyInput = row.querySelector(".pizza-check__qty");
+    menuListEl.querySelectorAll(".menu-item").forEach((row) => {
+      const checkbox = row.querySelector(".menu-item__box");
+      const qtyInput = row.querySelector(".menu-item__qty");
       checkbox.addEventListener("change", () => {
         qtyInput.disabled = !checkbox.checked;
         if (checkbox.checked && (!qtyInput.value || Number(qtyInput.value) < 1)) {
@@ -175,12 +163,12 @@ if (typeof document !== "undefined") {
   }
 
   function gatherPizzaSelections() {
-    if (!pizzaChecklistEl) return [];
-    return Array.from(pizzaChecklistEl.querySelectorAll(".pizza-check"))
-      .filter((row) => row.querySelector(".pizza-check__box").checked)
+    if (!menuListEl) return [];
+    return Array.from(menuListEl.querySelectorAll(".menu-item"))
+      .filter((row) => row.querySelector(".menu-item__box").checked)
       .map((row) => {
-        const id = row.querySelector(".pizza-check__box").value;
-        const qty = parseInt(row.querySelector(".pizza-check__qty").value, 10);
+        const id = row.querySelector(".menu-item__box").value;
+        const qty = parseInt(row.querySelector(".menu-item__qty").value, 10);
         return { id, qty: Number.isFinite(qty) && qty > 0 ? qty : 1 };
       });
   }
