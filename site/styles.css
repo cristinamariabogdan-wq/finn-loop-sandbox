@@ -192,6 +192,17 @@ legend {
   font-size: 0.9rem;
 }
 
+.form-success {
+  color: var(--brand-yellow);
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.form-success:empty {
+  display: none;
+}
+
 .contact {
   text-align: center;
   color: #999;

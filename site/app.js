@@ -77,6 +77,15 @@ export function buildWhatsAppUrl(message) {
   return `https://wa.me/${PHONE_INTL}?text=${encodeURIComponent(message)}`;
 }
 
+/**
+ * Confirmation shown after WhatsApp opens. Says "opened", not "sent" — the
+ * customer still has to press send inside WhatsApp.
+ * @returns {string}
+ */
+export function buildConfirmationMessage() {
+  return "Am deschis WhatsApp cu mesajul completat. Apasă Trimite acolo ca să ajungă la Anda.";
+}
+
 export const CONTACT = { phoneIntl: PHONE_INTL, phoneDisplay: PHONE_DISPLAY };
 
 if (typeof document !== "undefined") {
@@ -84,6 +93,7 @@ if (typeof document !== "undefined") {
   const pizzaChecklistEl = document.getElementById("pizza-checklist");
   const formEl = document.getElementById("booking-form");
   const errorsEl = document.getElementById("form-errors");
+  const successEl = document.getElementById("form-success");
   const phoneLinkEl = document.getElementById("phone-link");
 
   if (phoneLinkEl) {
@@ -194,6 +204,7 @@ if (typeof document !== "undefined") {
             .map((message) => `<p class="form-error">${message}</p>`)
             .join("");
         }
+        if (successEl) successEl.textContent = "";
         return;
       }
 
@@ -202,6 +213,8 @@ if (typeof document !== "undefined") {
       const message = buildWhatsAppMessage(formState, menu);
       const url = buildWhatsAppUrl(message);
       window.open(url, "_blank", "noopener");
+
+      if (successEl) successEl.textContent = buildConfirmationMessage();
     });
   }
 }

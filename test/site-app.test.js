@@ -5,6 +5,7 @@ import {
   validateBooking,
   buildWhatsAppMessage,
   buildWhatsAppUrl,
+  buildConfirmationMessage,
   CONTACT,
 } from "../site/app.js";
 
@@ -111,5 +112,13 @@ describe("buildWhatsAppUrl", () => {
     const url = buildWhatsAppUrl("Bună Anda!");
     expect(url).toBe(`https://wa.me/${CONTACT.phoneIntl}?text=${encodeURIComponent("Bună Anda!")}`);
     expect(url.startsWith("https://wa.me/40756748177?text=")).toBe(true);
+  });
+});
+
+describe("buildConfirmationMessage", () => {
+  it("says WhatsApp opened, not that the message was sent", () => {
+    const message = buildConfirmationMessage();
+    expect(message).toContain("deschis WhatsApp");
+    expect(message.toLowerCase()).not.toContain("trimis mesajul");
   });
 });
