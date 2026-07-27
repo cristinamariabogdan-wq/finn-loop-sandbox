@@ -101,6 +101,25 @@ if (typeof document !== "undefined") {
     phoneLinkEl.textContent = PHONE_DISPLAY;
   }
 
+  // Scroll in-page anchors with JS instead of letting the browser navigate to
+  // the hash. A real hash navigation reloads the page inside sandboxed iframe
+  // embeds (e.g. the shared artifact), which re-runs this script and wipes the
+  // in-memory order. preventDefault keeps the selections intact.
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener("click", (event) => {
+      const target = document.getElementById(anchor.getAttribute("href").slice(1));
+      if (!target) return;
+      event.preventDefault();
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (target.id === "rezervare" && formEl) {
+        const nameEl = formEl.querySelector('input[name="name"]');
+        const dateEl = formEl.querySelector('input[name="date"]');
+        const focusEl = nameEl && !nameEl.value.trim() ? nameEl : dateEl;
+        setTimeout(() => focusEl && focusEl.focus({ preventScroll: true }), 480);
+      }
+    });
+  });
+
   fetch("./data/menu.json")
     .then((response) => {
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -117,6 +136,8 @@ if (typeof document !== "undefined") {
       }
     });
 
+  const BADGES = { crudo: "Cea mai comandată", hot: "Pentru curajoși" };
+
   function renderMenu(menu) {
     if (!menuListEl) return;
     const items = buildMenuViewModel(menu);
@@ -124,40 +145,38 @@ if (typeof document !== "undefined") {
       .map(
         (item) => `
         <li class="menu-item" data-pizza-id="${item.id}">
-          ${item.image ? `<img class="menu-item__image" src="${item.image}" alt="${item.name}" width="72" height="72" />` : ""}
-          <div class="menu-item__body">
-            <div class="menu-item__header">
-              <span class="menu-item__name">${item.name}</span>
-              <span class="menu-item__price">${item.priceLabel}</span>
-            </div>
-            <p class="menu-item__description">${item.description}</p>
-            <div class="menu-item__select">
-              <label class="menu-item__checkbox-label">
-                <input type="checkbox" class="menu-item__box" value="${item.id}" />
-                Adaugă la rezervare
-              </label>
-              <input
-                type="number"
-                class="menu-item__qty"
-                min="1"
-                value="1"
-                disabled
-                aria-label="Cantitate ${item.name}"
-              />
-            </div>
+          <div class="menu-item__media">
+            ${item.image ? `<img class="menu-item__image" src="${item.image}" alt="Pizza ${item.name}: ${item.description}" loading="lazy" />` : ""}
+            ${BADGES[item.id] ? `<span class="menu-item__badge">${BADGES[item.id]}</span>` : ""}
+          </div>
+          <div class="menu-item__header">
+            <span class="menu-item__name">${item.name}</span>
+            <span class="menu-item__price">${item.priceLabel}</span>
+          </div>
+          <p class="menu-item__description">${item.description}</p>
+          <div class="stepper">
+            <button type="button" class="stepper__btn stepper__btn--minus" aria-label="Scade cantitatea pentru ${item.name}">−</button>
+            <span class="stepper__count" data-qty="0" aria-live="polite">0</span>
+            <button type="button" class="stepper__btn stepper__btn--plus" aria-label="Crește cantitatea pentru ${item.name}">+</button>
           </div>
         </li>`
       )
       .join("");
 
     menuListEl.querySelectorAll(".menu-item").forEach((row) => {
-      const checkbox = row.querySelector(".menu-item__box");
-      const qtyInput = row.querySelector(".menu-item__qty");
-      checkbox.addEventListener("change", () => {
-        qtyInput.disabled = !checkbox.checked;
-        if (checkbox.checked && (!qtyInput.value || Number(qtyInput.value) < 1)) {
-          qtyInput.value = "1";
-        }
+      const countEl = row.querySelector(".stepper__count");
+      const setQty = (qty) => {
+        const next = Math.max(0, qty);
+        countEl.dataset.qty = String(next);
+        countEl.textContent = String(next);
+        row.classList.toggle("is-selected", next > 0);
+        updateOrderBar(menu);
+      };
+      row.querySelector(".stepper__btn--minus").addEventListener("click", () => {
+        setQty(Number(countEl.dataset.qty) - 1);
+      });
+      row.querySelector(".stepper__btn--plus").addEventListener("click", () => {
+        setQty(Number(countEl.dataset.qty) + 1);
       });
     });
   }
@@ -165,12 +184,30 @@ if (typeof document !== "undefined") {
   function gatherPizzaSelections() {
     if (!menuListEl) return [];
     return Array.from(menuListEl.querySelectorAll(".menu-item"))
-      .filter((row) => row.querySelector(".menu-item__box").checked)
-      .map((row) => {
-        const id = row.querySelector(".menu-item__box").value;
-        const qty = parseInt(row.querySelector(".menu-item__qty").value, 10);
-        return { id, qty: Number.isFinite(qty) && qty > 0 ? qty : 1 };
-      });
+      .map((row) => ({
+        id: row.dataset.pizzaId,
+        qty: Number(row.querySelector(".stepper__count").dataset.qty) || 0,
+      }))
+      .filter((selection) => selection.qty > 0);
+  }
+
+  const orderBarEl = document.getElementById("order-bar");
+  const orderBarSummaryEl = document.getElementById("order-bar-summary");
+
+  function updateOrderBar(menu) {
+    if (!orderBarEl || !orderBarSummaryEl) return;
+    const selections = gatherPizzaSelections();
+    const count = selections.reduce((sum, s) => sum + s.qty, 0);
+    if (count === 0) {
+      orderBarEl.hidden = true;
+      return;
+    }
+    const total = selections.reduce((sum, s) => {
+      const item = menu.find((menuItem) => menuItem.id === s.id);
+      return sum + (item ? item.price * s.qty : 0);
+    }, 0);
+    orderBarSummaryEl.innerHTML = `${count} pizza · <em>${formatPrice(total)}</em>`;
+    orderBarEl.hidden = false;
   }
 
   function wireForm(menu) {
