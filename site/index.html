@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>And'a Pizza — pizza la eveniment</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Karla:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <img class="hero__photo" src="assets/pizzas/margherita.jpg" alt="Pizza Margherita scoasă din cuptorul cu lemne, cu crustă pătată de foc" />
+    <div class="hero__scrim"></div>
+    <div class="hero__content">
+      <img class="hero__logo" src="assets/logo.png" alt="And'a Pizza" />
+      <h1 class="hero__title">Coaptă pe piatră, la 500°.<br />Direct la evenimentul tău.</h1>
+      <p class="hero__tagline">Aluat fermentat 24h la rece, cuptor cu lemne adus la tine. Pizza iese caldă, în fața invitaților.</p>
+      <a class="button button--big" href="#meniu">Vezi meniul</a>
+    </div>
+  </header>
+
+  <section class="meniu" id="meniu">
+    <h2>Alege-ți pizza</h2>
+    <p class="meniu-hint">Apasă + pe cele care te tentează. Comanda se strânge singură jos, în bară.</p>
+    <ul class="menu-list" id="menu-list"></ul>
+  </section>
+
+  <section class="despre" id="despre">
+    <h2>De ce e altfel</h2>
+    <div class="despre__grid">
+      <p><strong>Aluatul</strong> e homemade, din două făini speciale de pizza. Fermentează 24 de ore la rece: mai aromat, mult mai ușor de digerat.</p>
+      <p><strong>Cuptorul</strong> vine cu noi. Piatră încinsă la aproximativ 500°, coacere în 90 de secunde, crustă pătată de foc.</p>
+      <p><strong>Spectacolul</strong> e inclus. Întindem, coacem și tăiem live, iar invitații mănâncă pizza fierbinte, nu din cutie.</p>
+    </div>
+  </section>
+
+  <section class="rezervare" id="rezervare">
+    <h2>Rezervă data</h2>
+    <p class="rezervare-hint">Fără plată acum: trimiți un mesaj pe WhatsApp și Anda îți confirmă disponibilitatea.</p>
+    <form id="booking-form" novalidate>
+      <label>
+        Nume
+        <input type="text" name="name" placeholder="Numele tău" />
+      </label>
+      <label>
+        Data evenimentului
+        <input type="date" name="date" />
+      </label>
+      <label>
+        Locație
+        <input type="text" name="location" placeholder="Oraș / adresă" />
+      </label>
+      <label>
+        Nr. persoane aproximativ
+        <input type="number" name="guests" min="1" placeholder="ex: 30" />
+      </label>
+
+      <label>
+        Observații
+        <textarea name="notes" placeholder="Detalii suplimentare despre eveniment"></textarea>
+      </label>
+
+      <div id="form-errors" class="form-errors" aria-live="polite"></div>
+      <p id="form-success" class="form-success" aria-live="polite"></p>
+
+      <a href="#" id="whatsapp-submit" class="button button--big" target="_blank" rel="noopener">Trimite pe WhatsApp</a>
+    </form>
+  </section>
+
+  <footer class="contact" id="contact">
+    <p>Contact: <a id="phone-link" href="#"></a></p>
+    <p>&copy; And'a Pizza</p>
+  </footer>
+
+  <div class="order-bar" id="order-bar" hidden>
+    <span class="order-bar__summary" id="order-bar-summary"></span>
+    <a class="button" href="#rezervare">Rezervă acum</a>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
