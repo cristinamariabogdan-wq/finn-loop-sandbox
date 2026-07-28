@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zece la română — antrenament pentru Evaluarea Națională</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="masthead">
+      <p class="masthead__kicker">Evaluarea Națională · Limba română</p>
+      <h1 class="masthead__title">Zece la română</h1>
+      <p class="masthead__subtitle">Antrenament în reprize scurte: 10 întrebări, explicații pe loc.</p>
+    </header>
+
+    <main>
+      <section id="view-start" class="view">
+        <h2 class="view__heading">Alege ce exersezi azi</h2>
+        <div id="category-list" class="category-list"></div>
+        <div id="review-card" class="review-card" hidden>
+          <div class="review-card__copy">
+            <h3 class="review-card__title">Reia greșelile</h3>
+            <p id="review-count" class="review-card__count"></p>
+          </div>
+          <button id="review-start" class="button button--ghost" type="button">Reia greșelile</button>
+        </div>
+        <p id="load-error" class="load-error" hidden></p>
+      </section>
+
+      <section id="view-quiz" class="view" hidden>
+        <div class="quiz-meta">
+          <span id="quiz-category" class="quiz-meta__category"></span>
+          <span id="quiz-step" class="quiz-meta__step"></span>
+        </div>
+        <h2 id="quiz-prompt" class="quiz-prompt"></h2>
+        <div id="quiz-options" class="quiz-options"></div>
+        <div id="quiz-feedback" class="quiz-feedback" hidden>
+          <p id="feedback-verdict" class="quiz-feedback__verdict"></p>
+          <p id="feedback-explanation" class="quiz-feedback__explanation"></p>
+          <button id="quiz-next" class="button" type="button">Următoarea</button>
+        </div>
+      </section>
+
+      <section id="view-summary" class="view" hidden>
+        <p class="summary__label">Scorul tău</p>
+        <p id="summary-score" class="summary__score"></p>
+        <p id="summary-message" class="summary__message"></p>
+        <div class="summary__actions">
+          <button id="summary-again" class="button" type="button">Încă o sesiune</button>
+          <button id="summary-home" class="button button--ghost" type="button">Înapoi la început</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footnote">Progresul se salvează doar pe acest dispozitiv.</footer>
+  </div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

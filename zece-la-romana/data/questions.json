@@ -1,0 +1,392 @@
+[
+  {
+    "id": "m01",
+    "category": "morfologie",
+    "prompt": "„Copilul desenează frumos.” — ce valoare morfologică are cuvântul „frumos”?",
+    "options": [
+      "adjectiv propriu-zis",
+      "adverb de mod",
+      "substantiv comun",
+      "interjecție"
+    ],
+    "correctIndex": 1,
+    "explanation": "„Frumos” determină verbul „desenează” și arată cum se desfășoară acțiunea, deci este adverb de mod. Ca adjectiv s-ar acorda cu un substantiv: „un desen frumos”."
+  },
+  {
+    "id": "m02",
+    "category": "morfologie",
+    "prompt": "„Am citit o carte despre munți.” — cuvântul „despre” este:",
+    "options": [
+      "conjuncție subordonatoare",
+      "adverb de loc",
+      "prepoziție simplă",
+      "articol nehotărât"
+    ],
+    "correctIndex": 2,
+    "explanation": "„Despre” leagă substantivul „munți” de „carte” și cere cazul acuzativ. Prepozițiile scrise într-un singur cuvânt (despre, printre, dinspre) sunt simple; cele compuse se scriu separat: „de la”, „până la”."
+  },
+  {
+    "id": "m03",
+    "category": "morfologie",
+    "prompt": "„Aș merge la mare.” — verbul „aș merge” este la modul:",
+    "options": [
+      "indicativ, timpul viitor",
+      "conjunctiv, timpul prezent",
+      "condițional-optativ, timpul prezent",
+      "imperativ"
+    ],
+    "correctIndex": 2,
+    "explanation": "Structura „aș + infinitiv” exprimă o acțiune dorită sau condiționată — modul condițional-optativ, timpul prezent. Conjunctivul se recunoaște după „să”: „să merg”."
+  },
+  {
+    "id": "m04",
+    "category": "morfologie",
+    "prompt": "„Cartea elevului este nouă.” — substantivul „elevului” este în cazul:",
+    "options": [
+      "dativ",
+      "genitiv",
+      "acuzativ",
+      "nominativ"
+    ],
+    "correctIndex": 1,
+    "explanation": "Răspunde la întrebarea „a cui carte?” și exprimă posesorul — cazul genitiv. În dativ ar răspunde la „cui?” pe lângă un verb: „I-am dat elevului o carte”."
+  },
+  {
+    "id": "m05",
+    "category": "morfologie",
+    "prompt": "„I-am dat Mariei cartea.” — cuvântul „i-” este:",
+    "options": [
+      "pronume personal în dativ",
+      "pronume personal în acuzativ",
+      "pronume reflexiv în dativ",
+      "articol hotărât"
+    ],
+    "correctIndex": 0,
+    "explanation": "„I-” este forma neaccentuată de dativ a pronumelui personal, persoana a III-a singular, și dublează complementul indirect „Mariei”. Reflexivul ar avea aceeași persoană cu subiectul: „își”."
+  },
+  {
+    "id": "m06",
+    "category": "morfologie",
+    "prompt": "„Am cumpărat două caiete.” — cuvântul „două” este:",
+    "options": [
+      "numeral ordinal",
+      "adjectiv propriu-zis",
+      "numeral cardinal",
+      "articol nehotărât"
+    ],
+    "correctIndex": 2,
+    "explanation": "„Două” exprimă un număr precis, deci este numeral cardinal (aici cu valoare adjectivală, acordat cu „caiete”). Numeralul ordinal arată ordinea: „al doilea caiet”."
+  },
+  {
+    "id": "m07",
+    "category": "morfologie",
+    "prompt": "„Andrei este cel mai harnic din clasă.” — adjectivul „cel mai harnic” este la gradul:",
+    "options": [
+      "comparativ de superioritate",
+      "superlativ absolut",
+      "superlativ relativ de superioritate",
+      "pozitiv"
+    ],
+    "correctIndex": 2,
+    "explanation": "Construcția „cel mai + adjectiv” compară un termen cu toți ceilalți din grup — superlativ relativ de superioritate. Superlativul absolut se formează cu „foarte”: „foarte harnic”."
+  },
+  {
+    "id": "m08",
+    "category": "morfologie",
+    "prompt": "„Frunzele căzute acoperă aleea.” — cuvântul „căzute” este:",
+    "options": [
+      "verb la participiu, cu funcție de predicat",
+      "adjectiv provenit din verb la participiu",
+      "adverb de mod",
+      "substantiv comun"
+    ],
+    "correctIndex": 1,
+    "explanation": "„Căzute” se acordă în gen, număr și caz cu „frunzele” și îl determină ca un adjectiv; provine din participiul verbului „a cădea”. Singur, participiul nu poate fi predicat."
+  },
+  {
+    "id": "m09",
+    "category": "morfologie",
+    "prompt": "„Elevul care învață reușește.” — cuvântul „care” este:",
+    "options": [
+      "pronume interogativ",
+      "conjuncție subordonatoare",
+      "pronume relativ",
+      "adjectiv pronominal"
+    ],
+    "correctIndex": 2,
+    "explanation": "„Care” leagă subordonata de regentă și ține locul substantivului „elevul”, deci este pronume relativ. Ar fi interogativ doar într-o întrebare directă: „Care a reușit?”."
+  },
+  {
+    "id": "m10",
+    "category": "morfologie",
+    "prompt": "„Hai, vino mai repede!” — cuvântul „hai” este:",
+    "options": [
+      "verb la imperativ",
+      "adverb de mod",
+      "interjecție",
+      "conjuncție coordonatoare"
+    ],
+    "correctIndex": 2,
+    "explanation": "„Hai” exprimă un îndemn și este interjecție. Deși seamănă cu un verb la imperativ, nu are conjugare completă — este o interjecție cu valoare verbală."
+  },
+  {
+    "id": "m11",
+    "category": "morfologie",
+    "prompt": "„Caietul meu este albastru.” — cuvântul „meu” este:",
+    "options": [
+      "pronume posesiv",
+      "adjectiv pronominal posesiv",
+      "pronume personal",
+      "articol hotărât"
+    ],
+    "correctIndex": 1,
+    "explanation": "„Meu” însoțește substantivul „caietul” și se acordă cu el, deci este adjectiv pronominal posesiv. Ar fi pronume posesiv dacă ar înlocui substantivul: „Al meu este albastru”."
+  },
+  {
+    "id": "m12",
+    "category": "morfologie",
+    "prompt": "„Învăț mult, dar obosesc repede.” — cuvântul „dar” este:",
+    "options": [
+      "conjuncție coordonatoare adversativă",
+      "conjuncție subordonatoare",
+      "prepoziție simplă",
+      "adverb de mod"
+    ],
+    "correctIndex": 0,
+    "explanation": "„Dar” leagă două propoziții de același fel, exprimând o opoziție — conjuncție coordonatoare adversativă, ca „iar”, „însă”, „ci”."
+  },
+  {
+    "id": "m13",
+    "category": "morfologie",
+    "prompt": "„Mergeam zilnic la bunici.” — verbul „mergeam” este la timpul:",
+    "options": [
+      "perfect compus",
+      "mai-mult-ca-perfect",
+      "imperfect",
+      "perfect simplu"
+    ],
+    "correctIndex": 2,
+    "explanation": "„Mergeam” exprimă o acțiune trecută, repetată, văzută în desfășurare — timpul imperfect. Perfectul compus ar fi „am mers”, iar mai-mult-ca-perfectul „mersesem”."
+  },
+  {
+    "id": "m14",
+    "category": "morfologie",
+    "prompt": "„Se gândește la vacanță.” — cuvântul „se” este:",
+    "options": [
+      "pronume personal",
+      "pronume reflexiv",
+      "pronume demonstrativ",
+      "conjuncție subordonatoare"
+    ],
+    "correctIndex": 1,
+    "explanation": "„Se” are aceeași persoană cu subiectul verbului „se gândește”, deci este pronume reflexiv, formă neaccentuată de acuzativ."
+  },
+  {
+    "id": "m15",
+    "category": "morfologie",
+    "prompt": "„O carte stă pe raft.” — cuvântul „o” este:",
+    "options": [
+      "numeral cardinal",
+      "pronume personal",
+      "articol nehotărât",
+      "interjecție"
+    ],
+    "correctIndex": 2,
+    "explanation": "Aici „o” doar însoțește substantivul „carte” — articol nehotărât. Ar fi numeral dacă ar insista pe cantitate („am o carte, nu două”) și pronume personal când înlocuiește un substantiv: „o văd”."
+  },
+  {
+    "id": "s01",
+    "category": "sintaxa",
+    "prompt": "„Mi-e dor de bunici.” — subiectul propoziției este:",
+    "options": [
+      "„mi”",
+      "„dor”",
+      "„bunici”",
+      "propoziția nu are subiect"
+    ],
+    "correctIndex": 1,
+    "explanation": "În construcțiile „mi-e dor/foame/sete”, substantivul este subiectul: dorul îmi este. „Mi” este complement indirect în dativ."
+  },
+  {
+    "id": "s02",
+    "category": "sintaxa",
+    "prompt": "„Maria este eleva mea.” — predicatul propoziției este:",
+    "options": [
+      "„este” — predicat verbal",
+      "„este eleva” — predicat nominal",
+      "„eleva mea” — subiect",
+      "propoziția nu are predicat"
+    ],
+    "correctIndex": 1,
+    "explanation": "„A fi” este aici verb copulativ și, împreună cu numele predicativ „eleva”, formează predicatul nominal. „A fi” e predicativ doar când înseamnă „a exista, a se afla”: „Cartea este pe masă”."
+  },
+  {
+    "id": "s03",
+    "category": "sintaxa",
+    "prompt": "„Cartea de povești e veche.” — „de povești” are funcția sintactică de:",
+    "options": [
+      "atribut substantival prepozițional",
+      "complement prepozițional",
+      "circumstanțial de loc",
+      "nume predicativ"
+    ],
+    "correctIndex": 0,
+    "explanation": "„De povești” determină substantivul „cartea” („care carte?”) — deci e atribut; fiind exprimat prin substantiv cu prepoziție, este atribut substantival prepozițional."
+  },
+  {
+    "id": "s04",
+    "category": "sintaxa",
+    "prompt": "„Îl văd pe Andrei.” — „pe Andrei” are funcția sintactică de:",
+    "options": [
+      "complement indirect",
+      "complement prepozițional",
+      "complement direct",
+      "circumstanțial de loc"
+    ],
+    "correctIndex": 2,
+    "explanation": "„Pe” + acuzativ la nume de persoane marchează complementul direct („pe cine văd?”), dublat aici de pronumele „îl”. Nu orice „pe” introduce un circumstanțial!"
+  },
+  {
+    "id": "s05",
+    "category": "sintaxa",
+    "prompt": "„Mă gândesc la examen.” — „la examen” are funcția sintactică de:",
+    "options": [
+      "complement direct",
+      "complement indirect",
+      "complement prepozițional",
+      "circumstanțial de timp"
+    ],
+    "correctIndex": 2,
+    "explanation": "Verbul cere prepoziția „la” (mă gândesc la ceva) — complement prepozițional, conform programei actuale. Complementul indirect stă în dativ și răspunde la „cui?”: „îi spun colegului”."
+  },
+  {
+    "id": "s06",
+    "category": "sintaxa",
+    "prompt": "„Le-am mulțumit colegilor.” — „colegilor” are funcția sintactică de:",
+    "options": [
+      "complement direct",
+      "complement indirect",
+      "atribut substantival",
+      "subiect"
+    ],
+    "correctIndex": 1,
+    "explanation": "„Colegilor” e substantiv în dativ și răspunde la întrebarea „cui am mulțumit?” — complement indirect, dublat de forma pronominală „le-”."
+  },
+  {
+    "id": "s07",
+    "category": "sintaxa",
+    "prompt": "„Mâine plecăm la munte.” — „mâine” are funcția sintactică de:",
+    "options": [
+      "circumstanțial de timp",
+      "circumstanțial de loc",
+      "circumstanțial de mod",
+      "subiect"
+    ],
+    "correctIndex": 0,
+    "explanation": "„Mâine” arată când se petrece acțiunea („când plecăm?”) — circumstanțial de timp, exprimat prin adverb de timp."
+  },
+  {
+    "id": "s08",
+    "category": "sintaxa",
+    "prompt": "„Știu că vei reuși.” — propoziția „că vei reuși” este:",
+    "options": [
+      "propoziție subiectivă",
+      "propoziție completivă directă",
+      "propoziție atributivă",
+      "propoziție circumstanțială de cauză"
+    ],
+    "correctIndex": 1,
+    "explanation": "Subordonata răspunde la „ce știu?” pe lângă verbul predicativ „știu” și ține locul unui complement direct — completivă directă."
+  },
+  {
+    "id": "s09",
+    "category": "sintaxa",
+    "prompt": "„Se spune că iarna va fi grea.” — propoziția „că iarna va fi grea” este:",
+    "options": [
+      "propoziție completivă directă",
+      "propoziție subiectivă",
+      "propoziție atributivă",
+      "propoziție circumstanțială de mod"
+    ],
+    "correctIndex": 1,
+    "explanation": "„Se spune” este verb impersonal, fără subiect propriu; subordonata îi ține locul de subiect — propoziție subiectivă. La fel după „trebuie”, „e bine”, „se pare”."
+  },
+  {
+    "id": "s10",
+    "category": "sintaxa",
+    "prompt": "„Am citit cartea pe care mi-ai recomandat-o.” — propoziția „pe care mi-ai recomandat-o” este:",
+    "options": [
+      "propoziție completivă directă",
+      "propoziție atributivă",
+      "propoziție subiectivă",
+      "propoziție circumstanțială de loc"
+    ],
+    "correctIndex": 1,
+    "explanation": "Subordonata determină substantivul „cartea” („care carte?”) — atributivă. Subordonata introdusă prin pronume relativ după un substantiv este, de regulă, atributivă."
+  },
+  {
+    "id": "s11",
+    "category": "sintaxa",
+    "prompt": "„N-am ieșit afară pentru că ploua.” — propoziția „pentru că ploua” este:",
+    "options": [
+      "propoziție circumstanțială de cauză",
+      "propoziție circumstanțială de scop",
+      "propoziție completivă directă",
+      "propoziție circumstanțială de timp"
+    ],
+    "correctIndex": 0,
+    "explanation": "Subordonata arată motivul („din ce cauză n-am ieșit?”) — circumstanțială de cauză, introdusă prin „pentru că”. Scopul (finala) arată intenția și folosește „ca să”."
+  },
+  {
+    "id": "s12",
+    "category": "sintaxa",
+    "prompt": "„Cred că ai dreptate, dar vreau să verific.” — câte propoziții are fraza?",
+    "options": [
+      "două",
+      "trei",
+      "patru",
+      "cinci"
+    ],
+    "correctIndex": 2,
+    "explanation": "Numărăm predicatele: „cred” / „ai dreptate” / „vreau” / „să verific” — patru predicate, deci patru propoziții."
+  },
+  {
+    "id": "s13",
+    "category": "sintaxa",
+    "prompt": "„Mergem la teatru.” — subiectul propoziției este:",
+    "options": [
+      "exprimat: „noi”",
+      "inclus",
+      "subînțeles",
+      "propoziția nu are subiect"
+    ],
+    "correctIndex": 1,
+    "explanation": "Subiectul nu e exprimat, dar e cuprins în desinența verbului la persoana I plural — subiect inclus (specific persoanelor I și a II-a). Subînțeles este la persoana a III-a, recuperat din context."
+  },
+  {
+    "id": "s14",
+    "category": "sintaxa",
+    "prompt": "„Fratele meu a devenit inginer.” — „inginer” are funcția sintactică de:",
+    "options": [
+      "complement direct",
+      "nume predicativ",
+      "subiect",
+      "atribut substantival"
+    ],
+    "correctIndex": 1,
+    "explanation": "„A deveni” este întotdeauna verb copulativ; „inginer” îi completează sensul și formează cu el predicatul nominal „a devenit inginer” — deci e nume predicativ."
+  },
+  {
+    "id": "s15",
+    "category": "sintaxa",
+    "prompt": "„A plecat în oraș ca să cumpere pâine.” — propoziția „ca să cumpere pâine” este:",
+    "options": [
+      "propoziție circumstanțială de scop",
+      "propoziție circumstanțială de cauză",
+      "propoziție completivă directă",
+      "propoziție atributivă"
+    ],
+    "correctIndex": 0,
+    "explanation": "Subordonata arată intenția acțiunii („cu ce scop a plecat?”) — circumstanțială de scop (finală), introdusă prin „ca să”. Cauzala ar arăta motivul: „pentru că nu mai avea pâine”."
+  }
+]
