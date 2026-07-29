@@ -4,16 +4,21 @@
 
 export const STORAGE_KEY = "zece-la-romana.v1";
 export const SESSION_SIZE = 10;
+export const LESSON_QUIZ_SIZE = 3;
 
 export const CATEGORIES = [
   {
     id: "morfologie",
     label: "Morfologie",
+    // Definite accusative, for sentences like „Exersează Morfologia”. Romanian
+    // articulation is irregular enough that spelling it out beats deriving it.
+    articulatedLabel: "Morfologia",
     tagline: "Părți de vorbire, cazuri, moduri și timpuri",
   },
   {
     id: "sintaxa",
     label: "Sintaxă",
+    articulatedLabel: "Sintaxa",
     tagline: "Funcții sintactice, propoziții și frază",
   },
 ];
@@ -69,6 +74,113 @@ export function validateQuestionBank(questions) {
   return errors;
 }
 
+const VALID_GRADES = new Set([5, 6, 7, 8]);
+const ROMAN_GRADES = { 5: "a V-a", 6: "a VI-a", 7: "a VII-a", 8: "a VIII-a" };
+
+/**
+ * Check one multiple-choice item — shared by the question bank and the lesson
+ * quizzes, which use the same shape.
+ * @returns {string[]} problems found, empty when valid
+ */
+function validateChoiceItem(item, where) {
+  const errors = [];
+  if (typeof item.prompt !== "string" || !item.prompt.trim()) {
+    errors.push(`${where}: enunț lipsă`);
+  }
+  if (
+    !Array.isArray(item.options) ||
+    item.options.length !== 4 ||
+    item.options.some((option) => typeof option !== "string" || !option.trim())
+  ) {
+    errors.push(`${where}: trebuie exact 4 variante nevide`);
+  }
+  if (!Number.isInteger(item.correctIndex) || item.correctIndex < 0 || item.correctIndex > 3) {
+    errors.push(`${where}: correctIndex trebuie să fie între 0 și 3`);
+  }
+  if (typeof item.explanation !== "string" || !item.explanation.trim()) {
+    errors.push(`${where}: explicație lipsă`);
+  }
+  return errors;
+}
+
+/**
+ * Check the lesson bank against the schema the app relies on.
+ * @param {Array<object>} lessons
+ * @returns {string[]} human-readable problems; empty when the bank is valid
+ */
+export function validateLessonBank(lessons) {
+  if (!Array.isArray(lessons)) return ["banca de lecții nu este o listă"];
+  const errors = [];
+  const seenLessons = new Set();
+  const seenQuestions = new Set();
+  lessons.forEach((lesson, index) => {
+    const where = `lecția #${index} (${lesson && lesson.id ? lesson.id : "fără id"})`;
+    if (!lesson || typeof lesson !== "object") {
+      errors.push(`${where}: nu este un obiect`);
+      return;
+    }
+    if (typeof lesson.id !== "string" || !lesson.id.trim()) {
+      errors.push(`${where}: id lipsă`);
+    } else if (seenLessons.has(lesson.id)) {
+      errors.push(`${where}: id duplicat`);
+    } else {
+      seenLessons.add(lesson.id);
+    }
+    if (!VALID_CATEGORY_IDS.has(lesson.theme)) {
+      errors.push(`${where}: temă necunoscută`);
+    }
+    if (typeof lesson.title !== "string" || !lesson.title.trim()) {
+      errors.push(`${where}: titlu lipsă`);
+    }
+    if (
+      !Array.isArray(lesson.grades) ||
+      lesson.grades.length === 0 ||
+      lesson.grades.some((grade) => !VALID_GRADES.has(grade))
+    ) {
+      errors.push(`${where}: clasele trebuie să fie între 5 și 8`);
+    }
+    if (typeof lesson.intro !== "string" || !lesson.intro.trim()) {
+      errors.push(`${where}: introducere lipsă`);
+    }
+    if (!Array.isArray(lesson.sections) || lesson.sections.length === 0) {
+      errors.push(`${where}: trebuie cel puțin o secțiune`);
+    }
+    if (!Array.isArray(lesson.traps) || lesson.traps.length === 0) {
+      errors.push(`${where}: trebuie cel puțin o capcană`);
+    }
+    if (!Array.isArray(lesson.quiz) || lesson.quiz.length !== LESSON_QUIZ_SIZE) {
+      errors.push(`${where}: mini-verificarea trebuie să aibă exact ${LESSON_QUIZ_SIZE} întrebări`);
+      return;
+    }
+    lesson.quiz.forEach((question, qIndex) => {
+      const qWhere = `${where}, întrebarea #${qIndex}`;
+      if (typeof question.id !== "string" || !question.id.trim()) {
+        errors.push(`${qWhere}: id lipsă`);
+      } else if (seenQuestions.has(question.id)) {
+        errors.push(`${qWhere}: id duplicat`);
+      } else {
+        seenQuestions.add(question.id);
+      }
+      errors.push(...validateChoiceItem(question, qWhere));
+    });
+  });
+  return errors;
+}
+
+/**
+ * Romanian label for the curriculum grades a lesson covers:
+ * [5] → „clasa a V-a”, [5, 6] → „clasele V–VI”, [5, 7] → „clasele V și VII”.
+ */
+export function formatGradeBadge(grades) {
+  const sorted = [...new Set(grades)].sort((a, b) => a - b);
+  if (sorted.length === 0) return "";
+  if (sorted.length === 1) return `clasa ${ROMAN_GRADES[sorted[0]]}`;
+  const romanNumerals = sorted.map((grade) => ROMAN_GRADES[grade].replace("a ", "").replace("-a", ""));
+  const isRange = sorted.every((grade, index) => index === 0 || grade === sorted[index - 1] + 1);
+  if (isRange) return `clasele ${romanNumerals[0]}–${romanNumerals[romanNumerals.length - 1]}`;
+  return `clasele ${romanNumerals.join(" și ")}`;
+}
+
 /**
  * Fisher–Yates shuffle into a new array; `rng` is injectable for tests.
  * @template T @param {T[]} items @param {() => number} rng @returns {T[]}
@@ -100,7 +212,7 @@ export function buildReviewSession(questions, wrongIds, rng = Math.random) {
 }
 
 export function createProgress() {
-  return { categories: {}, wrongIds: [] };
+  return { categories: {}, wrongIds: [], lessons: {} };
 }
 
 /**
@@ -136,6 +248,29 @@ export function recordSessionEnd(progress, categoryId, score) {
       },
     },
   };
+}
+
+/**
+ * Close a finished lesson quiz, keeping the best score for that lesson.
+ * Deliberately touches nothing else: lesson quizzes never feed the category
+ * stats or the review list.
+ */
+export function recordLessonScore(progress, lessonId, score) {
+  const previous = progress.lessons[lessonId];
+  const bestScore = previous ? Math.max(previous.bestScore, score) : score;
+  return {
+    ...progress,
+    lessons: { ...progress.lessons, [lessonId]: { bestScore } },
+  };
+}
+
+/**
+ * @returns {string} lesson-list status line for the mini quiz
+ */
+export function describeLessonProgress(progress, lessonId) {
+  const stats = progress.lessons[lessonId];
+  if (!stats) return "Verificare nefăcută";
+  return `Cel mai bun scor: ${stats.bestScore}/${LESSON_QUIZ_SIZE}`;
 }
 
 /**
@@ -201,6 +336,20 @@ export function deserializeProgress(raw) {
   if (Array.isArray(parsed.wrongIds)) {
     progress.wrongIds = [...new Set(parsed.wrongIds.filter((id) => typeof id === "string"))];
   }
+  // Absent on progress saved before lessons shipped — those visits just start
+  // with no lesson scores rather than failing to load.
+  if (parsed.lessons && typeof parsed.lessons === "object" && !Array.isArray(parsed.lessons)) {
+    for (const [id, stats] of Object.entries(parsed.lessons)) {
+      if (
+        stats &&
+        Number.isInteger(stats.bestScore) &&
+        stats.bestScore >= 0 &&
+        stats.bestScore <= LESSON_QUIZ_SIZE
+      ) {
+        progress.lessons[id] = { bestScore: stats.bestScore };
+      }
+    }
+  }
   return progress;
 }
 
@@ -229,11 +378,37 @@ if (typeof document !== "undefined") {
     summaryMessage: document.getElementById("summary-message"),
     summaryAgain: document.getElementById("summary-again"),
     summaryHome: document.getElementById("summary-home"),
+    lessons: document.getElementById("view-lessons"),
+    lesson: document.getElementById("view-lesson"),
+    lessonsCard: document.getElementById("lessons-card"),
+    lessonsCount: document.getElementById("lessons-count"),
+    lessonsOpen: document.getElementById("lessons-open"),
+    lessonsHome: document.getElementById("lessons-home"),
+    lessonGroups: document.getElementById("lesson-groups"),
+    lessonBadge: document.getElementById("lesson-badge"),
+    lessonTitle: document.getElementById("lesson-title"),
+    lessonIntro: document.getElementById("lesson-intro"),
+    lessonSections: document.getElementById("lesson-sections"),
+    lessonTraps: document.getElementById("lesson-traps"),
+    lessonQuizStep: document.getElementById("lesson-quiz-step"),
+    lessonQuizPrompt: document.getElementById("lesson-quiz-prompt"),
+    lessonQuizOptions: document.getElementById("lesson-quiz-options"),
+    lessonQuizFeedback: document.getElementById("lesson-quiz-feedback"),
+    lessonFeedbackVerdict: document.getElementById("lesson-feedback-verdict"),
+    lessonFeedbackExplanation: document.getElementById("lesson-feedback-explanation"),
+    lessonQuizNext: document.getElementById("lesson-quiz-next"),
+    lessonQuizResult: document.getElementById("lesson-quiz-result"),
+    lessonQuizScore: document.getElementById("lesson-quiz-score"),
+    lessonQuizAgain: document.getElementById("lesson-quiz-again"),
+    lessonPractice: document.getElementById("lesson-practice"),
+    lessonBack: document.getElementById("lesson-back"),
   };
 
   let bank = [];
+  let lessons = [];
   let progress = deserializeProgress(readStoredProgress());
   let session = null;
+  let lessonView = null;
 
   function readStoredProgress() {
     try {
@@ -255,6 +430,21 @@ if (typeof document !== "undefined") {
     els.start.hidden = name !== "start";
     els.quiz.hidden = name !== "quiz";
     els.summary.hidden = name !== "summary";
+    els.lessons.hidden = name !== "lessons";
+    els.lesson.hidden = name !== "lesson";
+    // Every view is a fresh screen, so it starts at its own top. Without this,
+    // leaving a long lesson sheet carries the old offset over and the next
+    // view opens scrolled past its heading — the taller the sheet, the worse.
+    window.scrollTo({ top: 0 });
+  }
+
+  // Lesson copy comes from our own JSON, but it still passes through innerHTML,
+  // so escape it rather than trusting the data file to stay markup-free.
+  function escapeHtml(value) {
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
   }
 
   function renderStart() {
@@ -276,7 +466,150 @@ if (typeof document !== "undefined") {
     if (wrongCount > 0) {
       els.reviewCount.textContent = `${formatQuestionCount(wrongCount)} de reluat`;
     }
+    els.lessonsCard.hidden = lessons.length === 0;
+    if (lessons.length > 0) {
+      els.lessonsCount.textContent = lessons.length === 1 ? "o fișă de teorie" : `${lessons.length} fișe de teorie`;
+    }
     show("start");
+  }
+
+  function renderLessonList() {
+    const groups = CATEGORIES.map((category) => ({
+      category,
+      items: lessons.filter((lesson) => lesson.theme === category.id),
+    })).filter((group) => group.items.length > 0);
+
+    els.lessonGroups.innerHTML = groups
+      .map(
+        (group) => `
+        <section class="lesson-group">
+          <h3 class="lesson-group__title">${escapeHtml(group.category.label)}</h3>
+          <div class="lesson-group__items">
+            ${group.items
+              .map(
+                (lesson) => `
+              <button class="lesson-row" type="button" data-lesson="${escapeHtml(lesson.id)}">
+                <span class="lesson-row__title">${escapeHtml(lesson.title)}</span>
+                <span class="lesson-row__meta">
+                  <span class="lesson-row__badge">${escapeHtml(formatGradeBadge(lesson.grades))}</span>
+                  <span>${escapeHtml(lesson.readingMinutes)} min de citit</span>
+                </span>
+                <span class="lesson-row__status">${escapeHtml(describeLessonProgress(progress, lesson.id))}</span>
+              </button>`
+              )
+              .join("")}
+          </div>
+        </section>`
+      )
+      .join("");
+
+    els.lessonGroups.querySelectorAll("button[data-lesson]").forEach((button) => {
+      button.addEventListener("click", () => openLesson(button.dataset.lesson));
+    });
+    show("lessons");
+  }
+
+  function renderLessonSections(lesson) {
+    els.lessonSections.innerHTML = lesson.sections
+      .map((section) => {
+        const paragraphs = (section.paragraphs || [])
+          .map((text) => `<p>${escapeHtml(text)}</p>`)
+          .join("");
+        const bullets = section.bullets
+          ? `<ul class="lesson__bullets">${section.bullets
+              .map((item) => `<li>${escapeHtml(item)}</li>`)
+              .join("")}</ul>`
+          : "";
+        const table = section.table
+          ? `<div class="lesson__table-wrap">
+              <table class="lesson__table">
+                <caption>${escapeHtml(section.table.caption)}</caption>
+                <thead><tr>${section.table.headers
+                  .map((header) => `<th scope="col">${escapeHtml(header)}</th>`)
+                  .join("")}</tr></thead>
+                <tbody>${section.table.rows
+                  .map((row) => `<tr>${row.map((cell) => `<td>${escapeHtml(cell)}</td>`).join("")}</tr>`)
+                  .join("")}</tbody>
+              </table>
+            </div>`
+          : "";
+        return `<section class="lesson__section">
+            <h3 class="lesson__section-title">${escapeHtml(section.heading)}</h3>
+            ${paragraphs}${bullets}${table}
+          </section>`;
+      })
+      .join("");
+  }
+
+  function openLesson(lessonId) {
+    const lesson = lessons.find((entry) => entry.id === lessonId);
+    if (!lesson) return;
+    lessonView = { lesson, index: 0, score: 0, answered: false };
+    els.lessonBadge.textContent = formatGradeBadge(lesson.grades);
+    els.lessonTitle.textContent = lesson.title;
+    els.lessonIntro.textContent = lesson.intro;
+    renderLessonSections(lesson);
+    els.lessonTraps.innerHTML = lesson.traps.map((trap) => `<li>${escapeHtml(trap)}</li>`).join("");
+    const theme = CATEGORIES.find((entry) => entry.id === lesson.theme);
+    els.lessonPractice.textContent = `Exersează ${theme ? theme.articulatedLabel : ""}`.trim();
+    renderLessonQuestion();
+    show("lesson");
+  }
+
+  function renderLessonQuestion() {
+    const question = lessonView.lesson.quiz[lessonView.index];
+    lessonView.answered = false;
+    els.lessonQuizStep.textContent = `Întrebarea ${lessonView.index + 1} din ${lessonView.lesson.quiz.length}`;
+    els.lessonQuizPrompt.textContent = question.prompt;
+    els.lessonQuizOptions.innerHTML = question.options
+      .map(
+        (option, index) => `
+      <button class="option" type="button" data-index="${index}">
+        <span class="option__letter">${"ABCD"[index]}</span>
+        <span class="option__text">${escapeHtml(option)}</span>
+      </button>`
+      )
+      .join("");
+    els.lessonQuizOptions.querySelectorAll("button.option").forEach((button) => {
+      button.addEventListener("click", () => answerLessonQuestion(Number(button.dataset.index)));
+    });
+    els.lessonQuizFeedback.hidden = true;
+    els.lessonQuizResult.hidden = true;
+    els.lessonQuizPrompt.hidden = false;
+    els.lessonQuizOptions.hidden = false;
+  }
+
+  function answerLessonQuestion(selectedIndex) {
+    if (lessonView.answered) return;
+    lessonView.answered = true;
+    const question = lessonView.lesson.quiz[lessonView.index];
+    const correct = selectedIndex === question.correctIndex;
+    if (correct) lessonView.score += 1;
+    els.lessonQuizOptions.querySelectorAll("button.option").forEach((button) => {
+      const index = Number(button.dataset.index);
+      button.disabled = true;
+      if (index === question.correctIndex) button.classList.add("option--correct");
+      if (index === selectedIndex && !correct) button.classList.add("option--wrong");
+    });
+    els.lessonFeedbackVerdict.textContent = correct
+      ? "Corect! 🎯"
+      : `Greșit — răspunsul corect era ${"ABCD"[question.correctIndex]}.`;
+    els.lessonFeedbackVerdict.classList.toggle("quiz-feedback__verdict--wrong", !correct);
+    els.lessonFeedbackExplanation.textContent = question.explanation;
+    els.lessonQuizNext.textContent =
+      lessonView.index + 1 === lessonView.lesson.quiz.length ? "Vezi rezultatul" : "Următoarea";
+    els.lessonQuizFeedback.hidden = false;
+  }
+
+  function endLessonQuiz() {
+    progress = recordLessonScore(progress, lessonView.lesson.id, lessonView.score);
+    saveProgress();
+    els.lessonQuizScore.textContent = `${lessonView.score}/${lessonView.lesson.quiz.length}`;
+    els.lessonQuizFeedback.hidden = true;
+    els.lessonQuizPrompt.hidden = true;
+    els.lessonQuizOptions.hidden = true;
+    els.lessonQuizStep.textContent = "";
+    els.lessonQuizResult.hidden = false;
   }
 
   function startCategorySession(categoryId) {
@@ -376,21 +709,42 @@ if (typeof document !== "undefined") {
   els.summaryHome.addEventListener("click", renderStart);
   els.reviewStart.addEventListener("click", startReviewSession);
 
-  fetch("data/questions.json")
-    .then((response) => {
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  els.lessonsOpen.addEventListener("click", renderLessonList);
+  els.lessonsHome.addEventListener("click", renderStart);
+  els.lessonBack.addEventListener("click", renderLessonList);
+  els.lessonPractice.addEventListener("click", () => startCategorySession(lessonView.lesson.theme));
+  els.lessonQuizAgain.addEventListener("click", () => {
+    lessonView.index = 0;
+    lessonView.score = 0;
+    renderLessonQuestion();
+  });
+  els.lessonQuizNext.addEventListener("click", () => {
+    lessonView.index += 1;
+    if (lessonView.index < lessonView.lesson.quiz.length) renderLessonQuestion();
+    else endLessonQuiz();
+  });
+
+  Promise.all([
+    fetch("data/questions.json").then((response) => {
+      if (!response.ok) throw new Error(`HTTP ${response.status} la questions.json`);
       return response.json();
-    })
-    .then((questions) => {
-      const problems = validateQuestionBank(questions);
+    }),
+    fetch("data/lessons.json").then((response) => {
+      if (!response.ok) throw new Error(`HTTP ${response.status} la lessons.json`);
+      return response.json();
+    }),
+  ])
+    .then(([questions, lessonBank]) => {
+      const problems = [...validateQuestionBank(questions), ...validateLessonBank(lessonBank)];
       if (problems.length > 0) throw new Error(problems.join("; "));
       bank = questions;
+      lessons = lessonBank;
       renderStart();
     })
     .catch((error) => {
       els.loadError.hidden = false;
       els.loadError.textContent =
-        "Nu am putut încărca întrebările. Deschide aplicația printr-un server static (de exemplu „npx serve”) și reîncarcă pagina.";
+        "Nu am putut încărca întrebările și lecțiile. Deschide aplicația printr-un server static (de exemplu „npx serve”) și reîncarcă pagina.";
       console.error("Zece la română:", error);
     });
 }
