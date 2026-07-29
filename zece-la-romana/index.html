@@ -28,7 +28,54 @@
           </div>
           <button id="review-start" class="button button--ghost" type="button">Reia greșelile</button>
         </div>
+        <div id="lessons-card" class="lessons-card" hidden>
+          <div>
+            <h3 class="lessons-card__title">Lecții</h3>
+            <p id="lessons-count" class="lessons-card__count"></p>
+          </div>
+          <button id="lessons-open" class="button button--ghost" type="button">Vezi lecțiile</button>
+        </div>
         <p id="load-error" class="load-error" hidden></p>
+      </section>
+
+      <section id="view-lessons" class="view" hidden>
+        <h2 class="view__heading">Lecții</h2>
+        <div id="lesson-groups" class="lesson-groups"></div>
+        <button id="lessons-home" class="button button--ghost" type="button">Înapoi la început</button>
+      </section>
+
+      <section id="view-lesson" class="view" hidden>
+        <p id="lesson-badge" class="lesson__badge"></p>
+        <h2 id="lesson-title" class="lesson__title"></h2>
+        <p id="lesson-intro" class="lesson__intro"></p>
+        <div id="lesson-sections" class="lesson__sections"></div>
+        <div class="lesson__traps">
+          <h3 class="lesson__traps-title">Capcane</h3>
+          <ul id="lesson-traps"></ul>
+        </div>
+
+        <div id="lesson-quiz" class="lesson__quiz">
+          <h3 class="lesson__quiz-title">Verifică-te</h3>
+          <div class="quiz-meta">
+            <span id="lesson-quiz-step" class="quiz-meta__step"></span>
+          </div>
+          <p id="lesson-quiz-prompt" class="quiz-prompt"></p>
+          <div id="lesson-quiz-options" class="quiz-options"></div>
+          <div id="lesson-quiz-feedback" class="quiz-feedback" hidden>
+            <p id="lesson-feedback-verdict" class="quiz-feedback__verdict"></p>
+            <p id="lesson-feedback-explanation" class="quiz-feedback__explanation"></p>
+            <button id="lesson-quiz-next" class="button" type="button">Următoarea</button>
+          </div>
+          <div id="lesson-quiz-result" class="lesson__quiz-result" hidden>
+            <p id="lesson-quiz-score" class="lesson__quiz-score"></p>
+            <button id="lesson-quiz-again" class="button button--ghost" type="button">Refă verificarea</button>
+          </div>
+        </div>
+
+        <div class="lesson__actions">
+          <button id="lesson-practice" class="button" type="button"></button>
+          <button id="lesson-back" class="button button--ghost" type="button">Înapoi la lecții</button>
+        </div>
       </section>
 
       <section id="view-quiz" class="view" hidden>

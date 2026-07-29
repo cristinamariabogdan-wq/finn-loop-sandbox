@@ -1,7 +1,13 @@
 import { describe, it, expect } from "vitest";
 import {
   SESSION_SIZE,
+  LESSON_QUIZ_SIZE,
+  CATEGORIES,
   validateQuestionBank,
+  validateLessonBank,
+  formatGradeBadge,
+  recordLessonScore,
+  describeLessonProgress,
   shuffle,
   buildSession,
   buildReviewSession,
@@ -15,6 +21,7 @@ import {
   deserializeProgress,
 } from "../zece-la-romana/app.js";
 import bank from "../zece-la-romana/data/questions.json";
+import lessonBank from "../zece-la-romana/data/lessons.json";
 
 const makeQuestion = (overrides = {}) => ({
   id: "q1",
@@ -45,6 +52,154 @@ describe("banca de întrebări reală", () => {
 
   it("are id-uri unice", () => {
     expect(new Set(bank.map((q) => q.id)).size).toBe(bank.length);
+  });
+});
+
+const makeLesson = (overrides = {}) => ({
+  id: "lectie-proba",
+  theme: "morfologie",
+  title: "Lecție de probă",
+  grades: [5, 6],
+  readingMinutes: 3,
+  intro: "Introducere de probă.",
+  sections: [{ heading: "Secțiune", paragraphs: ["Text."] }],
+  traps: ["O capcană."],
+  quiz: [
+    { ...makeQuestion({ id: "lq1" }) },
+    { ...makeQuestion({ id: "lq2" }) },
+    { ...makeQuestion({ id: "lq3" }) },
+  ],
+  ...overrides,
+});
+
+describe("banca de lecții reală", () => {
+  it("trece validarea de schemă", () => {
+    expect(validateLessonBank(lessonBank)).toEqual([]);
+  });
+
+  it("are 6 fișe de morfologie, fiecare cu tabel sau listă și cel puțin 3 capcane", () => {
+    const morfologie = lessonBank.filter((lesson) => lesson.theme === "morfologie");
+    expect(morfologie.length).toBeGreaterThanOrEqual(6);
+    for (const lesson of morfologie) {
+      const hasStructure = lesson.sections.some(
+        (section) => section.table || (section.bullets && section.bullets.length > 0)
+      );
+      expect(hasStructure, `${lesson.id} fără tabel sau listă`).toBe(true);
+      expect(lesson.traps.length, `${lesson.id} sub 3 capcane`).toBeGreaterThanOrEqual(3);
+      expect(lesson.quiz).toHaveLength(LESSON_QUIZ_SIZE);
+    }
+  });
+
+  it("are id-uri unice de lecție și de întrebare", () => {
+    expect(new Set(lessonBank.map((lesson) => lesson.id)).size).toBe(lessonBank.length);
+    const quizIds = lessonBank.flatMap((lesson) => lesson.quiz.map((question) => question.id));
+    expect(new Set(quizIds).size).toBe(quizIds.length);
+  });
+});
+
+describe("validateLessonBank", () => {
+  it("acceptă o lecție corectă", () => {
+    expect(validateLessonBank([makeLesson()])).toEqual([]);
+  });
+
+  it("respinge ce nu este listă", () => {
+    expect(validateLessonBank({})).toHaveLength(1);
+  });
+
+  it("prinde id de lecție duplicat", () => {
+    const errors = validateLessonBank([makeLesson(), makeLesson()]);
+    expect(errors.some((e) => e.includes("duplicat"))).toBe(true);
+  });
+
+  it("prinde clasele în afara intervalului 5–8", () => {
+    const errors = validateLessonBank([makeLesson({ grades: [4, 5] })]);
+    expect(errors.some((e) => e.includes("clasele"))).toBe(true);
+  });
+
+  it("prinde tema necunoscută și introducerea lipsă", () => {
+    const errors = validateLessonBank([makeLesson({ theme: "fonetica", intro: "  " })]);
+    expect(errors.some((e) => e.includes("temă"))).toBe(true);
+    expect(errors.some((e) => e.includes("introducere"))).toBe(true);
+  });
+
+  it("prinde secțiunile și capcanele lipsă", () => {
+    const errors = validateLessonBank([makeLesson({ sections: [], traps: [] })]);
+    expect(errors.some((e) => e.includes("secțiune"))).toBe(true);
+    expect(errors.some((e) => e.includes("capcană"))).toBe(true);
+  });
+
+  it("cere exact 3 întrebări în mini-verificare", () => {
+    const short = makeLesson({ quiz: [makeQuestion({ id: "lq1" }), makeQuestion({ id: "lq2" })] });
+    expect(validateLessonBank([short]).some((e) => e.includes("exact 3"))).toBe(true);
+  });
+
+  it("validează întrebările mini-verificării ca pe cele din bancă", () => {
+    const lesson = makeLesson();
+    lesson.quiz[1] = makeQuestion({ id: "lq2", options: ["a", "b"], correctIndex: 9 });
+    const errors = validateLessonBank([lesson]);
+    expect(errors.some((e) => e.includes("4 variante"))).toBe(true);
+    expect(errors.some((e) => e.includes("correctIndex"))).toBe(true);
+  });
+});
+
+describe("CATEGORIES", () => {
+  it("dă fiecărei categorii o formă articulată pentru butonul de exersare", () => {
+    expect(CATEGORIES.map((category) => category.articulatedLabel)).toEqual([
+      "Morfologia",
+      "Sintaxa",
+    ]);
+  });
+});
+
+describe("formatGradeBadge", () => {
+  it("formatează o singură clasă", () => {
+    expect(formatGradeBadge([5])).toBe("clasa a V-a");
+    expect(formatGradeBadge([8])).toBe("clasa a VIII-a");
+  });
+
+  it("formatează un interval continuu", () => {
+    expect(formatGradeBadge([5, 6])).toBe("clasele V–VI");
+    expect(formatGradeBadge([5, 6, 7, 8])).toBe("clasele V–VIII");
+  });
+
+  it("formatează clase neconsecutive", () => {
+    expect(formatGradeBadge([5, 7])).toBe("clasele V și VII");
+  });
+
+  it("normalizează ordinea și duplicatele", () => {
+    expect(formatGradeBadge([6, 5, 6])).toBe("clasele V–VI");
+  });
+});
+
+describe("recordLessonScore", () => {
+  it("salvează scorul primei încercări", () => {
+    const progress = recordLessonScore(createProgress(), "pronumele", 2);
+    expect(progress.lessons.pronumele).toEqual({ bestScore: 2 });
+  });
+
+  it("păstrează cel mai bun scor", () => {
+    let progress = recordLessonScore(createProgress(), "pronumele", 3);
+    progress = recordLessonScore(progress, "pronumele", 1);
+    expect(progress.lessons.pronumele).toEqual({ bestScore: 3 });
+  });
+
+  it("nu atinge statisticile categoriilor și lista de reluat", () => {
+    let progress = recordSessionEnd(createProgress(), "morfologie", 7);
+    progress = recordAnswer(progress, "m01", false);
+    const after = recordLessonScore(progress, "pronumele", 3);
+    expect(after.categories).toEqual(progress.categories);
+    expect(after.wrongIds).toEqual(progress.wrongIds);
+  });
+});
+
+describe("describeLessonProgress", () => {
+  it("marchează verificarea nefăcută", () => {
+    expect(describeLessonProgress(createProgress(), "verbul")).toBe("Verificare nefăcută");
+  });
+
+  it("afișează cel mai bun scor", () => {
+    const progress = recordLessonScore(createProgress(), "verbul", 2);
+    expect(describeLessonProgress(progress, "verbul")).toBe("Cel mai bun scor: 2/3");
   });
 });
 
@@ -210,7 +365,30 @@ describe("serializare progres", () => {
   it("face round-trip fără pierderi", () => {
     let progress = recordSessionEnd(createProgress(), "morfologie", 8);
     progress = recordAnswer(progress, "s03", false);
+    progress = recordLessonScore(progress, "pronumele", 3);
     expect(deserializeProgress(serializeProgress(progress))).toEqual(progress);
+  });
+
+  it("citește progresul salvat înainte de lecții, fără scoruri de lecție", () => {
+    const legacy = JSON.stringify({
+      categories: { morfologie: { sessions: 2, bestScore: 8 } },
+      wrongIds: ["m01"],
+    });
+    const progress = deserializeProgress(legacy);
+    expect(progress.categories).toEqual({ morfologie: { sessions: 2, bestScore: 8 } });
+    expect(progress.wrongIds).toEqual(["m01"]);
+    expect(progress.lessons).toEqual({});
+  });
+
+  it("igienizează scorurile de lecție imposibile", () => {
+    const raw = JSON.stringify({
+      lessons: {
+        verbul: { bestScore: 2 },
+        pronumele: { bestScore: 9 },
+        adjectivul: { bestScore: "trei" },
+      },
+    });
+    expect(deserializeProgress(raw).lessons).toEqual({ verbul: { bestScore: 2 } });
   });
 
   it("pornește de la zero pentru date absente sau corupte", () => {

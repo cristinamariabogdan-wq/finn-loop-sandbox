@@ -1,0 +1,464 @@
+[
+  {
+    "id": "substantivul",
+    "theme": "morfologie",
+    "title": "Substantivul și articolul",
+    "grades": [5, 6],
+    "readingMinutes": 4,
+    "intro": "Substantivul denumește ființe, lucruri, fenomene sau însușiri privite ca de sine stătătoare. La examen apare mai ales în întrebările despre caz și despre articol — două lucruri pe care le confundă mulți elevi.",
+    "sections": [
+      {
+        "heading": "Fel, gen și număr",
+        "paragraphs": [
+          "După fel, substantivele sunt comune (elev, oraș, bucurie) sau proprii (Andrei, București, Dunărea). Cele proprii se scriu cu majusculă."
+        ],
+        "bullets": [
+          "masculin: un elev — doi elevi",
+          "feminin: o carte — două cărți",
+          "neutru: un caiet — două caiete (masculin la singular, feminin la plural)"
+        ]
+      },
+      {
+        "heading": "Cazurile",
+        "paragraphs": [
+          "Cazul se află punând întrebarea potrivită. Nu te lua după prepoziție: aceeași prepoziție poate apărea în cazuri diferite."
+        ],
+        "table": {
+          "caption": "Cele cinci cazuri și întrebările lor",
+          "headers": ["Caz", "Întrebare", "Exemplu", "Funcție frecventă"],
+          "rows": [
+            ["Nominativ", "cine? ce?", "Elevul învață.", "subiect, nume predicativ"],
+            ["Acuzativ", "pe cine? ce? cu cine?", "Îl văd pe elev.", "complement direct, circumstanțial"],
+            ["Genitiv", "a cui? al cui?", "Cartea elevului", "atribut substantival genitival"],
+            ["Dativ", "cui?", "I-am dat elevului o carte.", "complement indirect"],
+            ["Vocativ", "—", "Elevule, vino!", "chemare, fără funcție sintactică"]
+          ]
+        }
+      },
+      {
+        "heading": "Articolul",
+        "bullets": [
+          "hotărât — lipit la sfârșitul cuvântului: elevul, cartea, caietele",
+          "nehotărât — stă înainte: un elev, o carte, niște caiete",
+          "posesiv-genitival: al, a, ai, ale — „un prieten al fratelui meu”",
+          "demonstrativ: cel, cea, cei, cele — „elevul cel harnic”"
+        ]
+      }
+    ],
+    "traps": [
+      "Neutrul nu are formă proprie: se recunoaște doar comparând singularul (un) cu pluralul (două). „Un caiet — două caiete” = neutru, nu masculin.",
+      "„O” poate fi articol nehotărât („o carte stă pe raft”), numeral („am o carte, nu două”) sau pronume personal („o văd”). Decide după context, nu după formă.",
+      "Genitivul răspunde la „a cui?” și stă lângă un substantiv; dativul răspunde la „cui?” și stă lângă un verb. Formele sunt identice — „elevului” — doar întrebarea le desparte.",
+      "Vocativul nu are funcție sintactică și se desparte prin virgulă: „Andrei, vino!”"
+    ],
+    "quiz": [
+      {
+        "id": "l-subst-1",
+        "prompt": "„Am primit un scaun nou.” — ce gen are substantivul „scaun”?",
+        "options": ["masculin", "feminin", "neutru", "nu are gen"],
+        "correctIndex": 2,
+        "explanation": "Test: „un scaun — două scaune”. Masculin la singular, feminin la plural — deci neutru."
+      },
+      {
+        "id": "l-subst-2",
+        "prompt": "„Le-am promis colegilor o surpriză.” — în ce caz este „colegilor”?",
+        "options": ["genitiv", "dativ", "acuzativ", "nominativ"],
+        "correctIndex": 1,
+        "explanation": "Răspunde la „cui am promis?” pe lângă verbul „am promis” — cazul dativ. La genitiv ar răspunde la „a cui?” lângă un substantiv."
+      },
+      {
+        "id": "l-subst-3",
+        "prompt": "„Este un coleg al Mariei.” — cuvântul „al” este:",
+        "options": [
+          "articol posesiv-genitival",
+          "articol hotărât",
+          "articol nehotărât",
+          "prepoziție"
+        ],
+        "correctIndex": 0,
+        "explanation": "„Al” leagă substantivul „coleg” de genitivul „Mariei” și se acordă cu obiectul posedat — articol posesiv-genitival (al, a, ai, ale)."
+      }
+    ]
+  },
+  {
+    "id": "adjectivul",
+    "theme": "morfologie",
+    "title": "Adjectivul și gradele de comparație",
+    "grades": [5, 6],
+    "readingMinutes": 3,
+    "intro": "Adjectivul arată o însușire a unui substantiv și se acordă cu el în gen, număr și caz. Întrebarea clasică de examen: la ce grad de comparație stă?",
+    "sections": [
+      {
+        "heading": "Variabile și invariabile",
+        "paragraphs": [
+          "Cele mai multe adjective își schimbă forma după substantiv: „băiat harnic — fată harnică — copii harnici”. Câteva rămân neschimbate: roz, bej, gri, maro, kaki, ditamai."
+        ]
+      },
+      {
+        "heading": "Gradele de comparație",
+        "table": {
+          "caption": "Gradele adjectivului „harnic”",
+          "headers": ["Grad", "Formă", "Exemplu"],
+          "rows": [
+            ["Pozitiv", "adjectivul simplu", "un elev harnic"],
+            ["Comparativ de superioritate", "mai + adjectiv", "mai harnic decât el"],
+            ["Comparativ de egalitate", "la fel de / tot atât de", "la fel de harnic ca el"],
+            ["Comparativ de inferioritate", "mai puțin + adjectiv", "mai puțin harnic decât el"],
+            ["Superlativ relativ", "cel mai / cea mai", "cel mai harnic din clasă"],
+            ["Superlativ absolut", "foarte / extrem de", "foarte harnic"]
+          ]
+        }
+      }
+    ],
+    "traps": [
+      "„Cel mai harnic” = superlativ relativ (compară cu un grup); „foarte harnic” = superlativ absolut (fără comparație). Prezența lui „cel” face diferența.",
+      "Același cuvânt poate fi adjectiv sau adverb: „un desen frumos” (adjectiv, determină substantivul) vs „desenează frumos” (adverb, determină verbul).",
+      "Superlativul absolut se poate exprima și fără „foarte”: „grozav de bun”, „nemaipomenit de frumos”, sau prin intonație în scris — „E frumooos!”",
+      "Adjectivele invariabile (roz, gri, maro) nu primesc desinență de plural: „bluze roz”, nu „bluze roze”."
+    ],
+    "quiz": [
+      {
+        "id": "l-adj-1",
+        "prompt": "„Ana este la fel de atentă ca fratele ei.” — la ce grad este adjectivul „atentă”?",
+        "options": [
+          "comparativ de superioritate",
+          "comparativ de egalitate",
+          "superlativ relativ",
+          "pozitiv"
+        ],
+        "correctIndex": 1,
+        "explanation": "Construcția „la fel de + adjectiv + ca” pune doi termeni pe aceeași treaptă — comparativ de egalitate."
+      },
+      {
+        "id": "l-adj-2",
+        "prompt": "În care variantă este „greu” adjectiv?",
+        "options": [
+          "Merge greu prin zăpadă.",
+          "Vorbește greu după operație.",
+          "Am un bagaj greu.",
+          "Se trezește greu dimineața."
+        ],
+        "correctIndex": 2,
+        "explanation": "În „un bagaj greu”, cuvântul determină substantivul „bagaj” și se acordă cu el — adjectiv. În celelalte determină verbe, deci e adverb de mod."
+      },
+      {
+        "id": "l-adj-3",
+        "prompt": "„Mi-am luat o geacă maro.” — adjectivul „maro” este:",
+        "options": [
+          "variabil, la feminin singular",
+          "invariabil",
+          "la gradul superlativ",
+          "substantiv comun"
+        ],
+        "correctIndex": 1,
+        "explanation": "„Maro” face parte din adjectivele invariabile (roz, bej, gri, kaki), care nu își schimbă forma după gen, număr sau caz."
+      }
+    ]
+  },
+  {
+    "id": "pronumele",
+    "theme": "morfologie",
+    "title": "Pronumele — de la personal la negativ",
+    "grades": [6, 7],
+    "readingMinutes": 5,
+    "intro": "Pronumele ține locul unui substantiv. La examen se cere aproape mereu felul pronumelui, iar capcana clasică este confuzia dintre pronume și adjectiv pronominal.",
+    "sections": [
+      {
+        "heading": "Felurile pronumelui",
+        "bullets": [
+          "personal: eu, tu, el, ea, noi, voi, ei, ele (+ formele neaccentuate: mă, te, îl, îi, ne, vă, le)",
+          "reflexiv: se, își, sine — are aceeași persoană cu subiectul",
+          "posesiv: al meu, a ta, ai noștri",
+          "demonstrativ: acesta, acela, același, celălalt",
+          "relativ: care, cine, ce, cât — leagă o subordonată de regentă",
+          "interogativ: aceleași forme, dar într-o întrebare",
+          "nehotărât: cineva, ceva, oricine, fiecare, unii",
+          "negativ: nimeni, nimic, niciunul"
+        ]
+      },
+      {
+        "heading": "Pronumele personal — forme",
+        "table": {
+          "caption": "Persoana a III-a singular, formele neaccentuate",
+          "headers": ["Caz", "Masculin", "Feminin", "Exemplu"],
+          "rows": [
+            ["Acuzativ", "îl, l-", "o", "Îl văd. / O văd."],
+            ["Dativ", "îi, i-", "îi, i-", "I-am dat cartea."]
+          ]
+        }
+      },
+      {
+        "heading": "Pronume sau adjectiv pronominal?",
+        "paragraphs": [
+          "Dacă ține locul substantivului, e pronume: „Al meu este albastru.” Dacă însoțește substantivul și se acordă cu el, e adjectiv pronominal: „Caietul meu este albastru.” Regula funcționează la fel pentru posesive, demonstrative, nehotărâte și negative."
+        ]
+      }
+    ],
+    "traps": [
+      "„Meu, acesta, fiecare” sunt pronume doar când stau singure. Lângă un substantiv devin adjective pronominale: „caietul meu”, „elevul acesta”, „fiecare elev”.",
+      "„Care” este pronume relativ într-o frază („Elevul care învață reușește”) și pronume interogativ într-o întrebare directă („Care a reușit?”).",
+      "„Se” este reflexiv doar când are aceeași persoană cu subiectul („se gândește”). În „se spune că…” marchează un verb impersonal, iar propoziția care urmează este subiectivă.",
+      "Formele neaccentuate dublează complementul: în „Îl văd pe Andrei”, „îl” și „pe Andrei” sunt același complement direct, nu două complemente."
+    ],
+    "quiz": [
+      {
+        "id": "l-pron-1",
+        "prompt": "„Fiecare elev primește o fișă.” — cuvântul „fiecare” este:",
+        "options": [
+          "pronume nehotărât",
+          "adjectiv pronominal nehotărât",
+          "pronume negativ",
+          "articol nehotărât"
+        ],
+        "correctIndex": 1,
+        "explanation": "„Fiecare” însoțește substantivul „elev” și îl determină — deci este adjectiv pronominal nehotărât. Ar fi pronume dacă ar sta singur: „Fiecare primește o fișă.”"
+      },
+      {
+        "id": "l-pron-2",
+        "prompt": "„Nu a venit nimeni.” — cuvântul „nimeni” este:",
+        "options": [
+          "pronume nehotărât",
+          "adverb de negație",
+          "pronume negativ",
+          "conjuncție"
+        ],
+        "correctIndex": 2,
+        "explanation": "„Nimeni” neagă existența persoanei și ține locul unui substantiv — pronume negativ, alături de „nimic” și „niciunul”. Aici are funcția de subiect."
+      },
+      {
+        "id": "l-pron-3",
+        "prompt": "„Își cumpără o carte.” — cuvântul „își” este:",
+        "options": [
+          "pronume personal în dativ",
+          "pronume reflexiv în dativ",
+          "pronume posesiv",
+          "adjectiv pronominal posesiv"
+        ],
+        "correctIndex": 1,
+        "explanation": "„Își” are aceeași persoană cu subiectul verbului „cumpără” — pronume reflexiv, forma neaccentuată de dativ. Pronumele personal ar trimite la altcineva: „îi cumpără o carte”."
+      }
+    ]
+  },
+  {
+    "id": "numeralul",
+    "theme": "morfologie",
+    "title": "Numeralul — cardinal, ordinal și restul",
+    "grades": [5, 6],
+    "readingMinutes": 3,
+    "intro": "Numeralul exprimă un număr sau ordinea prin numărare. Este cea mai scurtă parte de vorbire de învățat, dar apare des în întrebările care testează dacă știi să separi numeralul de articol.",
+    "sections": [
+      {
+        "heading": "Felurile numeralului",
+        "table": {
+          "caption": "Tipuri și exemple",
+          "headers": ["Fel", "Ce arată", "Exemple"],
+          "rows": [
+            ["Cardinal", "numărul", "doi, șapte, douăzeci și trei"],
+            ["Ordinal", "ordinea", "primul, al doilea, a treia"],
+            ["Colectiv", "grupul întreg", "amândoi, ambele, tustrei"],
+            ["Fracționar", "fracția", "doime, treime, sfert"],
+            ["Multiplicativ", "de câte ori crește", "dublu, întreit"],
+            ["Distributiv", "repartizarea", "câte doi, câte trei"]
+          ]
+        }
+      },
+      {
+        "heading": "Valoare substantivală sau adjectivală",
+        "paragraphs": [
+          "Numeralul are valoare adjectivală când însoțește un substantiv („am cumpărat două caiete”) și valoare substantivală când stă singur, în locul lui („au venit doi”)."
+        ]
+      }
+    ],
+    "traps": [
+      "„Un/o” este numeral doar când insistă pe cantitate („am o carte, nu două”). Altfel e articol nehotărât („o carte stă pe raft”).",
+      "Numeralele cardinale compuse se scriu în cuvinte separate: „douăzeci și trei”, nu „douăzecișitrei”.",
+      "„Al doilea” este ordinal, „doi” este cardinal — nu confunda ordinea cu numărul.",
+      "„Amândoi” și „ambii” sunt numerale colective, nu cardinale: arată grupul luat în întregime."
+    ],
+    "quiz": [
+      {
+        "id": "l-num-1",
+        "prompt": "„Au plecat amândoi la meci.” — cuvântul „amândoi” este numeral:",
+        "options": ["cardinal", "ordinal", "colectiv", "distributiv"],
+        "correctIndex": 2,
+        "explanation": "„Amândoi” arată grupul luat în întregime — numeral colectiv, ca „ambii”, „tustrei”. Aici are valoare substantivală și funcția de subiect."
+      },
+      {
+        "id": "l-num-2",
+        "prompt": "„Ne-am așezat câte doi în bancă.” — „câte doi” este numeral:",
+        "options": ["distributiv", "colectiv", "multiplicativ", "fracționar"],
+        "correctIndex": 0,
+        "explanation": "Structura „câte + numeral” arată repartizarea egală pe grupuri — numeral distributiv."
+      },
+      {
+        "id": "l-num-3",
+        "prompt": "În care variantă este „o” numeral?",
+        "options": [
+          "O carte stă pe raft.",
+          "Am o soră și doi frați.",
+          "O văd în fiecare zi.",
+          "Mi-a dat o veste bună."
+        ],
+        "correctIndex": 1,
+        "explanation": "În „o soră și doi frați”, cuvântul intră în serie cu „doi” și insistă pe cantitate — numeral cardinal. În a) și d) e articol nehotărât, în c) e pronume personal."
+      }
+    ]
+  },
+  {
+    "id": "verbul",
+    "theme": "morfologie",
+    "title": "Verbul — moduri și timpuri",
+    "grades": [5, 6, 7, 8],
+    "readingMinutes": 5,
+    "intro": "Verbul este miezul propoziției: fără el nu există predicat. Se învață pe tot parcursul gimnaziului, iar la examen se cere de obicei modul și timpul unei forme date.",
+    "sections": [
+      {
+        "heading": "Moduri personale și nepersonale",
+        "bullets": [
+          "personale (au persoană și pot fi predicat): indicativ, conjunctiv, condițional-optativ, imperativ",
+          "nepersonale (nu pot fi singure predicat): infinitiv (a merge), gerunziu (mergând), participiu (mers), supin (de mers)"
+        ],
+        "paragraphs": [
+          "Recunoști modul după marca lui: „să” pentru conjunctiv, „aș/ai/ar” pentru condițional-optativ, forma de poruncă pentru imperativ („Vino!”)."
+        ]
+      },
+      {
+        "heading": "Timpurile indicativului",
+        "table": {
+          "caption": "Verbul „a merge”, persoana I singular",
+          "headers": ["Timp", "Formă", "Ce exprimă"],
+          "rows": [
+            ["Prezent", "merg", "acțiune în desfășurare acum"],
+            ["Imperfect", "mergeam", "acțiune trecută, repetată sau în desfășurare"],
+            ["Perfect compus", "am mers", "acțiune trecută, încheiată"],
+            ["Perfect simplu", "mersei", "acțiune trecută, încheiată recent (mai ales în narațiune)"],
+            ["Mai-mult-ca-perfect", "mersesem", "acțiune trecută înaintea altei acțiuni trecute"],
+            ["Viitor", "voi merge", "acțiune care urmează"]
+          ]
+        }
+      },
+      {
+        "heading": "Verbe predicative și copulative",
+        "paragraphs": [
+          "Verbele predicative au înțeles de sine stătător și formează singure predicatul verbal. Cele copulative (a fi, a deveni, a ajunge, a rămâne, a ieși, a se face, a părea) au nevoie de un nume predicativ și formează predicatul nominal."
+        ]
+      }
+    ],
+    "traps": [
+      "„A fi” este copulativ în „Maria este elevă”, dar predicativ când înseamnă „a exista, a se afla”: „Cartea este pe masă.”",
+      "Participiul singur nu poate fi predicat. În „frunzele căzute”, cuvântul se acordă cu substantivul — este adjectiv provenit din participiu.",
+      "„A deveni” este întotdeauna copulativ: după el urmează un nume predicativ, nu un complement direct.",
+      "Viitorul popular „o să merg” și cel literar „voi merge” sunt același timp — nu confunda „o” de aici cu articolul."
+    ],
+    "quiz": [
+      {
+        "id": "l-verb-1",
+        "prompt": "„Plecasem deja când a sunat telefonul.” — verbul „plecasem” este la timpul:",
+        "options": ["imperfect", "perfect compus", "mai-mult-ca-perfect", "perfect simplu"],
+        "correctIndex": 2,
+        "explanation": "„Plecasem” arată o acțiune trecută petrecută înaintea altei acțiuni trecute („a sunat”) — mai-mult-ca-perfect, recunoscut după sufixul -se-."
+      },
+      {
+        "id": "l-verb-2",
+        "prompt": "„Vreau să învăț mai mult.” — verbul „să învăț” este la modul:",
+        "options": [
+          "indicativ",
+          "conjunctiv",
+          "condițional-optativ",
+          "imperativ"
+        ],
+        "correctIndex": 1,
+        "explanation": "Marca „să” înaintea verbului indică modul conjunctiv, timpul prezent. Condiționalul-optativ ar avea „aș”: „aș învăța”."
+      },
+      {
+        "id": "l-verb-3",
+        "prompt": "În care propoziție este „a fi” verb predicativ?",
+        "options": [
+          "Ea este colega mea.",
+          "Cartea este pe masă.",
+          "Andrei este harnic.",
+          "El este inginer."
+        ],
+        "correctIndex": 1,
+        "explanation": "În „Cartea este pe masă”, verbul înseamnă „se află” și are înțeles de sine stătător — predicat verbal. În celelalte e copulativ și formează predicat nominal."
+      }
+    ]
+  },
+  {
+    "id": "neflexibile",
+    "theme": "morfologie",
+    "title": "Părțile de vorbire neflexibile",
+    "grades": [7, 8],
+    "readingMinutes": 4,
+    "intro": "Adverbul, prepoziția, conjuncția și interjecția nu își schimbă forma. Par simple, dar tocmai ele sunt folosite ca să te încurce: același cuvânt poate fi prepoziție într-o propoziție și conjuncție în alta.",
+    "sections": [
+      {
+        "heading": "Cele patru clase",
+        "table": {
+          "caption": "Ce face fiecare",
+          "headers": ["Parte de vorbire", "Rol", "Exemple"],
+          "rows": [
+            ["Adverb", "determină un verb, un adjectiv sau alt adverb", "aici, mâine, frumos, foarte"],
+            ["Prepoziție", "leagă un cuvânt de altul și cere un caz", "la, pe, despre, datorită"],
+            ["Conjuncție", "leagă propoziții sau părți de propoziție", "și, dar, iar, că, dacă"],
+            ["Interjecție", "exprimă o emoție sau un îndemn", "vai, of, hai, poc"]
+          ]
+        }
+      },
+      {
+        "heading": "Adverbul",
+        "bullets": [
+          "de loc: aici, acolo, departe",
+          "de timp: azi, mâine, atunci",
+          "de mod: bine, repede, frumos",
+          "predicativ: desigur, firește, poate — pot forma singure predicat"
+        ]
+      },
+      {
+        "heading": "Conjuncții coordonatoare și subordonatoare",
+        "paragraphs": [
+          "Coordonatoarele leagă elemente de același fel: copulative (și, nici), adversative (dar, iar, însă, ci), disjunctive (sau, ori), conclusive (deci, așadar). Subordonatoarele introduc o propoziție secundară: că, să, dacă, deoarece, fiindcă, deși."
+        ]
+      }
+    ],
+    "traps": [
+      "Prepozițiile scrise într-un singur cuvânt (despre, printre, dinspre) sunt simple; cele compuse se scriu separat: „de la”, „până la”, „de pe lângă”.",
+      "„Ca” e prepoziție în „muncește ca un rob” și conjuncție în „ca să reușească”. Verifică ce leagă: un cuvânt sau o propoziție.",
+      "„Datorită, grație, mulțumită” cer dativul, nu genitivul: „datorită părinților”, nu „datorită părinților mei” cu sens de posesie.",
+      "Interjecțiile cu valoare verbală („hai”, „na”, „poftim”) pot avea funcție de predicat, deși nu sunt verbe."
+    ],
+    "quiz": [
+      {
+        "id": "l-nefl-1",
+        "prompt": "„Muncește ca un profesionist.” — cuvântul „ca” este:",
+        "options": [
+          "conjuncție subordonatoare",
+          "prepoziție",
+          "adverb de mod",
+          "interjecție"
+        ],
+        "correctIndex": 1,
+        "explanation": "Aici „ca” leagă substantivul „profesionist” de verb, nu două propoziții — prepoziție. Ar fi conjuncție în „ca să reușească”."
+      },
+      {
+        "id": "l-nefl-2",
+        "prompt": "„Desigur, vom veni și noi.” — cuvântul „desigur” este:",
+        "options": [
+          "conjuncție coordonatoare",
+          "interjecție",
+          "adverb predicativ",
+          "prepoziție simplă"
+        ],
+        "correctIndex": 2,
+        "explanation": "„Desigur” exprimă certitudinea vorbitorului și poate forma singur predicat — adverb predicativ, alături de „firește”, „poate”, „bineînțeles”."
+      },
+      {
+        "id": "l-nefl-3",
+        "prompt": "„Am reușit datorită antrenorului.” — ce caz cere prepoziția „datorită”?",
+        "options": ["genitiv", "dativ", "acuzativ", "nominativ"],
+        "correctIndex": 1,
+        "explanation": "„Datorită”, „grație” și „mulțumită” sunt prepoziții care cer cazul dativ: „datorită antrenorului” răspunde la „cui datorez reușita?”."
+      }
+    ]
+  }
+]
