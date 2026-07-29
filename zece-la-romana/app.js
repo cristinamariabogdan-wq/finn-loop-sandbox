@@ -432,6 +432,10 @@ if (typeof document !== "undefined") {
     els.summary.hidden = name !== "summary";
     els.lessons.hidden = name !== "lessons";
     els.lesson.hidden = name !== "lesson";
+    // Every view is a fresh screen, so it starts at its own top. Without this,
+    // leaving a long lesson sheet carries the old offset over and the next
+    // view opens scrolled past its heading — the taller the sheet, the worse.
+    window.scrollTo({ top: 0 });
   }
 
   // Lesson copy comes from our own JSON, but it still passes through innerHTML,
@@ -550,7 +554,6 @@ if (typeof document !== "undefined") {
     els.lessonPractice.textContent = `Exersează ${theme ? theme.articulatedLabel : ""}`.trim();
     renderLessonQuestion();
     show("lesson");
-    window.scrollTo({ top: 0 });
   }
 
   function renderLessonQuestion() {
