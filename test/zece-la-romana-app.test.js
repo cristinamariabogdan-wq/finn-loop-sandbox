@@ -122,6 +122,16 @@ describe("validateLessonBank", () => {
     expect(errors.some((e) => e.includes("introducere"))).toBe(true);
   });
 
+  it("cere readingMinutes întreg pozitiv", () => {
+    for (const value of [undefined, 0, -2, 3.5, "3"]) {
+      const errors = validateLessonBank([makeLesson({ readingMinutes: value })]);
+      expect(
+        errors.some((e) => e.includes("readingMinutes")),
+        `readingMinutes: ${String(value)}`
+      ).toBe(true);
+    }
+  });
+
   it("prinde secțiunile și capcanele lipsă", () => {
     const errors = validateLessonBank([makeLesson({ sections: [], traps: [] })]);
     expect(errors.some((e) => e.includes("secțiune"))).toBe(true);
