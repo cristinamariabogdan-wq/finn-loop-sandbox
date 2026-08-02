@@ -139,6 +139,9 @@ export function validateLessonBank(lessons) {
     ) {
       errors.push(`${where}: clasele trebuie să fie între 5 și 8`);
     }
+    if (!Number.isInteger(lesson.readingMinutes) || lesson.readingMinutes <= 0) {
+      errors.push(`${where}: readingMinutes trebuie să fie un număr întreg pozitiv`);
+    }
     if (typeof lesson.intro !== "string" || !lesson.intro.trim()) {
       errors.push(`${where}: introducere lipsă`);
     }
@@ -439,12 +442,16 @@ if (typeof document !== "undefined") {
   }
 
   // Lesson copy comes from our own JSON, but it still passes through innerHTML,
-  // so escape it rather than trusting the data file to stay markup-free.
+  // so escape it rather than trusting the data file to stay markup-free. Quotes
+  // are escaped too because the output also lands inside attributes, e.g.
+  // data-lesson="…" in renderLessonList.
   function escapeHtml(value) {
     return String(value)
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;");
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
   }
 
   function renderStart() {
