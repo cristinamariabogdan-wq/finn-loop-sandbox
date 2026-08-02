@@ -460,5 +460,483 @@
         "explanation": "„Datorită”, „grație” și „mulțumită” sunt prepoziții care cer cazul dativ: „datorită antrenorului” răspunde la „cui datorez reușita?”."
       }
     ]
+  },
+  {
+    "id": "subiectul",
+    "theme": "sintaxa",
+    "title": "Subiectul și propoziția subiectivă",
+    "grades": [5, 6, 7, 8],
+    "readingMinutes": 4,
+    "intro": "Subiectul arată cine face acțiunea sau cui i se atribuie o însușire. La examen apar două întrebări: prin ce parte de vorbire e exprimat și — mai greu — dacă subordonata din frază e subiectivă.",
+    "sections": [
+      {
+        "heading": "Exprimat sau neexprimat",
+        "bullets": [
+          "exprimat simplu: „Elevul învață.”",
+          "exprimat multiplu: „Ana și Radu învață.”",
+          "inclus — cuprins în desinența verbului, la persoana I și a II-a: „Învățăm.” (noi)",
+          "subînțeles — la persoana a III-a, recuperat din contextul anterior: „Ana a intrat. A salutat.”"
+        ]
+      },
+      {
+        "heading": "Prin ce se exprimă",
+        "table": {
+          "caption": "Părți de vorbire care pot fi subiect",
+          "headers": ["Parte de vorbire", "Exemplu"],
+          "rows": [
+            ["substantiv", "Copilul citește."],
+            ["pronume", "El citește."],
+            ["numeral", "Doi au lipsit."],
+            ["verb la infinitiv", "A citi este util."],
+            ["verb la supin", "De citit e obositor."],
+            ["adjectiv substantivizat", "Harnicul reușește."]
+          ]
+        }
+      },
+      {
+        "heading": "Propoziția subiectivă",
+        "paragraphs": [
+          "Ține locul subiectului pe lângă un verb sau o expresie impersonală: trebuie, se spune, se pare, se cuvine, e bine, e necesar, e ușor. Se introduce prin „că”, „să”, „dacă” sau prin pronume și adverbe relative: „Se spune că iarna va fi grea.” / „Trebuie să înveți.”"
+        ]
+      }
+    ],
+    "traps": [
+      "Subiectul inclus e la persoana I și a II-a („Mergem la teatru” — noi); cel subînțeles e la persoana a III-a și se recuperează din propoziția dinainte. Nu sunt același lucru.",
+      "În „Mi-e dor de bunici”, subiectul este „dor”, nu „mi” și nu „bunici”. La fel la „mi-e foame”, „mi-e frig”, „mi-e teamă”.",
+      "Subiectul stă în nominativ și nu are prepoziție înainte. Dacă vezi o prepoziție, nu e subiect.",
+      "După un verb impersonal („trebuie”, „se pare”, „e bine”) subordonata este subiectivă, nu completivă directă — chiar dacă seamănă la formă."
+    ],
+    "quiz": [
+      {
+        "id": "l-subi-1",
+        "prompt": "„Trebuie să plecăm acum.” — propoziția „să plecăm acum” este:",
+        "options": [
+          "propoziție completivă directă",
+          "propoziție subiectivă",
+          "propoziție atributivă",
+          "propoziție circumstanțială de timp"
+        ],
+        "correctIndex": 1,
+        "explanation": "„Trebuie” este verb impersonal, fără subiect propriu; subordonata îi ține locul de subiect — propoziție subiectivă."
+      },
+      {
+        "id": "l-subi-2",
+        "prompt": "„A minți este urât.” — prin ce parte de vorbire este exprimat subiectul?",
+        "options": [
+          "substantiv comun",
+          "verb la infinitiv",
+          "adjectiv",
+          "adverb de mod"
+        ],
+        "correctIndex": 1,
+        "explanation": "Subiectul este „a minți”, verb la modul infinitiv. Răspunde la întrebarea „ce este urât?”."
+      },
+      {
+        "id": "l-subi-3",
+        "prompt": "„Ați ajuns devreme.” — subiectul propoziției este:",
+        "options": ["exprimat", "inclus", "subînțeles", "propoziția nu are subiect"],
+        "correctIndex": 1,
+        "explanation": "Subiectul „voi” nu e exprimat, dar e cuprins în desinența verbului la persoana a II-a plural — subiect inclus."
+      }
+    ]
+  },
+  {
+    "id": "predicatul",
+    "theme": "sintaxa",
+    "title": "Predicatul verbal și predicatul nominal",
+    "grades": [5, 6, 7, 8],
+    "readingMinutes": 4,
+    "intro": "Predicatul arată ce face sau cum este subiectul. Toată dificultatea stă într-un singur lucru: să recunoști când verbul este copulativ și cere un nume predicativ.",
+    "sections": [
+      {
+        "heading": "Predicatul verbal",
+        "paragraphs": [
+          "Este format dintr-un verb predicativ la un mod personal: „Copilul citește.” Poate fi exprimat și printr-o interjecție predicativă („Hai la joacă!”) sau printr-o locuțiune verbală („Și-a adus aminte.”)."
+        ]
+      },
+      {
+        "heading": "Predicatul nominal",
+        "paragraphs": [
+          "Este format din verb copulativ + nume predicativ. Verbele copulative sunt puține și merită învățate pe de rost."
+        ],
+        "table": {
+          "caption": "Verbele copulative și un exemplu pentru fiecare",
+          "headers": ["Verb", "Exemplu", "Nume predicativ"],
+          "rows": [
+            ["a fi", "Ana este elevă.", "elevă"],
+            ["a deveni", "A devenit inginer.", "inginer"],
+            ["a ajunge", "A ajuns director.", "director"],
+            ["a rămâne", "A rămas tăcut.", "tăcut"],
+            ["a ieși", "A ieșit campion.", "campion"],
+            ["a se face", "S-a făcut medic.", "medic"],
+            ["a părea", "Pare obosit.", "obosit"],
+            ["a însemna", "Asta înseamnă victorie.", "victorie"]
+          ]
+        }
+      },
+      {
+        "heading": "Prin ce se exprimă numele predicativ",
+        "bullets": [
+          "substantiv: „Este profesor.”",
+          "adjectiv: „Este harnic.”",
+          "pronume: „Cartea este a mea.”",
+          "numeral: „El este al doilea.”",
+          "adverb: „Este bine.”",
+          "verb la infinitiv: „Datoria lui este a învăța.”"
+        ]
+      }
+    ],
+    "traps": [
+      "„A fi” este copulativ în „Maria este elevă”, dar predicativ când înseamnă „a exista, a se afla”: „Cartea este pe masă” — acolo predicatul e verbal.",
+      "„A ajunge” și „a rămâne” pot fi și predicative: „A ajuns acasă” (= a sosit) și „A rămas la școală” (= a stat) au predicat verbal, nu nominal.",
+      "„A deveni” este întotdeauna copulativ — după el urmează un nume predicativ, niciodată un complement direct.",
+      "Predicatul nominal se numără o singură dată, deși are două cuvinte. „Este elevă” = un predicat, deci o propoziție."
+    ],
+    "quiz": [
+      {
+        "id": "l-pred-1",
+        "prompt": "„Trenul a ajuns în gară.” — ce fel de predicat are propoziția?",
+        "options": [
+          "predicat nominal",
+          "predicat verbal",
+          "nu are predicat",
+          "două predicate"
+        ],
+        "correctIndex": 1,
+        "explanation": "Aici „a ajuns” înseamnă „a sosit” și are înțeles de sine stătător — predicat verbal. Ar fi copulativ în „a ajuns director”."
+      },
+      {
+        "id": "l-pred-2",
+        "prompt": "„Prietenul meu pare supărat.” — cuvântul „supărat” are funcția sintactică de:",
+        "options": [
+          "complement direct",
+          "atribut adjectival",
+          "nume predicativ",
+          "circumstanțial de mod"
+        ],
+        "correctIndex": 2,
+        "explanation": "„A părea” este verb copulativ, iar „supărat” îi completează sensul — nume predicativ, în predicatul nominal „pare supărat”."
+      },
+      {
+        "id": "l-pred-3",
+        "prompt": "În care propoziție avem predicat nominal?",
+        "options": [
+          "Elevii scriu tema.",
+          "Cartea este pe raft.",
+          "Ea a rămas premianta clasei.",
+          "A rămas în curte până seara."
+        ],
+        "correctIndex": 2,
+        "explanation": "În „a rămas premianta clasei”, verbul e copulativ și „premianta” e nume predicativ. În b) și d) verbele înseamnă „se află” și „a stat” — predicate verbale."
+      }
+    ]
+  },
+  {
+    "id": "atributul",
+    "theme": "sintaxa",
+    "title": "Atributul și propoziția atributivă",
+    "grades": [6, 7, 8],
+    "readingMinutes": 4,
+    "intro": "Atributul determină un substantiv și răspunde la întrebările „care?”, „ce fel de?”, „al cui?”, „câți?”. Se recunoaște ușor dacă ții minte un singur lucru: atributul se agață mereu de un substantiv, nu de un verb.",
+    "sections": [
+      {
+        "heading": "Felurile atributului",
+        "table": {
+          "caption": "După partea de vorbire prin care e exprimat",
+          "headers": ["Fel", "Exemplu", "Prin ce e exprimat"],
+          "rows": [
+            ["adjectival", "carte nouă", "adjectiv"],
+            ["substantival genitival", "cartea elevului", "substantiv în genitiv"],
+            ["substantival prepozițional", "carte de povești", "substantiv cu prepoziție"],
+            ["substantival apozițional", "colegul meu, Radu", "substantiv în nominativ"],
+            ["pronominal", "cartea lui", "pronume"],
+            ["verbal", "dorința de a citi", "verb la infinitiv sau supin"],
+            ["adverbial", "plecarea de mâine", "adverb"]
+          ]
+        }
+      },
+      {
+        "heading": "Propoziția atributivă",
+        "paragraphs": [
+          "Ține locul unui atribut și determină un substantiv din regentă. Se introduce de obicei prin pronume sau adjective relative („care”, „cine”, „ce”, „al cărui”) ori prin adverbe relative („unde”, „când”): „Am citit cartea pe care mi-ai dat-o.”"
+        ]
+      }
+    ],
+    "traps": [
+      "Atributul determină un substantiv; numele predicativ determină subiectul prin verb copulativ. Compară: „fata harnică” (atribut) cu „fata este harnică” (nume predicativ).",
+      "Apoziția stă în nominativ, indiferent de cazul substantivului determinat: „I-am spus colegului meu, Radu” — „Radu”, nu „lui Radu”.",
+      "Aceeași prepoziție poate introduce lucruri diferite: „carte de povești” e atribut, dar „scrie de zor” e circumstanțial de mod. Verifică ce determină: substantiv sau verb.",
+      "O subordonată introdusă prin „unde” sau „când” după un substantiv este atributivă, nu circumstanțială: „Orașul unde m-am născut e mic.”"
+    ],
+    "quiz": [
+      {
+        "id": "l-atr-1",
+        "prompt": "„Casa bunicilor este veche.” — „bunicilor” are funcția sintactică de:",
+        "options": [
+          "complement indirect",
+          "atribut substantival genitival",
+          "nume predicativ",
+          "subiect"
+        ],
+        "correctIndex": 1,
+        "explanation": "„Bunicilor” răspunde la „a cui casă?” și determină substantivul „casa” — atribut substantival genitival."
+      },
+      {
+        "id": "l-atr-2",
+        "prompt": "„Mi-a plăcut filmul pe care l-am văzut ieri.” — subordonata este:",
+        "options": [
+          "propoziție atributivă",
+          "propoziție completivă directă",
+          "propoziție subiectivă",
+          "propoziție circumstanțială de timp"
+        ],
+        "correctIndex": 0,
+        "explanation": "Subordonata determină substantivul „filmul” („care film?”) și e introdusă prin pronume relativ — propoziție atributivă."
+      },
+      {
+        "id": "l-atr-3",
+        "prompt": "„L-am invitat pe vecinul nostru, Mihai.” — cuvântul „Mihai” are funcția sintactică de:",
+        "options": [
+          "complement direct",
+          "subiect",
+          "atribut substantival apozițional",
+          "nume predicativ"
+        ],
+        "correctIndex": 2,
+        "explanation": "„Mihai” explică substantivul „vecinul” și stă în nominativ, izolat prin virgulă — atribut substantival apozițional (apoziție)."
+      }
+    ]
+  },
+  {
+    "id": "complementele",
+    "theme": "sintaxa",
+    "title": "Complementele: direct, indirect, prepozițional",
+    "grades": [6, 7, 8],
+    "readingMinutes": 5,
+    "intro": "Complementele completează sensul verbului. Programa actuală lucrează cu trei: direct, indirect și prepozițional — iar diferența dintre ultimele două este exact locul unde se pierd cele mai multe puncte.",
+    "sections": [
+      {
+        "heading": "Cele trei complemente",
+        "table": {
+          "caption": "Cum le deosebești",
+          "headers": ["Complement", "Caz", "Întrebare", "Exemplu"],
+          "rows": [
+            ["direct", "acuzativ", "pe cine? ce?", "Citesc o carte. / Îl văd pe Andrei."],
+            ["indirect", "dativ", "cui?", "I-am spus colegului."],
+            ["prepozițional", "acuzativ (cu prepoziție cerută de verb)", "la ce? despre ce? de cine?", "Mă gândesc la examen."]
+          ]
+        }
+      },
+      {
+        "heading": "Complementul prepozițional",
+        "paragraphs": [
+          "Apare pe lângă verbe care cer obligatoriu o anumită prepoziție: a se gândi la, a vorbi despre, a depinde de, a se teme de, a conta pe, a renunța la. Prepoziția face parte din construcția verbului — nu o poți scoate fără să strici propoziția."
+        ]
+      },
+      {
+        "heading": "Subordonatele corespunzătoare",
+        "bullets": [
+          "completiva directă: „Știu că vei reuși.”",
+          "completiva indirectă: „Le-am spus celor care întrebau.”",
+          "completiva prepozițională: „Mă gândesc la ce mi-ai spus.”"
+        ]
+      }
+    ],
+    "traps": [
+      "„Pe” + acuzativ la nume de persoane marchează complementul direct, nu un circumstanțial: în „Îl văd pe Andrei”, „pe Andrei” e complement direct, dublat de „îl”.",
+      "Complementul indirect stă în dativ și răspunde la „cui?”. „Mă gândesc la examen” nu e complement indirect, ci prepozițional — greșeala clasică de examen.",
+      "Formele neaccentuate dublează complementul, nu adaugă unul nou: „I-am dat Mariei cartea” are un singur complement indirect.",
+      "Verbele care cer prepoziție („a depinde de”, „a se teme de”) formează complement prepozițional chiar dacă prepoziția pare de circumstanțial."
+    ],
+    "quiz": [
+      {
+        "id": "l-compl-1",
+        "prompt": "„Depinde de tine.” — „de tine” are funcția sintactică de:",
+        "options": [
+          "complement indirect",
+          "complement prepozițional",
+          "complement direct",
+          "circumstanțial de cauză"
+        ],
+        "correctIndex": 1,
+        "explanation": "Verbul „a depinde” cere obligatoriu prepoziția „de” — complement prepozițional. Complementul indirect ar sta în dativ și ar răspunde la „cui?”."
+      },
+      {
+        "id": "l-compl-2",
+        "prompt": "„I-am scris bunicii o scrisoare.” — câte complemente are propoziția și de ce fel?",
+        "options": [
+          "unul direct",
+          "unul indirect",
+          "unul direct și unul indirect",
+          "două complemente directe"
+        ],
+        "correctIndex": 2,
+        "explanation": "„O scrisoare” răspunde la „ce am scris?” — complement direct; „bunicii” răspunde la „cui?” și e în dativ — complement indirect, dublat de „i-”."
+      },
+      {
+        "id": "l-compl-3",
+        "prompt": "„Am înțeles ce mi-ai explicat.” — subordonata „ce mi-ai explicat” este:",
+        "options": [
+          "propoziție completivă directă",
+          "propoziție completivă indirectă",
+          "propoziție subiectivă",
+          "propoziție atributivă"
+        ],
+        "correctIndex": 0,
+        "explanation": "Răspunde la „ce am înțeles?” pe lângă verbul predicativ „am înțeles” și ține locul complementului direct — completivă directă."
+      }
+    ]
+  },
+  {
+    "id": "circumstantialele",
+    "theme": "sintaxa",
+    "title": "Circumstanțialele și subordonatele lor",
+    "grades": [7, 8],
+    "readingMinutes": 5,
+    "intro": "Circumstanțialele arată împrejurarea în care se petrece acțiunea: unde, când, cum, din ce cauză, cu ce scop. Fiecare are o subordonată corespunzătoare, iar perechea cauză–scop e cea mai des confundată.",
+    "sections": [
+      {
+        "heading": "Cele cinci circumstanțiale",
+        "table": {
+          "caption": "Întrebări și conectori",
+          "headers": ["Circumstanțial", "Întrebare", "Exemplu", "Conectori ai subordonatei"],
+          "rows": [
+            ["de loc", "unde?", "Merg la școală.", "unde, de unde, încotro"],
+            ["de timp", "când?", "Plecăm mâine.", "când, până când, îndată ce"],
+            ["de mod", "cum?", "Scrie frumos.", "cum, precum, ca și cum"],
+            ["de cauză", "din ce cauză?", "N-am ieșit din cauza ploii.", "pentru că, fiindcă, deoarece, întrucât"],
+            ["de scop", "cu ce scop?", "A plecat după pâine.", "ca să, să, pentru ca să"]
+          ]
+        }
+      },
+      {
+        "heading": "Cauză sau scop?",
+        "paragraphs": [
+          "Cauza există înaintea acțiunii și o explică: „N-am ieșit pentru că ploua.” Scopul vine după acțiune și arată intenția: „Am ieșit ca să cumpăr pâine.” Testul rapid: dacă poți răspunde cu „din ce cauză?” e cauzală; dacă răspunzi cu „cu ce scop?” e finală."
+        ]
+      }
+    ],
+    "traps": [
+      "„Pentru că” introduce o cauzală, „ca să” o finală. Sunt aproape identice ca formă și complet diferite ca sens.",
+      "„Când” și „unde” nu introduc automat circumstanțiale: după un substantiv devin atributive — „Ziua când ne-am cunoscut” e atributivă, nu circumstanțială de timp.",
+      "Circumstanțialul de mod se confundă cu numele predicativ: „Merge bine” (circumstanțial, pe lângă verb predicativ) vs „Este bine” (nume predicativ, pe lângă copulativ).",
+      "Nu orice grup cu prepoziție e circumstanțial: dacă verbul cere prepoziția („se gândește la”), e complement prepozițional."
+    ],
+    "quiz": [
+      {
+        "id": "l-circ-1",
+        "prompt": "„A învățat mult ca să ia notă mare.” — subordonata „ca să ia notă mare” este:",
+        "options": [
+          "circumstanțială de cauză",
+          "circumstanțială de scop",
+          "circumstanțială de mod",
+          "completivă directă"
+        ],
+        "correctIndex": 1,
+        "explanation": "Arată intenția acțiunii („cu ce scop a învățat?”) și e introdusă prin „ca să” — circumstanțială de scop (finală)."
+      },
+      {
+        "id": "l-circ-2",
+        "prompt": "„Îmi amintesc ziua când am plecat la mare.” — subordonata „când am plecat la mare” este:",
+        "options": [
+          "circumstanțială de timp",
+          "atributivă",
+          "completivă directă",
+          "subiectivă"
+        ],
+        "correctIndex": 1,
+        "explanation": "Deși începe cu „când”, subordonata determină substantivul „ziua” („care zi?”) — propoziție atributivă. Adverbul relativ nu decide singur felul subordonatei."
+      },
+      {
+        "id": "l-circ-3",
+        "prompt": "„Am întârziat deoarece s-a stricat autobuzul.” — subordonata este:",
+        "options": [
+          "circumstanțială de scop",
+          "circumstanțială de timp",
+          "circumstanțială de cauză",
+          "circumstanțială de mod"
+        ],
+        "correctIndex": 2,
+        "explanation": "„Deoarece” introduce motivul întârzierii („din ce cauză am întârziat?”) — circumstanțială de cauză, ca și „pentru că”, „fiindcă”, „întrucât”."
+      }
+    ]
+  },
+  {
+    "id": "fraza",
+    "theme": "sintaxa",
+    "title": "Fraza: coordonare, subordonare și numărarea propozițiilor",
+    "grades": [7, 8],
+    "readingMinutes": 4,
+    "intro": "Fraza este alcătuită din două sau mai multe propoziții. Prima cerință de la examen e mereu aceeași: câte propoziții are fraza — iar răspunsul se află numărând predicatele, nu virgulele.",
+    "sections": [
+      {
+        "heading": "Cum numeri propozițiile",
+        "paragraphs": [
+          "Câte predicate, atâtea propoziții. Caută verbele la moduri personale (indicativ, conjunctiv, condițional-optativ, imperativ) și predicatele nominale. Verbele la infinitiv, gerunziu, participiu și supin nu formează predicat, deci nu deschid o propoziție nouă."
+        ]
+      },
+      {
+        "heading": "Coordonare și subordonare",
+        "table": {
+          "caption": "Cele două raporturi din frază",
+          "headers": ["Raport", "Ce leagă", "Elemente de relație", "Exemplu"],
+          "rows": [
+            ["copulativ", "propoziții de același fel", "și, nici", "Citesc și scriu."],
+            ["adversativ", "propoziții de același fel", "dar, iar, însă, ci", "Învăț, dar obosesc."],
+            ["disjunctiv", "propoziții de același fel", "sau, ori", "Vii sau rămâi?"],
+            ["conclusiv", "propoziții de același fel", "deci, așadar", "A plouat, deci rămânem."],
+            ["subordonare", "secundara de regentă", "că, să, dacă, care, când, unde", "Știu că vii."]
+          ]
+        }
+      },
+      {
+        "heading": "Elementele de relație",
+        "bullets": [
+          "conjuncții coordonatoare: și, dar, iar, sau, deci",
+          "conjuncții subordonatoare: că, să, dacă, deoarece, deși, ca să",
+          "pronume și adjective relative: care, cine, ce, al cărui",
+          "adverbe relative: unde, când, cum, cât"
+        ]
+      }
+    ],
+    "traps": [
+      "Numeri predicatele, nu virgulele. „Cred că ai dreptate, dar vreau să verific” are patru predicate — deci patru propoziții.",
+      "Predicatul nominal se numără o singură dată, deși are două cuvinte: „Ana este elevă și învață bine” are două propoziții, nu trei.",
+      "Verbele la moduri nepersonale nu deschid propoziții: „Vreau să plec citind” are două predicate („vreau”, „să plec”), gerunziul nu contează.",
+      "„Și” poate coordona și părți de propoziție, nu doar propoziții: „Ana și Radu învață” e o singură propoziție, cu subiect multiplu."
+    ],
+    "quiz": [
+      {
+        "id": "l-fraza-1",
+        "prompt": "„Mă bucur că ai venit și că ai rămas.” — câte propoziții are fraza?",
+        "options": ["două", "trei", "patru", "una"],
+        "correctIndex": 1,
+        "explanation": "Predicatele sunt „mă bucur”, „ai venit” și „ai rămas” — trei predicate, deci trei propoziții."
+      },
+      {
+        "id": "l-fraza-2",
+        "prompt": "„Ana și Maria au plecat la munte.” — câte propoziții are enunțul?",
+        "options": [
+          "două, coordonate copulativ",
+          "una, cu subiect multiplu",
+          "două, în raport de subordonare",
+          "trei"
+        ],
+        "correctIndex": 1,
+        "explanation": "Există un singur predicat, „au plecat”. „Și” coordonează aici două substantive, formând un subiect multiplu — o singură propoziție."
+      },
+      {
+        "id": "l-fraza-3",
+        "prompt": "„Am terminat tema, deci pot ieși afară.” — ce raport există între cele două propoziții?",
+        "options": [
+          "coordonare conclusivă",
+          "coordonare adversativă",
+          "subordonare",
+          "coordonare disjunctivă"
+        ],
+        "correctIndex": 0,
+        "explanation": "„Deci” arată concluzia care decurge din prima propoziție — coordonare conclusivă, ca și „așadar”, „prin urmare”."
+      }
+    ]
   }
 ]
