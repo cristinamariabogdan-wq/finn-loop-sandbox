@@ -1337,8 +1337,9 @@
             ["una", "trece la silaba următoare", "ca-să, pă-du-re"],
             ["două", "prima rămâne, a doua trece", "ar-bo-re, cas-tel"],
             ["două (excepție)", "trec amândouă dacă a doua e „l” sau „r”", "co-dru, a-flu-ent, o-glin-dă"],
-            ["trei", "prima rămâne, celelalte trec", "in-spec-tor, con-struc-tor"],
-            ["trei (excepție)", "primele două rămân la grupurile lpt, mpt, nct, ncț, rct, stm", "somp-tu-os, punc-taj, ast-ma-tic"]
+            ["trei", "prima rămâne, celelalte trec", "in-spec-tor, as-tro-nom"],
+            ["trei (excepție)", "primele două rămân la grupurile lpt, mpt, nct, ncț, rct, stm", "somp-tu-os, punc-taj, ast-ma-tic"],
+            ["patru", "primele două rămân, ultimele două trec", "abs-tract, cons-truc-tor, mons-tru"]
           ]
         }
       },
