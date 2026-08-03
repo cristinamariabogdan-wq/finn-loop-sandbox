@@ -77,16 +77,18 @@ describe("banca de lecții reală", () => {
     expect(validateLessonBank(lessonBank)).toEqual([]);
   });
 
-  it("are 6 fișe de morfologie, fiecare cu tabel sau listă și cel puțin 3 capcane", () => {
-    const morfologie = lessonBank.filter((lesson) => lesson.theme === "morfologie");
-    expect(morfologie.length).toBeGreaterThanOrEqual(6);
-    for (const lesson of morfologie) {
-      const hasStructure = lesson.sections.some(
-        (section) => section.table || (section.bullets && section.bullets.length > 0)
-      );
-      expect(hasStructure, `${lesson.id} fără tabel sau listă`).toBe(true);
-      expect(lesson.traps.length, `${lesson.id} sub 3 capcane`).toBeGreaterThanOrEqual(3);
-      expect(lesson.quiz).toHaveLength(LESSON_QUIZ_SIZE);
+  it("are cel puțin 6 fișe pe fiecare temă, fiecare cu tabel sau listă și cel puțin 3 capcane", () => {
+    for (const theme of ["morfologie", "sintaxa"]) {
+      const lessons = lessonBank.filter((lesson) => lesson.theme === theme);
+      expect(lessons.length, `tema ${theme}`).toBeGreaterThanOrEqual(6);
+      for (const lesson of lessons) {
+        const hasStructure = lesson.sections.some(
+          (section) => section.table || (section.bullets && section.bullets.length > 0)
+        );
+        expect(hasStructure, `${lesson.id} fără tabel sau listă`).toBe(true);
+        expect(lesson.traps.length, `${lesson.id} sub 3 capcane`).toBeGreaterThanOrEqual(3);
+        expect(lesson.quiz).toHaveLength(LESSON_QUIZ_SIZE);
+      }
     }
   });
 

@@ -274,6 +274,12 @@ body {
   gap: 24px;
 }
 
+/* Grid items default to min-width: auto, which lets a wide table stretch the
+   section past the viewport instead of scrolling inside its own wrapper. */
+.lesson__section {
+  min-width: 0;
+}
+
 .lesson__section-title {
   margin: 0 0 8px;
   font-size: 1.15rem;
