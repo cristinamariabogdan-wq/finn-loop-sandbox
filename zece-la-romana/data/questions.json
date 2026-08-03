@@ -583,5 +583,170 @@
     ],
     "correctIndex": 2,
     "explanation": "Diferă printr-un singur sunet, dar au sensuri complet diferite: a evalua = a aprecia, a măsura; a evolua = a se dezvolta. Confuzia dintre ele este atracția paronimică."
+  },
+  {
+    "id": "f01",
+    "category": "fonetica",
+    "prompt": "Câte litere și câte sunete are cuvântul „ceapă”?",
+    "options": [
+      "5 litere, 5 sunete",
+      "5 litere, 4 sunete",
+      "4 litere, 5 sunete",
+      "5 litere, 3 sunete"
+    ],
+    "correctIndex": 1,
+    "explanation": "Literele sunt c, e, a, p, ă. Grupul „ce” notează un singur sunet, [č], deci „e” nu se pronunță separat: c-e-a-p-ă = [ča-pă], 4 sunete."
+  },
+  {
+    "id": "f02",
+    "category": "fonetica",
+    "prompt": "În cuvântul „gheață”, grupul de litere „ghe”:",
+    "options": [
+      "notează trei sunete distincte",
+      "notează un singur sunet",
+      "formează un diftong",
+      "formează un hiat"
+    ],
+    "correctIndex": 1,
+    "explanation": "Grupurile „ghe” și „ghi” notează un singur sunet, [g]. La fel, „che/chi” notează [k]. Literele „h” și „e/i” nu se pronunță separat."
+  },
+  {
+    "id": "f03",
+    "category": "fonetica",
+    "prompt": "Câte sunete notează litera „x” în cuvântul „examen”?",
+    "options": [
+      "unul singur",
+      "două: [gz]",
+      "două: [cs]",
+      "niciunul"
+    ],
+    "correctIndex": 1,
+    "explanation": "În „examen”, „x” se pronunță [gz]. În alte cuvinte notează [cs]: „taxi”, „excursie”. Litera „x” notează întotdeauna două sunete."
+  },
+  {
+    "id": "f04",
+    "category": "fonetica",
+    "prompt": "Care dintre următoarele cuvinte conține un diftong?",
+    "options": [
+      "poet",
+      "seară",
+      "aer",
+      "alee"
+    ],
+    "correctIndex": 1,
+    "explanation": "În „seară”, „ea” este diftong: o vocală și o semivocală rostite în aceeași silabă (sea-ră). În „poet”, „aer” și „alee” vocalele alăturate se despart în silabe diferite — hiat."
+  },
+  {
+    "id": "f05",
+    "category": "fonetica",
+    "prompt": "Cuvântul „leoaică” conține:",
+    "options": [
+      "un diftong",
+      "un triftong",
+      "un hiat",
+      "doar vocale în hiat"
+    ],
+    "correctIndex": 1,
+    "explanation": "„Oai” este triftong: două semivocale și o vocală rostite în aceeași silabă (le-oai-că). Triftongul cere trei sunete vocalice într-o singură silabă."
+  },
+  {
+    "id": "f06",
+    "category": "fonetica",
+    "prompt": "În cuvântul „poezie”, secvența „oe” formează:",
+    "options": [
+      "un diftong",
+      "un triftong",
+      "un hiat",
+      "un grup de consoane"
+    ],
+    "correctIndex": 2,
+    "explanation": "Cele două vocale se rostesc în silabe diferite: po-e-zi-e — hiat. Diftongul ar cere ca ambele să stea în aceeași silabă."
+  },
+  {
+    "id": "f07",
+    "category": "fonetica",
+    "prompt": "Câte silabe are cuvântul „aeroport”?",
+    "options": ["trei", "patru", "cinci", "două"],
+    "correctIndex": 1,
+    "explanation": "a-e-ro-port: patru silabe. Vocalele „a” și „e” alăturate formează hiat, deci intră în silabe diferite."
+  },
+  {
+    "id": "f08",
+    "category": "fonetica",
+    "prompt": "Cum se desparte corect în silabe cuvântul „obiect”?",
+    "options": ["o-bi-ect", "ob-iect", "o-biect", "obi-ect"],
+    "correctIndex": 2,
+    "explanation": "„Ie” formează diftong și rămâne în aceeași silabă: o-biect. O consoană între două vocale trece la silaba următoare."
+  },
+  {
+    "id": "f09",
+    "category": "fonetica",
+    "prompt": "Cum se desparte în silabe cuvântul „arbore”?",
+    "options": ["ar-bo-re", "a-rbo-re", "arb-o-re", "ar-bor-e"],
+    "correctIndex": 0,
+    "explanation": "Când între vocale sunt două consoane, prima rămâne la silaba dinainte și a doua trece la următoarea: ar-bo-re."
+  },
+  {
+    "id": "f10",
+    "category": "fonetica",
+    "prompt": "Care este despărțirea corectă a cuvântului „inspector”?",
+    "options": ["in-spec-tor", "ins-pec-tor", "i-nspec-tor", "insp-ec-tor"],
+    "correctIndex": 0,
+    "explanation": "La trei consoane între vocale, prima rămâne la silaba dinainte și celelalte două trec la următoarea: in-spec-tor."
+  },
+  {
+    "id": "f11",
+    "category": "fonetica",
+    "prompt": "Ce fel de sunet este „i” din cuvântul „iarnă”?",
+    "options": [
+      "vocală",
+      "semivocală",
+      "consoană",
+      "nu se pronunță"
+    ],
+    "correctIndex": 1,
+    "explanation": "În „iarnă”, „i” face parte din diftongul „ia” și se sprijină pe vocala „a” — este semivocală. Ar fi vocală dacă ar forma singur o silabă: „i-nel”."
+  },
+  {
+    "id": "f12",
+    "category": "fonetica",
+    "prompt": "Câte vocale are limba română?",
+    "options": ["cinci", "șapte", "opt", "zece"],
+    "correctIndex": 1,
+    "explanation": "Limba română are șapte vocale: a, ă, â/î, e, i, o, u. „â” și „î” notează același sunet, scris diferit după poziția din cuvânt."
+  },
+  {
+    "id": "f13",
+    "category": "fonetica",
+    "prompt": "În cuvântul „ochi”, litera „i” de la final:",
+    "options": [
+      "este vocală și formează silabă",
+      "este semivocală și formează diftong",
+      "este „i” final, care nu formează silabă",
+      "notează două sunete"
+    ],
+    "correctIndex": 2,
+    "explanation": "La final de cuvânt, după consoană, „i” este șoptit și nu formează silabă: „ochi” are o singură silabă. Se aude plin abia în forme ca „ochii”."
+  },
+  {
+    "id": "f14",
+    "category": "fonetica",
+    "prompt": "Care cuvânt conține un hiat?",
+    "options": ["deal", "beau", "ideal", "soare"],
+    "correctIndex": 2,
+    "explanation": "În „ideal”, „e” și „a” se rostesc în silabe diferite: i-de-al — hiat. „Deal” și „soare” conțin diftongi, iar „beau” conține triftongul „eau”."
+  },
+  {
+    "id": "f15",
+    "category": "fonetica",
+    "prompt": "Accentul în limba română:",
+    "options": [
+      "cade întotdeauna pe ultima silabă",
+      "cade întotdeauna pe prima silabă",
+      "este liber: poate cădea pe silabe diferite",
+      "cade întotdeauna pe silaba a doua"
+    ],
+    "correctIndex": 2,
+    "explanation": "Accentul românesc este liber (mobil) și uneori deosebește sensuri: „véselă” (adjectiv) — „vesélă” (vasele de bucătărie), „cópii” (copiii) — „copíi” (duplicate)."
   }
 ]

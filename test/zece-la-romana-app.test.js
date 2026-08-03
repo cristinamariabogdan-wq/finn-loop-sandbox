@@ -121,7 +121,9 @@ describe("validateLessonBank", () => {
   });
 
   it("prinde tema necunoscută și introducerea lipsă", () => {
-    const errors = validateLessonBank([makeLesson({ theme: "fonetica", intro: "  " })]);
+    // Deliberately not a real category id, so adding areas never turns this
+    // negative case into a passing one.
+    const errors = validateLessonBank([makeLesson({ theme: "temă-inexistentă", intro: "  " })]);
     expect(errors.some((e) => e.includes("temă"))).toBe(true);
     expect(errors.some((e) => e.includes("introducere"))).toBe(true);
   });
@@ -248,7 +250,7 @@ describe("validateQuestionBank", () => {
 
   it("prinde explicația lipsă și categoria necunoscută", () => {
     const errors = validateQuestionBank([
-      makeQuestion({ explanation: "  ", category: "fonetica" }),
+      makeQuestion({ explanation: "  ", category: "categorie-inexistentă" }),
     ]);
     expect(errors.some((e) => e.includes("explicație"))).toBe(true);
     expect(errors.some((e) => e.includes("categorie"))).toBe(true);

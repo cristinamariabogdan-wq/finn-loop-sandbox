@@ -1182,5 +1182,203 @@
         "explanation": "Forma cuvântului rămâne neschimbată, dar rolul se schimbă: adjectivul „frumos” determină aici verbul „scrie”, deci a devenit adverb prin conversiune."
       }
     ]
+  },
+  {
+    "id": "sunete-si-litere",
+    "theme": "fonetica",
+    "title": "Sunete și litere",
+    "grades": [5, 6],
+    "readingMinutes": 4,
+    "intro": "Litera se scrie, sunetul se aude — și nu sunt totdeauna în număr egal. Cerința clasică de examen sună „câte litere și câte sunete are cuvântul?”, iar răspunsul se joacă în câteva grupuri de litere pe care merită să le știi pe de rost.",
+    "sections": [
+      {
+        "heading": "Vocale, semivocale, consoane",
+        "bullets": [
+          "vocale (7): a, ă, â/î, e, i, o, u — pot forma singure o silabă",
+          "semivocale (4): e, i, o, u — se sprijină pe o vocală și nu formează silabă („iarnă”, „seară”)",
+          "consoane: restul sunetelor, care au nevoie de o vocală ca să formeze silabă"
+        ],
+        "paragraphs": [
+          "Aceleași patru litere — e, i, o, u — pot fi vocale sau semivocale, după rolul din silabă. „I” e vocală în „i-nel” și semivocală în „iar-nă”."
+        ]
+      },
+      {
+        "heading": "Grupurile de litere",
+        "table": {
+          "caption": "Când mai multe litere notează un singur sunet",
+          "headers": ["Grup", "Sunet", "Exemplu", "Litere / sunete"],
+          "rows": [
+            ["ce, ci (urmate de vocală)", "[č]", "ceapă, ciorbă", "5 / 4"],
+            ["ge, gi (urmate de vocală)", "[ǧ]", "geam, giulgiu", "4 / 3"],
+            ["che, chi (urmate de vocală)", "[k]", "cheamă, chiar", "6 / 4"],
+            ["ghe, ghi (urmate de vocală)", "[g]", "gheață, ghiozdan", "6 / 4"],
+            ["x", "[cs] sau [gz]", "taxi, examen", "1 literă / 2 sunete"]
+          ]
+        }
+      },
+      {
+        "heading": "Cum numeri corect",
+        "paragraphs": [
+          "Scrie cuvântul pe litere, apoi rostește-l rar. Grupurile de mai sus se numără ca un singur sunet doar când sunt urmate de o vocală; altfel, „e” sau „i” se aud și se numără separat."
+        ]
+      }
+    ],
+    "traps": [
+      "„Ce/ci” și „ge/gi” notează un singur sunet doar când urmează o vocală: în „ceapă” avem 5 litere și 4 sunete, dar în „cer” avem 3 litere și 3 sunete, fiindcă „e” se aude.",
+      "Litera „x” face invers decât grupurile: o singură literă, dar două sunete — [cs] în „taxi”, [gz] în „examen”.",
+      "Litera „h” din „che, chi, ghe, ghi” nu se pronunță niciodată separat. Se aude doar când stă singură: „hartă”, „pahar”.",
+      "„I” final după consoană este șoptit și nu formează silabă: „ochi”, „lupi”, „pomi” au o singură silabă fiecare."
+    ],
+    "quiz": [
+      {
+        "id": "l-fon-1",
+        "prompt": "Câte litere și câte sunete are cuvântul „ghiozdan”?",
+        "options": [
+          "8 litere, 8 sunete",
+          "8 litere, 6 sunete",
+          "6 litere, 8 sunete",
+          "8 litere, 7 sunete"
+        ],
+        "correctIndex": 1,
+        "explanation": "Literele: g, h, i, o, z, d, a, n = 8. Grupul „ghi” urmat de vocala „o” notează un singur sunet [g], deci sunetele sunt g, o, z, d, a, n = 6."
+      },
+      {
+        "id": "l-fon-2",
+        "prompt": "În care cuvânt este „u” semivocală?",
+        "options": ["urs", "nuc", "sau", "unu"],
+        "correctIndex": 2,
+        "explanation": "În „sau”, „u” se sprijină pe vocala „a” și formează cu ea diftongul „au”, într-o singură silabă — semivocală. În celelalte, „u” este vocală și formează silabă."
+      },
+      {
+        "id": "l-fon-3",
+        "prompt": "Câte sunete notează litera „x” din cuvântul „taxi”?",
+        "options": ["unul", "două", "trei", "niciunul"],
+        "correctIndex": 1,
+        "explanation": "„X” notează întotdeauna două sunete: [cs] în „taxi”, „excursie”, sau [gz] în „examen”, „exact”."
+      }
+    ]
+  },
+  {
+    "id": "diftong-triftong-hiat",
+    "theme": "fonetica",
+    "title": "Diftong, triftong, hiat",
+    "grades": [5, 6, 7],
+    "readingMinutes": 4,
+    "intro": "Trei nume pentru ce se întâmplă când vocalele stau alături. Totul se decide după o singură întrebare: sunetele se rostesc în aceeași silabă sau în silabe diferite?",
+    "sections": [
+      {
+        "heading": "Cele trei situații",
+        "table": {
+          "caption": "Ce le deosebește",
+          "headers": ["Nume", "Alcătuire", "Silabe", "Exemplu"],
+          "rows": [
+            ["Diftong", "o vocală + o semivocală", "aceeași silabă", "sea-ră, deal, sau"],
+            ["Triftong", "o vocală + două semivocale", "aceeași silabă", "le-oai-că, beau, cre-ioa-ne"],
+            ["Hiat", "două vocale", "silabe diferite", "po-et, a-er, i-de-al"]
+          ]
+        }
+      },
+      {
+        "heading": "Testul silabei",
+        "paragraphs": [
+          "Desparte cuvântul în silabe și uită-te unde cad vocalele alăturate. Dacă rămân împreună, ai diftong sau triftong; dacă se despart, ai hiat. „Sea-ră” — diftong; „po-et” — hiat."
+        ]
+      }
+    ],
+    "traps": [
+      "Aceeași pereche de litere poate fi diftong într-un cuvânt și hiat în altul: „ea” e diftong în „sea-ră” și în „deal”, dar hiat în „i-de-al”, unde cele două vocale cad în silabe diferite. Contează despărțirea, nu literele.",
+      "Triftongul cere trei sunete vocalice în aceeași silabă, nu doar trei litere alăturate. În „beau” avem triftong; în „be-a-tă” nu.",
+      "Diftongii și triftongii nu se despart niciodată la despărțirea în silabe — de aceea „obiect” se desparte o-biect, nu o-bi-ect.",
+      "Semivocala nu poate sta singură într-o silabă. Dacă vocala alăturată dispare, sunetul devine vocală și își face silabă proprie."
+    ],
+    "quiz": [
+      {
+        "id": "l-fon-4",
+        "prompt": "Care cuvânt conține un triftong?",
+        "options": ["seară", "creioane", "poezie", "iarnă"],
+        "correctIndex": 1,
+        "explanation": "„Creioane” se desparte cre-ioa-ne, iar „ioa” este triftong: două semivocale și o vocală în aceeași silabă. „Seară” și „iarnă” au diftongi, „poezie” are hiat."
+      },
+      {
+        "id": "l-fon-5",
+        "prompt": "În cuvântul „aer”, secvența „ae” formează:",
+        "options": ["diftong", "triftong", "hiat", "o singură vocală"],
+        "correctIndex": 2,
+        "explanation": "Cuvântul se desparte a-er: cele două vocale cad în silabe diferite, deci formează hiat."
+      },
+      {
+        "id": "l-fon-6",
+        "prompt": "De ce „obiect” se desparte o-biect, și nu o-bi-ect?",
+        "options": [
+          "pentru că „b” nu poate încheia o silabă",
+          "pentru că „ie” este diftong și nu se desparte",
+          "pentru că „o” este vocală",
+          "pentru că are trei consoane alăturate"
+        ],
+        "correctIndex": 1,
+        "explanation": "„Ie” este diftong, iar diftongii rămân întotdeauna în aceeași silabă. De aceea despărțirea corectă este o-biect, cu două silabe."
+      }
+    ]
+  },
+  {
+    "id": "despartirea-in-silabe",
+    "theme": "fonetica",
+    "title": "Despărțirea în silabe",
+    "grades": [5, 6, 7, 8],
+    "readingMinutes": 5,
+    "intro": "Regulile de despărțire se învață o dată și se folosesc tot gimnaziul. Se aplică în ordine, după câte consoane stau între două vocale — plus o regulă care le bate pe toate: diftongii și triftongii nu se rup.",
+    "sections": [
+      {
+        "heading": "Regulile după numărul de consoane",
+        "table": {
+          "caption": "Între două vocale",
+          "headers": ["Consoane", "Regulă", "Exemplu"],
+          "rows": [
+            ["una", "trece la silaba următoare", "ca-să, pă-du-re"],
+            ["două", "prima rămâne, a doua trece", "ar-bo-re, cas-tel"],
+            ["două (excepție)", "trec amândouă dacă a doua e „l” sau „r”", "co-dru, a-flu-ent, o-glin-dă"],
+            ["trei", "prima rămâne, celelalte trec", "in-spec-tor, con-struc-tor"],
+            ["trei (excepție)", "primele două rămân la grupurile lpt, mpt, nct, ncț, rct, stm", "somp-tu-os, punc-taj, ast-ma-tic"]
+          ]
+        }
+      },
+      {
+        "heading": "Reguli care se aplică înaintea celorlalte",
+        "bullets": [
+          "diftongii și triftongii nu se despart: o-biect, cre-ioa-ne",
+          "vocalele în hiat se despart întotdeauna: po-e-zi-e, a-e-ro-port",
+          "„i” final șoptit nu formează silabă: ochi, lupi — o silabă fiecare"
+        ]
+      }
+    ],
+    "traps": [
+      "Numeri consoanele dintre vocale, nu literele. În „ceapă”, grupul „ce” notează un singur sunet, deci despărțirea e cea-pă, cu diftongul „ea” nedespărțit.",
+      "Excepția cu „l” și „r” e cea mai uitată: „co-dru”, nu „cod-ru”; „a-glo-me-rat”, nu „ag-lo-me-rat”.",
+      "Numărul de silabe e dat de numărul de vocale propriu-zise, nu de semivocale. „Beau” are trei litere vocalice, dar o singură silabă.",
+      "Nu desparți niciodată o silabă lăsând o consoană singură la capăt de rând fără vocală — fiecare silabă are nevoie de o vocală."
+    ],
+    "quiz": [
+      {
+        "id": "l-fon-7",
+        "prompt": "Cum se desparte corect în silabe cuvântul „codru”?",
+        "options": ["cod-ru", "co-dru", "codr-u", "c-odru"],
+        "correctIndex": 1,
+        "explanation": "Când a doua consoană din grup este „l” sau „r”, trec amândouă la silaba următoare: co-dru. La fel: a-flu-ent, o-glin-dă."
+      },
+      {
+        "id": "l-fon-8",
+        "prompt": "Câte silabe are cuvântul „poezie”?",
+        "options": ["două", "trei", "patru", "cinci"],
+        "correctIndex": 2,
+        "explanation": "Po-e-zi-e: patru silabe. Vocalele alăturate formează hiat, deci se despart, iar „e” final formează silabă proprie."
+      },
+      {
+        "id": "l-fon-9",
+        "prompt": "Care este despărțirea corectă a cuvântului „punctaj”?",
+        "options": ["pun-ctaj", "punc-taj", "punct-aj", "pu-nctaj"],
+        "correctIndex": 1,
+        "explanation": "„Nct” face parte din grupurile-excepție (lpt, mpt, nct, ncț, rct, stm), la care primele două consoane rămân la silaba dinainte: punc-taj."
+      }
+    ]
   }
 ]
