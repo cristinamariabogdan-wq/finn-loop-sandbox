@@ -938,5 +938,249 @@
         "explanation": "„Deci” arată concluzia care decurge din prima propoziție — coordonare conclusivă, ca și „așadar”, „prin urmare”."
       }
     ]
+  },
+  {
+    "id": "sinonime-antonime",
+    "theme": "vocabular",
+    "title": "Sinonime, antonime, omonime",
+    "grades": [5, 6],
+    "readingMinutes": 4,
+    "intro": "Trei relații între cuvinte, cu trei întrebări diferite: care are același sens, care are sensul opus și care doar sună la fel. Primele două se învață ușor; a treia e locul unde se pierd punctele.",
+    "sections": [
+      {
+        "heading": "Cele trei relații",
+        "table": {
+          "caption": "Cum le deosebești",
+          "headers": ["Relație", "Formă", "Sens", "Exemplu"],
+          "rows": [
+            ["Sinonime", "diferită", "asemănător", "harnic — silitor"],
+            ["Antonime", "diferită", "opus", "harnic — leneș"],
+            ["Omonime", "identică", "complet diferit", "somn (pește) — somn (odihnă)"]
+          ]
+        }
+      },
+      {
+        "heading": "Sinonimia se judecă în context",
+        "paragraphs": [
+          "Două cuvinte sunt sinonime doar dacă se pot înlocui într-un enunț fără să schimbe sensul. „A rosti” și „a pronunța” sunt sinonime în „a rostit cuvintele”, dar nu oriunde: nu spui „a pronunțat o rugăciune”."
+        ]
+      },
+      {
+        "heading": "Antonimele",
+        "bullets": [
+          "prin cuvinte diferite: bun — rău, sus — jos",
+          "prin prefix negativ: drept — nedrept, cinstit — necinstit",
+          "un cuvânt poate avea mai multe antonime, după sens: „tare” — moale (despre materie) sau încet (despre sunet)"
+        ]
+      }
+    ],
+    "traps": [
+      "Omonimele au formă identică și sensuri fără nicio legătură („leu” animal / „leu” monedă). Cuvintele polisemantice au tot o singură formă, dar sensurile lor se înrudesc („gura omului” — „gura râului”). Întreabă-te dacă sensurile au ceva în comun.",
+      "Sinonimia se verifică prin înlocuire în enunț. Două cuvinte din același domeniu nu sunt automat sinonime: „casă” și „vilă” denumesc lucruri diferite.",
+      "Un cuvânt polisemantic are antonime diferite pentru fiecare sens: „tare” se opune lui „moale”, dar și lui „încet”. Alege-l pe cel potrivit contextului din cerință.",
+      "Nu orice cuvinte care sună asemănător sunt omonime: „a evalua” și „a evolua” diferă printr-un sunet, deci sunt paronime, nu omonime."
+    ],
+    "quiz": [
+      {
+        "id": "l-vocab-1",
+        "prompt": "„Leul a răcnit.” / „Costă zece lei.” — ce relație există între cele două cuvinte „leu”?",
+        "options": [
+          "sunt sinonime",
+          "sunt omonime",
+          "sunt paronime",
+          "e un singur cuvânt polisemantic"
+        ],
+        "correctIndex": 1,
+        "explanation": "Animalul și moneda nu au nicio legătură de sens, deși cuvântul are aceeași formă — omonime. La un cuvânt polisemantic, sensurile s-ar înrudi."
+      },
+      {
+        "id": "l-vocab-2",
+        "prompt": "În enunțul „Are o voce tare”, care este antonimul potrivit pentru „tare”?",
+        "options": ["moale", "încet", "slab", "dulce"],
+        "correctIndex": 1,
+        "explanation": "Despre sunete, opusul lui „tare” este „încet”. „Moale” ar fi antonimul potrivit dacă „tare” s-ar referi la o materie: „un aluat tare”."
+      },
+      {
+        "id": "l-vocab-3",
+        "prompt": "Care pereche NU este formată din sinonime?",
+        "options": [
+          "a începe — a demara",
+          "vesel — bucuros",
+          "casă — vilă",
+          "a spune — a zice"
+        ],
+        "correctIndex": 2,
+        "explanation": "„Casă” și „vilă” denumesc realități diferite din același domeniu — fac parte din același câmp lexical, dar nu se pot înlocui una cu alta."
+      }
+    ]
+  },
+  {
+    "id": "paronime-pleonasm",
+    "theme": "vocabular",
+    "title": "Paronime, pleonasm și cuvinte polisemantice",
+    "grades": [6, 7, 8],
+    "readingMinutes": 4,
+    "intro": "Trei capcane de exprimare corectă care apar constant în cerințele de examen: cuvinte care se confundă între ele, repetări inutile și cuvinte cu mai multe sensuri.",
+    "sections": [
+      {
+        "heading": "Paronimele",
+        "paragraphs": [
+          "Sunt cuvinte aproape identice ca formă, dar cu sensuri diferite. Tocmai asemănarea le face periculoase: vorbitorul îl folosește pe unul crezând că spune celălalt — fenomen numit atracție paronimică."
+        ],
+        "table": {
+          "caption": "Paronime frecvente la examen",
+          "headers": ["Cuvânt", "Sens", "Perechea lui", "Sens"],
+          "rows": [
+            ["a evalua", "a aprecia, a măsura", "a evolua", "a se dezvolta"],
+            ["compliment", "vorbă de laudă", "complement", "parte de propoziție"],
+            ["original", "nou, neimitat", "originar", "care provine din"],
+            ["familiar", "apropiat, cunoscut", "familial", "privitor la familie"],
+            ["a enerva", "a irita", "a inerva", "a alimenta cu nervi"]
+          ]
+        }
+      },
+      {
+        "heading": "Pleonasmul",
+        "paragraphs": [
+          "Este repetarea inutilă a aceleiași informații prin două cuvinte diferite. Se corectează scoțând termenul de prisos."
+        ],
+        "bullets": [
+          "a urca sus → a urca",
+          "a coborî jos → a coborî",
+          "averse de ploaie → averse",
+          "și-a adus aportul → a contribuit",
+          "mijloace mass-media → mass-media"
+        ]
+      },
+      {
+        "heading": "Cuvintele polisemantice",
+        "paragraphs": [
+          "Au mai multe sensuri înrudite, pornind de la unul de bază: „a bate” — a lovi, a bate vântul, a bate la ușă, a bate un record. Sensul concret dă naștere celorlalte, de aceea sensurile se leagă între ele."
+        ]
+      }
+    ],
+    "traps": [
+      "Paronimele diferă printr-un singur sunet, omonimele au formă identică. „Complement / compliment” = paronime; „leu / leu” = omonime.",
+      "Un cuvânt polisemantic are sensuri înrudite; omonimele au sensuri fără legătură. Testul: încearcă să explici cum se ajunge de la un sens la celălalt. Dacă reușești, e polisemie.",
+      "Pleonasmul nu e greșeală de gramatică, ci de exprimare — enunțul rămâne corect gramatical, dar spune de două ori același lucru.",
+      "Nu orice repetare e pleonasm: „a repeta din nou” este pleonasm, dar „a spune din nou” e corect, fiindcă „a spune” nu conține ideea de repetare."
+    ],
+    "quiz": [
+      {
+        "id": "l-vocab-4",
+        "prompt": "Care enunț folosește corect paronimul potrivit?",
+        "options": [
+          "Profesorul ne va evolua lucrările.",
+          "Profesorul ne va evalua lucrările.",
+          "Situația s-a evaluat în bine.",
+          "Copilul a evaluat repede în ultimul an."
+        ],
+        "correctIndex": 1,
+        "explanation": "„A evalua” înseamnă a aprecia, a măsura — potrivit pentru lucrări. „A evolua” înseamnă a se dezvolta, deci ar fi corect în c) și d)."
+      },
+      {
+        "id": "l-vocab-5",
+        "prompt": "Care enunț conține un pleonasm?",
+        "options": [
+          "A repetat din nou explicația.",
+          "A spus din nou explicația.",
+          "A citit din nou lecția.",
+          "A scris din nou tema."
+        ],
+        "correctIndex": 0,
+        "explanation": "„A repeta” înseamnă deja „a face din nou”, deci „din nou” e de prisos. La „a spune”, „a citi”, „a scrie”, adverbul aduce o informație reală."
+      },
+      {
+        "id": "l-vocab-6",
+        "prompt": "„A bătut la ușă.” / „Bate vântul.” / „A bătut recordul.” — cuvântul „a bate” este:",
+        "options": [
+          "omonim",
+          "polisemantic",
+          "paronim",
+          "sinonim"
+        ],
+        "correctIndex": 1,
+        "explanation": "Toate sensurile pornesc de la ideea de lovire repetată și se înrudesc între ele — cuvânt polisemantic. La omonime, sensurile n-ar avea nicio legătură."
+      }
+    ]
+  },
+  {
+    "id": "imbogatirea-vocabularului",
+    "theme": "vocabular",
+    "title": "Mijloace de îmbogățire a vocabularului",
+    "grades": [6, 7, 8],
+    "readingMinutes": 5,
+    "intro": "Limba își face cuvinte noi în trei feluri: le derivă, le compune sau le schimbă valoarea gramaticală. Cerința de examen sună aproape întotdeauna „prin ce mijloc s-a format cuvântul?”.",
+    "sections": [
+      {
+        "heading": "Cele trei mijloace interne",
+        "table": {
+          "caption": "Cum recunoști fiecare procedeu",
+          "headers": ["Mijloc", "Ce se întâmplă", "Exemple"],
+          "rows": [
+            ["Derivare cu sufix", "se adaugă la sfârșit", "floare → floricică, pădure → pădurar"],
+            ["Derivare cu prefix", "se adaugă la început", "drept → nedrept, a face → a desface"],
+            ["Compunere prin contopire", "cuvintele se sudează", "untdelemn, binevoitor, deoarece"],
+            ["Compunere prin alăturare", "cuvinte legate cu cratimă sau separate", "câine-lup, primul-ministru, Delta Dunării"],
+            ["Compunere prin abreviere", "se păstrează inițialele sau fragmente", "ONU, CFR, TAROM"],
+            ["Conversiune", "schimbă partea de vorbire, nu forma", "bătrânul (adj → subst), muncește frumos (adj → adv)"]
+          ]
+        }
+      },
+      {
+        "heading": "Familie lexicală sau câmp lexical?",
+        "paragraphs": [
+          "Familia lexicală adună cuvintele formate de la același cuvânt de bază: floare, floricică, florar, înflori, înflorire. Câmpul lexical adună cuvintele care denumesc realități din același domeniu, indiferent de formă: floare, trandafir, lalea, crin."
+        ],
+        "bullets": [
+          "familie lexicală → înrudire de formă (același cuvânt de bază)",
+          "câmp lexical → înrudire de sens (același domeniu)"
+        ]
+      }
+    ],
+    "traps": [
+      "Prefixul stă la început, sufixul la sfârșit. „Nedrept” e derivat cu prefix, „dreptate” e derivat cu sufix, iar „nedreptate” are și prefix, și sufix — derivare parasintetică.",
+      "Compunerea unește cuvinte cu sens de sine stătător; derivarea adaugă particule care nu există singure. „Unt” și „lemn” sunt cuvinte, „ne-” și „-icică” nu sunt.",
+      "Conversiunea nu schimbă forma cuvântului, doar rolul lui în propoziție. Dacă forma e neschimbată dar partea de vorbire diferă, e conversiune, nu derivare.",
+      "Familia lexicală cere același cuvânt de bază, nu doar același domeniu: „floare, trandafir, lalea” e câmp lexical, nu familie lexicală."
+    ],
+    "quiz": [
+      {
+        "id": "l-vocab-7",
+        "prompt": "Cuvântul „nedreptate” este format prin:",
+        "options": [
+          "derivare doar cu prefix",
+          "derivare doar cu sufix",
+          "derivare cu prefix și sufix",
+          "compunere"
+        ],
+        "correctIndex": 2,
+        "explanation": "De la baza „drept” s-au adăugat prefixul „ne-” la început și sufixul „-ate” la sfârșit — derivare parasintetică, adică simultan cu prefix și sufix."
+      },
+      {
+        "id": "l-vocab-8",
+        "prompt": "„Am cumpărat un câine-lup.” — cuvântul „câine-lup” este format prin:",
+        "options": [
+          "derivare cu sufix",
+          "compunere prin alăturare",
+          "compunere prin contopire",
+          "conversiune"
+        ],
+        "correctIndex": 1,
+        "explanation": "Două cuvinte cu sens de sine stătător, legate prin cratimă și cu un singur înțeles — compunere prin alăturare. La contopire s-ar scrie într-un cuvânt: „untdelemn”."
+      },
+      {
+        "id": "l-vocab-9",
+        "prompt": "„Scrie frumos.” — prin ce procedeu a devenit „frumos” adverb?",
+        "options": [
+          "derivare cu sufix",
+          "compunere",
+          "conversiune",
+          "abreviere"
+        ],
+        "correctIndex": 2,
+        "explanation": "Forma cuvântului rămâne neschimbată, dar rolul se schimbă: adjectivul „frumos” determină aici verbul „scrie”, deci a devenit adverb prin conversiune."
+      }
+    ]
   }
 ]
