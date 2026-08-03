@@ -27,6 +27,12 @@ export const CATEGORIES = [
     articulatedLabel: "Vocabularul",
     tagline: "Sinonime, paronime și formarea cuvintelor",
   },
+  {
+    id: "fonetica",
+    label: "Fonetică",
+    articulatedLabel: "Fonetica",
+    tagline: "Sunete, diftongi și despărțirea în silabe",
+  },
 ];
 
 const VALID_CATEGORY_IDS = new Set(CATEGORIES.map((category) => category.id));
