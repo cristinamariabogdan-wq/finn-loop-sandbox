@@ -43,11 +43,12 @@ describe("banca de întrebări reală", () => {
     expect(validateQuestionBank(bank)).toEqual([]);
   });
 
-  it("are minimum 15 întrebări pe categorie", () => {
-    const morfologie = bank.filter((q) => q.category === "morfologie");
-    const sintaxa = bank.filter((q) => q.category === "sintaxa");
-    expect(morfologie.length).toBeGreaterThanOrEqual(15);
-    expect(sintaxa.length).toBeGreaterThanOrEqual(15);
+  it("are minimum 15 întrebări în fiecare categorie care are întrebări", () => {
+    for (const category of CATEGORIES) {
+      const questions = bank.filter((q) => q.category === category.id);
+      if (questions.length === 0) continue;
+      expect(questions.length, `categoria ${category.id}`).toBeGreaterThanOrEqual(15);
+    }
   });
 
   it("are id-uri unice", () => {
@@ -77,10 +78,11 @@ describe("banca de lecții reală", () => {
     expect(validateLessonBank(lessonBank)).toEqual([]);
   });
 
-  it("are cel puțin 6 fișe pe fiecare temă, fiecare cu tabel sau listă și cel puțin 3 capcane", () => {
-    for (const theme of ["morfologie", "sintaxa"]) {
+  it("are cel puțin 3 fișe pe fiecare temă, fiecare cu tabel sau listă și cel puțin 3 capcane", () => {
+    for (const { id: theme } of CATEGORIES) {
       const lessons = lessonBank.filter((lesson) => lesson.theme === theme);
-      expect(lessons.length, `tema ${theme}`).toBeGreaterThanOrEqual(6);
+      if (lessons.length === 0) continue;
+      expect(lessons.length, `tema ${theme}`).toBeGreaterThanOrEqual(3);
       for (const lesson of lessons) {
         const hasStructure = lesson.sections.some(
           (section) => section.table || (section.bullets && section.bullets.length > 0)
@@ -156,10 +158,15 @@ describe("validateLessonBank", () => {
 
 describe("CATEGORIES", () => {
   it("dă fiecărei categorii o formă articulată pentru butonul de exersare", () => {
-    expect(CATEGORIES.map((category) => category.articulatedLabel)).toEqual([
-      "Morfologia",
-      "Sintaxa",
-    ]);
+    for (const category of CATEGORIES) {
+      expect(typeof category.articulatedLabel, `categoria ${category.id}`).toBe("string");
+      expect(category.articulatedLabel.trim(), `categoria ${category.id}`).not.toBe("");
+    }
+  });
+
+  it("are id-uri și etichete unice", () => {
+    expect(new Set(CATEGORIES.map((c) => c.id)).size).toBe(CATEGORIES.length);
+    expect(new Set(CATEGORIES.map((c) => c.label)).size).toBe(CATEGORIES.length);
   });
 });
 

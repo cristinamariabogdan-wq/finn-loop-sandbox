@@ -21,6 +21,12 @@ export const CATEGORIES = [
     articulatedLabel: "Sintaxa",
     tagline: "Funcții sintactice, propoziții și frază",
   },
+  {
+    id: "vocabular",
+    label: "Vocabular",
+    articulatedLabel: "Vocabularul",
+    tagline: "Sinonime, paronime și formarea cuvintelor",
+  },
 ];
 
 const VALID_CATEGORY_IDS = new Set(CATEGORIES.map((category) => category.id));

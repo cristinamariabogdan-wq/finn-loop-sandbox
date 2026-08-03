@@ -388,5 +388,200 @@
     ],
     "correctIndex": 0,
     "explanation": "Subordonata arată intenția acțiunii („cu ce scop a plecat?”) — circumstanțială de scop (finală), introdusă prin „ca să”. Cauzala ar arăta motivul: „pentru că nu mai avea pâine”."
+  },
+  {
+    "id": "v01",
+    "category": "vocabular",
+    "prompt": "Care este sinonimul potrivit pentru cuvântul „a rosti” din enunțul „A rostit cuvintele rar”?",
+    "options": [
+      "a pronunța",
+      "a asculta",
+      "a scrie",
+      "a tăcea"
+    ],
+    "correctIndex": 0,
+    "explanation": "Sinonimele au sens asemănător și pot fi înlocuite în context: „a pronunțat cuvintele rar” păstrează sensul. Sinonimia se verifică întotdeauna în context, nu în abstract."
+  },
+  {
+    "id": "v02",
+    "category": "vocabular",
+    "prompt": "Care este antonimul cuvântului „harnic”?",
+    "options": [
+      "silitor",
+      "leneș",
+      "obosit",
+      "vrednic"
+    ],
+    "correctIndex": 1,
+    "explanation": "Antonimele au sens opus: harnic ≠ leneș. „Silitor” și „vrednic” sunt sinonime cu „harnic”, iar „obosit” denumește o stare, nu opusul hărniciei."
+  },
+  {
+    "id": "v03",
+    "category": "vocabular",
+    "prompt": "„Somnul de noapte” și „somnul din Dunăre” — ce relație există între cele două cuvinte „somn”?",
+    "options": [
+      "sunt sinonime",
+      "sunt antonime",
+      "sunt omonime",
+      "sunt paronime"
+    ],
+    "correctIndex": 2,
+    "explanation": "Omonimele au formă identică, dar sensuri complet diferite și origini diferite: „somn” (starea de a dormi) și „somn” (pește)."
+  },
+  {
+    "id": "v04",
+    "category": "vocabular",
+    "prompt": "„I-a făcut un compliment.” / „Propoziția are un complement direct.” — ce sunt „compliment” și „complement”?",
+    "options": [
+      "omonime",
+      "paronime",
+      "sinonime",
+      "cuvinte polisemantice"
+    ],
+    "correctIndex": 1,
+    "explanation": "Paronimele sunt cuvinte aproape identice ca formă, dar cu sensuri diferite, ușor de confundat: compliment (laudă) / complement (parte de propoziție)."
+  },
+  {
+    "id": "v05",
+    "category": "vocabular",
+    "prompt": "În care enunț cuvântul „gură” este folosit cu sens figurat?",
+    "options": [
+      "S-a spălat pe gură.",
+      "Gura râului s-a lărgit.",
+      "A deschis gura să vorbească.",
+      "Are o rană la gură."
+    ],
+    "correctIndex": 1,
+    "explanation": "„Gura râului” denumește locul de vărsare, printr-o asemănare cu gura ca deschizătură — sens figurat. În celelalte enunțuri cuvântul are sensul propriu, de parte a corpului."
+  },
+  {
+    "id": "v06",
+    "category": "vocabular",
+    "prompt": "„A pus farfuria pe masă.” / „Familia s-a strâns la masă.” — cuvântul „masă” este:",
+    "options": [
+      "polisemantic",
+      "omonim",
+      "paronim",
+      "monosemantic"
+    ],
+    "correctIndex": 0,
+    "explanation": "Sensurile se leagă între ele: de la mobilă s-a ajuns la mâncarea servită pe ea — cuvânt polisemantic. Atenție, „masă” cu sensul de mulțime („o masă de oameni”) vine din alt cuvânt latinesc și este omonim cu acesta, nu un sens înrudit."
+  },
+  {
+    "id": "v07",
+    "category": "vocabular",
+    "prompt": "Cuvântul „floricică” este format prin:",
+    "options": [
+      "derivare cu prefix",
+      "derivare cu sufix",
+      "compunere",
+      "conversiune"
+    ],
+    "correctIndex": 1,
+    "explanation": "La cuvântul de bază „floare” s-a adăugat sufixul diminutival „-icică”, la sfârșit — derivare cu sufix. Prefixul s-ar adăuga la început."
+  },
+  {
+    "id": "v08",
+    "category": "vocabular",
+    "prompt": "Cuvântul „nedrept” este format prin:",
+    "options": [
+      "derivare cu sufix",
+      "derivare cu prefix",
+      "compunere prin alăturare",
+      "conversiune"
+    ],
+    "correctIndex": 1,
+    "explanation": "La cuvântul de bază „drept” s-a adăugat prefixul negativ „ne-”, la început — derivare cu prefix."
+  },
+  {
+    "id": "v09",
+    "category": "vocabular",
+    "prompt": "Cuvântul „untdelemn” este format prin:",
+    "options": [
+      "derivare",
+      "compunere prin contopire",
+      "compunere prin alăturare",
+      "conversiune"
+    ],
+    "correctIndex": 1,
+    "explanation": "„Untdelemn” unește „unt”, „de” și „lemn” într-un singur cuvânt scris legat — compunere prin contopire (sudare). La alăturare, cuvintele se scriu cu cratimă sau separat: „câine-lup”."
+  },
+  {
+    "id": "v10",
+    "category": "vocabular",
+    "prompt": "„Bătrânul a plecat devreme.” — prin ce procedeu a devenit „bătrânul” substantiv?",
+    "options": [
+      "derivare cu sufix",
+      "compunere",
+      "conversiune",
+      "abreviere"
+    ],
+    "correctIndex": 2,
+    "explanation": "Conversiunea (schimbarea valorii gramaticale) transformă un cuvânt în altă parte de vorbire fără să-i schimbe forma: adjectivul „bătrân” articulat devine substantiv."
+  },
+  {
+    "id": "v11",
+    "category": "vocabular",
+    "prompt": "Care serie conține numai cuvinte din familia lexicală a lui „floare”?",
+    "options": [
+      "floare, trandafir, lalea, crin",
+      "floare, florar, înflori, floricică",
+      "floare, grădină, buchet, vază",
+      "floare, petală, tulpină, frunză"
+    ],
+    "correctIndex": 1,
+    "explanation": "Familia lexicală cuprinde cuvintele obținute prin derivare, compunere sau conversiune de la același cuvânt de bază. Celelalte serii sunt câmpuri lexicale — cuvinte din același domeniu, dar fără înrudire de formă."
+  },
+  {
+    "id": "v12",
+    "category": "vocabular",
+    "prompt": "Seria „caiet, penar, ghiozdan, manual” formează:",
+    "options": [
+      "o familie lexicală",
+      "un câmp lexical",
+      "o serie de sinonime",
+      "o serie de omonime"
+    ],
+    "correctIndex": 1,
+    "explanation": "Câmpul lexical grupează cuvinte care denumesc realități din același domeniu — aici, rechizitele școlare. Ele nu provin din același cuvânt de bază, deci nu sunt o familie lexicală."
+  },
+  {
+    "id": "v13",
+    "category": "vocabular",
+    "prompt": "Care dintre enunțuri conține un pleonasm?",
+    "options": [
+      "A urcat sus pe deal.",
+      "A urcat pe deal.",
+      "A coborât în vale.",
+      "A privit spre deal."
+    ],
+    "correctIndex": 0,
+    "explanation": "Pleonasmul repetă inutil o informație: „a urca” înseamnă deja „a merge în sus”, deci „sus” e de prisos. La fel: „a coborî jos”, „averse de ploaie”."
+  },
+  {
+    "id": "v14",
+    "category": "vocabular",
+    "prompt": "Cuvântul „primul-ministru” este:",
+    "options": [
+      "derivat cu prefix",
+      "compus prin alăturare",
+      "obținut prin conversiune",
+      "compus prin abreviere"
+    ],
+    "correctIndex": 1,
+    "explanation": "Două cuvinte cu sens de sine stătător, legate prin cratimă și cu un singur înțeles — compunere prin alăturare. Abrevierea ar da forme ca „ONU” sau „O.N.U.”."
+  },
+  {
+    "id": "v15",
+    "category": "vocabular",
+    "prompt": "„A evalua” și „a evolua” sunt:",
+    "options": [
+      "sinonime",
+      "omonime",
+      "paronime",
+      "antonime"
+    ],
+    "correctIndex": 2,
+    "explanation": "Diferă printr-un singur sunet, dar au sensuri complet diferite: a evalua = a aprecia, a măsura; a evolua = a se dezvolta. Confuzia dintre ele este atracția paronimică."
   }
 ]
