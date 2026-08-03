@@ -457,15 +457,15 @@
   {
     "id": "v06",
     "category": "vocabular",
-    "prompt": "Cuvântul „masă” din „o masă de oameni” și „o masă de lemn” arată că este un cuvânt:",
+    "prompt": "„A pus farfuria pe masă.” / „Familia s-a strâns la masă.” — cuvântul „masă” este:",
     "options": [
       "polisemantic",
-      "monosemantic",
-      "derivat",
-      "compus"
+      "omonim",
+      "paronim",
+      "monosemantic"
     ],
     "correctIndex": 0,
-    "explanation": "Cuvintele polisemantice au mai multe sensuri înrudite, pornind de la același cuvânt. Spre deosebire de omonime, sensurile unui cuvânt polisemantic se leagă între ele."
+    "explanation": "Sensurile se leagă între ele: de la mobilă s-a ajuns la mâncarea servită pe ea — cuvânt polisemantic. Atenție, „masă” cu sensul de mulțime („o masă de oameni”) vine din alt cuvânt latinesc și este omonim cu acesta, nu un sens înrudit."
   },
   {
     "id": "v07",
