@@ -2,7 +2,14 @@ import { describe, it, expect } from "vitest";
 import {
   SESSION_SIZE,
   LESSON_QUIZ_SIZE,
+  EXAM_SIZE,
   CATEGORIES,
+  buildExamSession,
+  computeExamResult,
+  formatMark,
+  formatTime,
+  recordExamRun,
+  describeExamProgress,
   validateQuestionBank,
   validateLessonBank,
   formatGradeBadge,
@@ -155,6 +162,148 @@ describe("validateLessonBank", () => {
     const errors = validateLessonBank([lesson]);
     expect(errors.some((e) => e.includes("4 variante"))).toBe(true);
     expect(errors.some((e) => e.includes("correctIndex"))).toBe(true);
+  });
+});
+
+describe("buildExamSession", () => {
+  it("alege exact 20 de întrebări distincte din banca reală", () => {
+    const paper = buildExamSession(bank);
+    expect(paper).toHaveLength(EXAM_SIZE);
+    expect(new Set(paper.map((q) => q.id)).size).toBe(EXAM_SIZE);
+  });
+
+  it("distribuie egal peste cele patru categorii", () => {
+    const counts = {};
+    for (const q of buildExamSession(bank)) counts[q.category] = (counts[q.category] || 0) + 1;
+    expect(counts).toEqual({ morfologie: 5, sintaxa: 5, vocabular: 5, fonetica: 5 });
+  });
+
+  it("amestecă ariile în loc să le grupeze", () => {
+    // With four blocks of five, a grouped paper would change category only
+    // three times; a shuffled one changes far more often.
+    const paper = buildExamSession(bank);
+    const switches = paper.filter((q, i) => i > 0 && q.category !== paper[i - 1].category).length;
+    expect(switches).toBeGreaterThan(3);
+  });
+
+  it("împarte restul către primele categorii când numărul nu se divide", () => {
+    // Three categories → 20 = 7 + 7 + 6, in CATEGORIES order.
+    const threeAreas = bank.filter((q) => q.category !== "fonetica");
+    const counts = {};
+    for (const q of buildExamSession(threeAreas)) counts[q.category] = (counts[q.category] || 0) + 1;
+    expect(counts).toEqual({ morfologie: 7, sintaxa: 7, vocabular: 6 });
+  });
+
+  it("întoarce o listă goală când nu există întrebări", () => {
+    expect(buildExamSession([])).toEqual([]);
+  });
+
+  it("este determinist pentru același rng", () => {
+    const seeded = () => fakeRng(0.2, 0.8, 0.5, 0.1, 0.9, 0.35, 0.64);
+    expect(buildExamSession(bank, seeded()).map((q) => q.id)).toEqual(
+      buildExamSession(bank, seeded()).map((q) => q.id)
+    );
+  });
+});
+
+describe("computeExamResult", () => {
+  const paper = [
+    makeQuestion({ id: "a", correctIndex: 0 }),
+    makeQuestion({ id: "b", correctIndex: 1 }),
+    makeQuestion({ id: "c", correctIndex: 2 }),
+  ];
+
+  it("numără răspunsurile corecte", () => {
+    const result = computeExamResult(paper, { a: 0, b: 1, c: 2 });
+    expect(result).toMatchObject({ total: 3, score: 3, unanswered: 0 });
+    expect(result.missed).toEqual([]);
+  });
+
+  it("tratează întrebările fără răspuns ca greșite", () => {
+    const result = computeExamResult(paper, { a: 0 });
+    expect(result).toMatchObject({ total: 3, score: 1, unanswered: 2 });
+    expect(result.missed.map((q) => q.id)).toEqual(["b", "c"]);
+  });
+
+  it("adună greșelile și necompletatele în aceeași listă", () => {
+    const result = computeExamResult(paper, { a: 3, b: 1 });
+    expect(result.score).toBe(1);
+    expect(result.missed.map((q) => q.id)).toEqual(["a", "c"]);
+    expect(result.unanswered).toBe(1);
+  });
+});
+
+describe("formatMark", () => {
+  it("aplică formula 1 + 9 × procent", () => {
+    expect(formatMark(20, 20)).toBe("10");
+    expect(formatMark(16, 20)).toBe("8.2");
+    expect(formatMark(10, 20)).toBe("5.5");
+    expect(formatMark(0, 20)).toBe("1");
+  });
+
+  it("rotunjește în sus la jumătate de zecime, fără eroare de virgulă mobilă", () => {
+    // 1 + 9 × 17/20 = 8.65 exactly; naive `Math.round(8.65 * 10)` gives 8.6.
+    expect(formatMark(17, 20)).toBe("8.7");
+    expect(formatMark(19, 20)).toBe("9.6");
+    expect(formatMark(3, 20)).toBe("2.4");
+  });
+
+  it("nu coboară sub 1 și nu are total zero", () => {
+    expect(formatMark(0, 0)).toBe("1");
+  });
+});
+
+describe("formatTime", () => {
+  it("formatează mm:ss", () => {
+    expect(formatTime(20 * 60)).toBe("20:00");
+    expect(formatTime(545)).toBe("09:05");
+    expect(formatTime(0)).toBe("00:00");
+  });
+
+  it("nu afișează timp negativ", () => {
+    expect(formatTime(-5)).toBe("00:00");
+  });
+});
+
+describe("recordExamRun", () => {
+  const result = (score, missedIds) => ({
+    total: EXAM_SIZE,
+    score,
+    unanswered: 0,
+    missed: missedIds.map((id) => makeQuestion({ id })),
+  });
+
+  it("numără rulările și păstrează cel mai bun scor", () => {
+    let progress = recordExamRun(createProgress(), result(16, ["m01"]));
+    expect(progress.exam).toEqual({ runs: 1, bestScore: 16 });
+    progress = recordExamRun(progress, result(12, ["m02"]));
+    expect(progress.exam).toEqual({ runs: 2, bestScore: 16 });
+    progress = recordExamRun(progress, result(19, []));
+    expect(progress.exam).toEqual({ runs: 3, bestScore: 19 });
+  });
+
+  it("trimite greșelile în lista de reluat", () => {
+    const progress = recordExamRun(createProgress(), result(18, ["m01", "s03"]));
+    expect(progress.wrongIds).toEqual(["m01", "s03"]);
+  });
+
+  it("nu atinge statisticile categoriilor", () => {
+    const before = recordSessionEnd(createProgress(), "morfologie", 7);
+    const after = recordExamRun(before, result(14, ["m01"]));
+    expect(after.categories).toEqual(before.categories);
+  });
+});
+
+describe("describeExamProgress", () => {
+  it("întoarce null înainte de prima simulare", () => {
+    expect(describeExamProgress(createProgress())).toBeNull();
+  });
+
+  it("formatează singularul și pluralul", () => {
+    const one = recordExamRun(createProgress(), { total: 20, score: 15, unanswered: 0, missed: [] });
+    expect(describeExamProgress(one)).toBe("Cel mai bun rezultat: 15/20 · 1 simulare");
+    const two = recordExamRun(one, { total: 20, score: 11, unanswered: 0, missed: [] });
+    expect(describeExamProgress(two)).toBe("Cel mai bun rezultat: 15/20 · 2 simulări");
   });
 });
 
@@ -388,6 +537,35 @@ describe("serializare progres", () => {
     progress = recordAnswer(progress, "s03", false);
     progress = recordLessonScore(progress, "pronumele", 3);
     expect(deserializeProgress(serializeProgress(progress))).toEqual(progress);
+  });
+
+  it("face round-trip cu istoricul de simulări", () => {
+    let progress = recordExamRun(createProgress(), {
+      total: EXAM_SIZE,
+      score: 17,
+      unanswered: 0,
+      missed: [makeQuestion({ id: "s07" })],
+    });
+    progress = recordSessionEnd(progress, "fonetica", 8);
+    expect(deserializeProgress(serializeProgress(progress))).toEqual(progress);
+  });
+
+  it("citește progresul salvat înainte de simulări, cu istoricul gol", () => {
+    const legacy = JSON.stringify({
+      categories: { vocabular: { sessions: 3, bestScore: 9 } },
+      wrongIds: ["v02"],
+      lessons: { pronumele: { bestScore: 3 } },
+    });
+    expect(deserializeProgress(legacy).exam).toEqual({ runs: 0, bestScore: 0 });
+  });
+
+  it("igienizează un istoric de simulări imposibil", () => {
+    const bad = (exam) => deserializeProgress(JSON.stringify({ exam })).exam;
+    expect(bad({ runs: -1, bestScore: 5 })).toEqual({ runs: 0, bestScore: 0 });
+    expect(bad({ runs: 2, bestScore: EXAM_SIZE + 1 })).toEqual({ runs: 0, bestScore: 0 });
+    expect(bad({ runs: "două", bestScore: 5 })).toEqual({ runs: 0, bestScore: 0 });
+    expect(bad([1, 2])).toEqual({ runs: 0, bestScore: 0 });
+    expect(bad({ runs: 2, bestScore: 14 })).toEqual({ runs: 2, bestScore: 14 });
   });
 
   it("citește progresul salvat înainte de lecții, fără scoruri de lecție", () => {

@@ -5,6 +5,8 @@
 export const STORAGE_KEY = "zece-la-romana.v1";
 export const SESSION_SIZE = 10;
 export const LESSON_QUIZ_SIZE = 3;
+export const EXAM_SIZE = 20;
+export const EXAM_MINUTES = 20;
 
 export const CATEGORIES = [
   {
@@ -226,8 +228,64 @@ export function buildReviewSession(questions, wrongIds, rng = Math.random) {
   return shuffle(pool, rng).slice(0, SESSION_SIZE);
 }
 
+/**
+ * Exam paper: EXAM_SIZE questions spread as evenly as possible over the
+ * categories that have questions, then shuffled so the areas interleave.
+ * Fixing the total rather than a per-category quota keeps the paper the same
+ * length if a fifth area is ever added.
+ */
+export function buildExamSession(questions, rng = Math.random) {
+  const pools = CATEGORIES.map((category) =>
+    questions.filter((question) => question.category === category.id)
+  ).filter((pool) => pool.length > 0);
+  if (pools.length === 0) return [];
+
+  const base = Math.floor(EXAM_SIZE / pools.length);
+  const remainder = EXAM_SIZE % pools.length;
+  const picked = pools.flatMap((pool, index) =>
+    shuffle(pool, rng).slice(0, base + (index < remainder ? 1 : 0))
+  );
+  return shuffle(picked, rng);
+}
+
+/**
+ * Grade a finished paper. `answers` maps question id → chosen option index;
+ * a missing entry means the question was left blank and counts as wrong.
+ */
+export function computeExamResult(questions, answers) {
+  const missed = questions.filter((question) => answers[question.id] !== question.correctIndex);
+  return {
+    total: questions.length,
+    score: questions.length - missed.length,
+    missed,
+    unanswered: questions.filter((question) => answers[question.id] === undefined).length,
+  };
+}
+
+/**
+ * Indicative mark on the Romanian 1–10 scale: 10 points „din oficiu” put the
+ * floor at 1, the remaining 9 are earned. 16/20 → 8.2, 20/20 → 10, 0/20 → 1.
+ */
+export function formatMark(score, total) {
+  if (total <= 0) return "1";
+  // Work in tenths: `1 + 9 * 17/20` is 8.65, but `8.65 * 10` lands on
+  // 86.4999… in binary floating point and would round down to 8.6.
+  const tenths = Math.round(10 + (90 * score) / total);
+  return tenths % 10 === 0 ? String(tenths / 10) : (tenths / 10).toFixed(1);
+}
+
+/**
+ * Seconds → mm:ss, clamped at zero so an overrun never shows a negative clock.
+ */
+export function formatTime(totalSeconds) {
+  const safe = Math.max(0, Math.floor(totalSeconds));
+  const minutes = Math.floor(safe / 60);
+  const seconds = safe % 60;
+  return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+}
+
 export function createProgress() {
-  return { categories: {}, wrongIds: [], lessons: {} };
+  return { categories: {}, wrongIds: [], lessons: {}, exam: { runs: 0, bestScore: 0 } };
 }
 
 /**
@@ -277,6 +335,36 @@ export function recordLessonScore(progress, lessonId, score) {
     ...progress,
     lessons: { ...progress.lessons, [lessonId]: { bestScore } },
   };
+}
+
+/**
+ * Close a finished exam: bump the run count, keep the best score, and queue
+ * every missed question for review. Deliberately leaves `categories` alone —
+ * those track ten-question single-area sessions, which a mixed twenty-question
+ * paper is not comparable to.
+ */
+export function recordExamRun(progress, result) {
+  const withWrong = result.missed.reduce(
+    (acc, question) => recordAnswer(acc, question.id, false),
+    progress
+  );
+  return {
+    ...withWrong,
+    exam: {
+      runs: progress.exam.runs + 1,
+      bestScore: Math.max(progress.exam.bestScore, result.score),
+    },
+  };
+}
+
+/**
+ * @returns {string | null} start-card status line, or null before the first run
+ */
+export function describeExamProgress(progress) {
+  const stats = progress.exam;
+  if (!stats || stats.runs === 0) return null;
+  const runsLabel = stats.runs === 1 ? "1 simulare" : `${stats.runs} simulări`;
+  return `Cel mai bun rezultat: ${stats.bestScore}/${EXAM_SIZE} · ${runsLabel}`;
 }
 
 /**
@@ -365,6 +453,21 @@ export function deserializeProgress(raw) {
       }
     }
   }
+  // Absent on progress saved before the exam shipped — those visits just start
+  // with no exam history rather than failing to load.
+  const exam = parsed.exam;
+  if (
+    exam &&
+    typeof exam === "object" &&
+    !Array.isArray(exam) &&
+    Number.isInteger(exam.runs) &&
+    exam.runs >= 0 &&
+    Number.isInteger(exam.bestScore) &&
+    exam.bestScore >= 0 &&
+    exam.bestScore <= EXAM_SIZE
+  ) {
+    progress.exam = { runs: exam.runs, bestScore: exam.bestScore };
+  }
   return progress;
 }
 
@@ -417,6 +520,28 @@ if (typeof document !== "undefined") {
     lessonQuizAgain: document.getElementById("lesson-quiz-again"),
     lessonPractice: document.getElementById("lesson-practice"),
     lessonBack: document.getElementById("lesson-back"),
+    examIntro: document.getElementById("view-exam-intro"),
+    exam: document.getElementById("view-exam"),
+    examResult: document.getElementById("view-exam-result"),
+    examCard: document.getElementById("exam-card"),
+    examStats: document.getElementById("exam-stats"),
+    examOpen: document.getElementById("exam-open"),
+    examStart: document.getElementById("exam-start"),
+    examCancel: document.getElementById("exam-cancel"),
+    examClock: document.getElementById("exam-clock"),
+    examStep: document.getElementById("exam-step"),
+    examRemaining: document.getElementById("exam-remaining"),
+    examPrompt: document.getElementById("exam-prompt"),
+    examOptions: document.getElementById("exam-options"),
+    examPrev: document.getElementById("exam-prev"),
+    examNext: document.getElementById("exam-next"),
+    examSubmit: document.getElementById("exam-submit"),
+    examConfirm: document.getElementById("exam-confirm"),
+    examScore: document.getElementById("exam-score"),
+    examMark: document.getElementById("exam-mark"),
+    examReview: document.getElementById("exam-review"),
+    examAgain: document.getElementById("exam-again"),
+    examHome: document.getElementById("exam-home"),
   };
 
   let bank = [];
@@ -424,6 +549,8 @@ if (typeof document !== "undefined") {
   let progress = deserializeProgress(readStoredProgress());
   let session = null;
   let lessonView = null;
+  let exam = null;
+  let examTimer = null;
 
   function readStoredProgress() {
     try {
@@ -447,6 +574,12 @@ if (typeof document !== "undefined") {
     els.summary.hidden = name !== "summary";
     els.lessons.hidden = name !== "lessons";
     els.lesson.hidden = name !== "lesson";
+    els.examIntro.hidden = name !== "exam-intro";
+    els.exam.hidden = name !== "exam";
+    els.examResult.hidden = name !== "exam-result";
+    // Leaving the paper by any route stops the clock, so an abandoned run can
+    // never keep ticking behind another view and submit itself later.
+    if (name !== "exam") stopExamTimer();
     // Every view is a fresh screen, so it starts at its own top. Without this,
     // leaving a long lesson sheet carries the old offset over and the next
     // view opens scrolled past its heading — the taller the sheet, the worse.
@@ -485,6 +618,9 @@ if (typeof document !== "undefined") {
     if (wrongCount > 0) {
       els.reviewCount.textContent = `${formatQuestionCount(wrongCount)} de reluat`;
     }
+    els.examCard.hidden = bank.length === 0;
+    const examStats = describeExamProgress(progress);
+    els.examStats.textContent = examStats || "Încă neîncercată";
     els.lessonsCard.hidden = lessons.length === 0;
     if (lessons.length > 0) {
       els.lessonsCount.textContent = lessons.length === 1 ? "o fișă de teorie" : `${lessons.length} fișe de teorie`;
@@ -631,6 +767,111 @@ if (typeof document !== "undefined") {
     els.lessonQuizResult.hidden = false;
   }
 
+  function stopExamTimer() {
+    if (examTimer !== null) {
+      clearInterval(examTimer);
+      examTimer = null;
+    }
+  }
+
+  function startExam() {
+    const questions = buildExamSession(bank);
+    if (questions.length === 0) return;
+    exam = { questions, answers: {}, index: 0, endsAt: Date.now() + EXAM_MINUTES * 60 * 1000 };
+    els.examConfirm.hidden = true;
+    renderExamQuestion();
+    tickExamClock();
+    examTimer = setInterval(tickExamClock, 1000);
+    show("exam");
+  }
+
+  function tickExamClock() {
+    if (!exam) return;
+    const secondsLeft = (exam.endsAt - Date.now()) / 1000;
+    // Round up so the first tick reads 20:00 rather than 19:59.
+    els.examClock.textContent = formatTime(Math.ceil(secondsLeft));
+    els.examClock.classList.toggle("exam-bar__clock--low", secondsLeft <= 60);
+    if (secondsLeft <= 0) finishExam();
+  }
+
+  function renderExamQuestion() {
+    const question = exam.questions[exam.index];
+    const chosen = exam.answers[question.id];
+    els.examStep.textContent = `Întrebarea ${exam.index + 1} din ${exam.questions.length}`;
+    const blank = exam.questions.filter((q) => exam.answers[q.id] === undefined).length;
+    els.examRemaining.textContent =
+      blank === 0
+        ? "Ai răspuns la toate întrebările."
+        : blank === 1
+          ? "A rămas o întrebare fără răspuns."
+          : `Au rămas ${formatQuestionCount(blank)} fără răspuns.`;
+    els.examPrompt.textContent = question.prompt;
+    els.examOptions.innerHTML = question.options
+      .map(
+        (option, index) => `
+      <button class="option${index === chosen ? " option--chosen" : ""}" type="button" data-index="${index}">
+        <span class="option__letter">${"ABCD"[index]}</span>
+        <span class="option__text">${escapeHtml(option)}</span>
+      </button>`
+      )
+      .join("");
+    els.examOptions.querySelectorAll("button.option").forEach((button) => {
+      button.addEventListener("click", () => {
+        // No verdict here on purpose: the paper stays silent until it is handed in.
+        exam.answers[question.id] = Number(button.dataset.index);
+        els.examConfirm.hidden = true;
+        renderExamQuestion();
+      });
+    });
+    els.examPrev.disabled = exam.index === 0;
+    els.examNext.disabled = exam.index === exam.questions.length - 1;
+  }
+
+  function requestExamSubmit() {
+    const blank = exam.questions.filter((q) => exam.answers[q.id] === undefined).length;
+    if (blank > 0 && els.examConfirm.hidden) {
+      els.examConfirm.textContent =
+        blank === 1
+          ? "A rămas o întrebare fără răspuns. Apasă din nou „Predă lucrarea” ca să predai așa."
+          : `Au rămas ${formatQuestionCount(blank)} fără răspuns. Apasă din nou „Predă lucrarea” ca să predai așa.`;
+      els.examConfirm.hidden = false;
+      return;
+    }
+    finishExam();
+  }
+
+  function finishExam() {
+    if (!exam) return;
+    stopExamTimer();
+    const result = computeExamResult(exam.questions, exam.answers);
+    progress = recordExamRun(progress, result);
+    saveProgress();
+    els.examScore.textContent = `${result.score}/${result.total}`;
+    els.examMark.textContent = `Nota estimativă: ${formatMark(result.score, result.total)}`;
+    els.examReview.innerHTML =
+      result.missed.length === 0
+        ? `<p class="exam-review__perfect">Nicio greșeală. Zece curat! 🎉</p>`
+        : `<h3 class="exam-review__title">De recapitulat (${result.missed.length})</h3>` +
+          result.missed
+            .map((question) => {
+              const chosen = exam.answers[question.id];
+              const given =
+                chosen === undefined
+                  ? "Fără răspuns"
+                  : `Ai ales: ${"ABCD"[chosen]}. ${escapeHtml(question.options[chosen])}`;
+              return `
+        <article class="exam-review__item">
+          <p class="exam-review__prompt">${escapeHtml(question.prompt)}</p>
+          <p class="exam-review__given">${given}</p>
+          <p class="exam-review__correct">Corect: ${"ABCD"[question.correctIndex]}. ${escapeHtml(question.options[question.correctIndex])}</p>
+          <p class="exam-review__explanation">${escapeHtml(question.explanation)}</p>
+        </article>`;
+            })
+            .join("");
+    exam = null;
+    show("exam-result");
+  }
+
   function startCategorySession(categoryId) {
     const questions = buildSession(bank, categoryId);
     if (questions.length === 0) return;
@@ -727,6 +968,25 @@ if (typeof document !== "undefined") {
 
   els.summaryHome.addEventListener("click", renderStart);
   els.reviewStart.addEventListener("click", startReviewSession);
+
+  els.examOpen.addEventListener("click", () => show("exam-intro"));
+  els.examCancel.addEventListener("click", renderStart);
+  els.examStart.addEventListener("click", startExam);
+  els.examPrev.addEventListener("click", () => {
+    if (exam.index > 0) {
+      exam.index -= 1;
+      renderExamQuestion();
+    }
+  });
+  els.examNext.addEventListener("click", () => {
+    if (exam.index < exam.questions.length - 1) {
+      exam.index += 1;
+      renderExamQuestion();
+    }
+  });
+  els.examSubmit.addEventListener("click", requestExamSubmit);
+  els.examAgain.addEventListener("click", () => show("exam-intro"));
+  els.examHome.addEventListener("click", renderStart);
 
   els.lessonsOpen.addEventListener("click", renderLessonList);
   els.lessonsHome.addEventListener("click", renderStart);
