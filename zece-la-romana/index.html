@@ -35,7 +35,58 @@
           </div>
           <button id="lessons-open" class="button button--ghost" type="button">Vezi lecțiile</button>
         </div>
+        <div id="exam-card" class="exam-card" hidden>
+          <div>
+            <h3 class="exam-card__title">Simulare de examen</h3>
+            <p class="exam-card__blurb">20 de întrebări în 20 de minute, fără ajutor pe parcurs.</p>
+            <p id="exam-stats" class="exam-card__stats"></p>
+          </div>
+          <button id="exam-open" class="button" type="button">Începe simularea</button>
+        </div>
         <p id="load-error" class="load-error" hidden></p>
+      </section>
+
+      <section id="view-exam-intro" class="view" hidden>
+        <h2 class="view__heading">Înainte să începi</h2>
+        <ul class="exam-rules">
+          <li><strong>20 de întrebări</strong> amestecate din toate cele patru arii.</li>
+          <li><strong>20 de minute.</strong> Când timpul expiră, lucrarea se predă singură.</li>
+          <li><strong>Fără feedback pe parcurs.</strong> Afli ce ai greșit abia la final.</li>
+          <li>Poți sări peste o întrebare și să revii la ea.</li>
+          <li><strong>Dacă închizi pagina, simularea se pierde</strong> — nu se salvează.</li>
+        </ul>
+        <div class="exam-intro__actions">
+          <button id="exam-start" class="button" type="button">Începe</button>
+          <button id="exam-cancel" class="button button--ghost" type="button">Renunț</button>
+        </div>
+      </section>
+
+      <section id="view-exam" class="view" hidden>
+        <div class="exam-bar">
+          <span id="exam-clock" class="exam-bar__clock" aria-live="off">20:00</span>
+          <span id="exam-step" class="exam-bar__step"></span>
+        </div>
+        <p id="exam-remaining" class="exam-bar__remaining"></p>
+        <p id="exam-prompt" class="quiz-prompt"></p>
+        <div id="exam-options" class="quiz-options"></div>
+        <div class="exam-nav">
+          <button id="exam-prev" class="button button--ghost" type="button">Înapoi</button>
+          <button id="exam-next" class="button button--ghost" type="button">Înainte</button>
+          <button id="exam-submit" class="button" type="button">Predă lucrarea</button>
+        </div>
+        <p id="exam-confirm" class="exam-confirm" hidden></p>
+      </section>
+
+      <section id="view-exam-result" class="view" hidden>
+        <p class="summary__label">Rezultatul simulării</p>
+        <p id="exam-score" class="summary__score"></p>
+        <p id="exam-mark" class="exam-result__mark"></p>
+        <p class="exam-result__note">Notă orientativă, calculată din procentul de răspunsuri corecte. Nu este punctajul oficial al examenului.</p>
+        <div id="exam-review" class="exam-review"></div>
+        <div class="summary__actions">
+          <button id="exam-again" class="button" type="button">Încă o simulare</button>
+          <button id="exam-home" class="button button--ghost" type="button">Înapoi la început</button>
+        </div>
       </section>
 
       <section id="view-lessons" class="view" hidden>

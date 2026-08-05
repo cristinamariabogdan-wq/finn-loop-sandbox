@@ -148,6 +148,188 @@ body {
   font-size: 0.9rem;
 }
 
+/* Exam simulation: start card, rules, paper, result */
+
+.exam-card {
+  margin-top: 16px;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.exam-card__title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.exam-card__blurb {
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+  opacity: 0.75;
+}
+
+.exam-card__stats {
+  margin: 6px 0 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.exam-card .button {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.exam-rules {
+  margin: 0 0 24px;
+  padding-left: 20px;
+  display: grid;
+  gap: 10px;
+}
+
+.exam-intro__actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.exam-bar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.exam-bar__clock {
+  font-size: 1.6rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+}
+
+.exam-bar__clock--low {
+  color: var(--wrong);
+}
+
+.exam-bar__step {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.exam-bar__remaining {
+  margin: 0 0 16px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* Chosen, not correct: the paper stays silent until it is handed in. */
+.option--chosen {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.exam-nav {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.exam-nav .button:disabled {
+  opacity: 0.4;
+  cursor: default;
+  transform: none;
+  box-shadow: none;
+}
+
+.exam-confirm {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--wrong-soft);
+  color: var(--wrong);
+  font-weight: 600;
+}
+
+.exam-result__mark {
+  margin: 0 0 6px;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.exam-result__note {
+  margin: 0 auto 24px;
+  max-width: 42ch;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.exam-review {
+  text-align: left;
+  display: grid;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.exam-review__title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.exam-review__perfect {
+  margin: 0;
+  font-weight: 700;
+  color: var(--correct);
+}
+
+.exam-review__item {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--wrong);
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: grid;
+  gap: 6px;
+}
+
+.exam-review__prompt {
+  margin: 0;
+  font-weight: 600;
+}
+
+.exam-review__given {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--wrong);
+}
+
+.exam-review__correct {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--correct);
+}
+
+.exam-review__explanation {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
 /* Lessons: start card, list, sheet */
 
 .lessons-card {
