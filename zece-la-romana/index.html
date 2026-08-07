@@ -19,6 +19,10 @@
 
     <main>
       <section id="view-start" class="view">
+        <div class="grade-filter">
+          <span class="grade-filter__label" id="grade-filter-label">Materia până în clasa:</span>
+          <div class="grade-filter__options" id="grade-filter" role="group" aria-labelledby="grade-filter-label"></div>
+        </div>
         <h2 class="view__heading">Alege ce exersezi azi</h2>
         <div id="category-list" class="category-list"></div>
         <div id="review-card" class="review-card" hidden>
@@ -39,6 +43,7 @@
           <div>
             <h3 class="exam-card__title">Simulare de examen</h3>
             <p class="exam-card__blurb">20 de întrebări în 20 de minute, fără ajutor pe parcurs.</p>
+            <p class="exam-card__scope">Simularea acoperă toată materia, indiferent de filtru.</p>
             <p id="exam-stats" class="exam-card__stats"></p>
           </div>
           <button id="exam-open" class="button" type="button">Începe simularea</button>
@@ -91,6 +96,7 @@
 
       <section id="view-lessons" class="view" hidden>
         <h2 class="view__heading">Lecții</h2>
+        <p id="lessons-hidden" class="lessons-hidden" hidden></p>
         <div id="lesson-groups" class="lesson-groups"></div>
         <button id="lessons-home" class="button button--ghost" type="button">Înapoi la început</button>
       </section>

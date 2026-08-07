@@ -5,6 +5,10 @@ import {
   EXAM_SIZE,
   CATEGORIES,
   buildExamSession,
+  filterQuestionsByGrade,
+  filterLessonsByGrade,
+  normalizeGradeFilter,
+  formatGradeLabel,
   computeExamResult,
   formatMark,
   formatTime,
@@ -193,6 +197,99 @@ describe("validateLessonBank", () => {
     const errors = validateLessonBank([lesson]);
     expect(errors.some((e) => e.includes("4 variante"))).toBe(true);
     expect(errors.some((e) => e.includes("correctIndex"))).toBe(true);
+  });
+});
+
+describe("normalizeGradeFilter", () => {
+  it("acceptă doar anii 5–8", () => {
+    for (const year of [5, 6, 7, 8]) expect(normalizeGradeFilter(year)).toBe(year);
+  });
+
+  it("reduce orice altceva la «toate clasele»", () => {
+    for (const value of [null, undefined, 4, 9, 0, 6.5, "6", true, {}, []]) {
+      expect(normalizeGradeFilter(value), `valoarea ${String(value)}`).toBeNull();
+    }
+  });
+});
+
+describe("formatGradeLabel", () => {
+  it("dă numeralul roman", () => {
+    expect(formatGradeLabel(5)).toBe("a V-a");
+    expect(formatGradeLabel(8)).toBe("a VIII-a");
+    expect(formatGradeLabel(9)).toBe("");
+  });
+});
+
+describe("filterQuestionsByGrade", () => {
+  it("nu filtrează nimic fără nivel ales", () => {
+    expect(filterQuestionsByGrade(bank, null)).toHaveLength(bank.length);
+    expect(filterQuestionsByGrade(bank, undefined)).toHaveLength(bank.length);
+  });
+
+  it("este cumulativ: păstrează tot ce s-a predat până la nivelul ales", () => {
+    for (const level of [5, 6, 7, 8]) {
+      const kept = filterQuestionsByGrade(bank, level);
+      expect(kept.every((q) => q.grade <= level), `nivelul ${level}`).toBe(true);
+      expect(kept.length).toBe(bank.filter((q) => q.grade <= level).length);
+    }
+  });
+
+  it("crește monoton de la un nivel la altul", () => {
+    const sizes = [5, 6, 7, 8].map((level) => filterQuestionsByGrade(bank, level).length);
+    expect(sizes).toEqual([...sizes].sort((a, b) => a - b));
+    expect(sizes[sizes.length - 1]).toBe(bank.length);
+  });
+
+  it("tratează un nivel invalid ca «toate»", () => {
+    expect(filterQuestionsByGrade(bank, 99)).toHaveLength(bank.length);
+  });
+});
+
+describe("filterLessonsByGrade", () => {
+  it("nu filtrează nimic fără nivel ales", () => {
+    expect(filterLessonsByGrade(lessonBank, null)).toHaveLength(lessonBank.length);
+  });
+
+  it("păstrează fișa dacă a fost începută până la nivelul ales", () => {
+    // „Verbul” acoperă 5–8: la clasa a V-a trebuie să apară, fiindcă începe atunci.
+    const atFive = filterLessonsByGrade(lessonBank, 5).map((l) => l.id);
+    expect(atFive).toContain("verbul");
+    expect(atFive).not.toContain("fraza"); // fișa începe în clasa a VII-a
+  });
+
+  it("ajunge la toate fișele la clasa a VIII-a", () => {
+    expect(filterLessonsByGrade(lessonBank, 8)).toHaveLength(lessonBank.length);
+  });
+});
+
+describe("filtrul aplicat construirii sesiunilor", () => {
+  it("o sesiune filtrată conține numai materie predată", () => {
+    const filtered = filterQuestionsByGrade(bank, 6);
+    const session = buildSession(filtered, "morfologie");
+    expect(session.length).toBeGreaterThan(0);
+    expect(session.every((q) => q.grade <= 6 && q.category === "morfologie")).toBe(true);
+  });
+
+  it("acceptă bazine mai mici decât o sesiune întreagă", () => {
+    // Sintaxa are doar 4 întrebări de clasa a V-a; sesiunea le ia pe toate.
+    const filtered = filterQuestionsByGrade(bank, 5);
+    const session = buildSession(filtered, "sintaxa");
+    expect(session.length).toBe(filtered.filter((q) => q.category === "sintaxa").length);
+    expect(session.length).toBeLessThan(SESSION_SIZE);
+  });
+
+  it("lista de reluat respectă filtrul", () => {
+    const wrongIds = bank.map((q) => q.id);
+    const filtered = filterQuestionsByGrade(bank, 5);
+    expect(buildReviewSession(filtered, wrongIds).every((q) => q.grade <= 5)).toBe(true);
+  });
+
+  it("simularea ignoră filtrul: primește banca întreagă", () => {
+    // AC-8 se ține prin construcție — examenul e alimentat cu `bank`, nu cu
+    // rezultatul filtrării. Testul apără exact acest contract.
+    const paper = buildExamSession(bank);
+    expect(paper).toHaveLength(EXAM_SIZE);
+    expect(paper.some((q) => q.grade > 5)).toBe(true);
   });
 });
 
@@ -589,6 +686,28 @@ describe("serializare progres", () => {
     });
     progress = recordSessionEnd(progress, "fonetica", 8);
     expect(deserializeProgress(serializeProgress(progress))).toEqual(progress);
+  });
+
+  it("face round-trip cu filtrul de clasă", () => {
+    const progress = { ...createProgress(), gradeFilter: 6 };
+    expect(deserializeProgress(serializeProgress(progress)).gradeFilter).toBe(6);
+  });
+
+  it("citește progresul salvat înainte de filtru, cu filtrul pe «toate»", () => {
+    const legacy = JSON.stringify({
+      categories: { morfologie: { sessions: 2, bestScore: 8 } },
+      wrongIds: ["m01"],
+      lessons: {},
+    });
+    expect(deserializeProgress(legacy).gradeFilter).toBeNull();
+  });
+
+  it("igienizează un filtru imposibil", () => {
+    const stored = (gradeFilter) => deserializeProgress(JSON.stringify({ gradeFilter })).gradeFilter;
+    expect(stored(4)).toBeNull();
+    expect(stored(9)).toBeNull();
+    expect(stored("6")).toBeNull();
+    expect(stored(7)).toBe(7);
   });
 
   it("citește progresul salvat înainte de simulări, cu istoricul gol", () => {
