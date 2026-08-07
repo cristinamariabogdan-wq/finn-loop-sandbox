@@ -33,6 +33,7 @@ import lessonBank from "../zece-la-romana/data/lessons.json";
 const makeQuestion = (overrides = {}) => ({
   id: "q1",
   category: "morfologie",
+  grade: 5,
   prompt: "Întrebare de probă?",
   options: ["a", "b", "c", "d"],
   correctIndex: 0,
@@ -60,6 +61,36 @@ describe("banca de întrebări reală", () => {
 
   it("are id-uri unice", () => {
     expect(new Set(bank.map((q) => q.id)).size).toBe(bank.length);
+  });
+
+  it("are anul de studiu pe fiecare întrebare", () => {
+    for (const question of bank) {
+      expect([5, 6, 7, 8], `întrebarea ${question.id}`).toContain(question.grade);
+    }
+  });
+
+  it("raportează distribuția pe categorii și ani", () => {
+    const matrix = {};
+    for (const question of bank) {
+      matrix[question.category] = matrix[question.category] || { 5: 0, 6: 0, 7: 0, 8: 0 };
+      matrix[question.category][question.grade] += 1;
+    }
+    const lines = ["", "categorie    cls5  cls6  cls7  cls8"];
+    for (const [category, row] of Object.entries(matrix)) {
+      lines.push(category.padEnd(12) + [5, 6, 7, 8].map((g) => String(row[g]).padStart(4)).join("  "));
+    }
+    lines.push("", "disponibil cumulativ, pe niveluri:");
+    for (const level of [5, 6, 7, 8]) {
+      const perCategory = Object.entries(matrix).map(
+        ([category, row]) =>
+          `${category} ${[5, 6, 7, 8].filter((g) => g <= level).reduce((sum, g) => sum + row[g], 0)}`
+      );
+      lines.push(`  până în clasa ${level}: ${perCategory.join(", ")}`);
+    }
+    // Printed so an unbalanced tagging is visible in review, not asserted:
+    // the curriculum, not a quota, decides how many topics each year carries.
+    console.log(lines.join("\n"));
+    expect(Object.keys(matrix).sort()).toEqual(CATEGORIES.map((c) => c.id).sort());
   });
 });
 
@@ -395,6 +426,16 @@ describe("validateQuestionBank", () => {
   it("prinde correctIndex în afara intervalului", () => {
     const errors = validateQuestionBank([makeQuestion({ correctIndex: 4 })]);
     expect(errors.some((e) => e.includes("correctIndex"))).toBe(true);
+  });
+
+  it("cere anul de studiu între 5 și 8", () => {
+    const noGrade = makeQuestion();
+    delete noGrade.grade;
+    expect(validateQuestionBank([noGrade]).some((e) => e.includes("grade"))).toBe(true);
+    for (const value of [4, 9, 0, 5.5, "5", null]) {
+      const errors = validateQuestionBank([makeQuestion({ grade: value })]);
+      expect(errors.some((e) => e.includes("grade")), `grade: ${String(value)}`).toBe(true);
+    }
   });
 
   it("prinde explicația lipsă și categoria necunoscută", () => {

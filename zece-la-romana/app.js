@@ -38,6 +38,9 @@ export const CATEGORIES = [
 ];
 
 const VALID_CATEGORY_IDS = new Set(CATEGORIES.map((category) => category.id));
+// Shared by both validators: drill questions carry one `grade`, lesson sheets
+// carry a `grades` range.
+const VALID_GRADES = new Set([5, 6, 7, 8]);
 
 /**
  * Check the question bank against the schema the app relies on.
@@ -64,6 +67,11 @@ export function validateQuestionBank(questions) {
     if (!VALID_CATEGORY_IDS.has(question.category)) {
       errors.push(`${where}: categorie necunoscută`);
     }
+    // The year the topic is introduced, so the grade filter can hide material
+    // the child has not been taught yet.
+    if (!VALID_GRADES.has(question.grade)) {
+      errors.push(`${where}: grade trebuie să fie un an între 5 și 8`);
+    }
     if (typeof question.prompt !== "string" || !question.prompt.trim()) {
       errors.push(`${where}: enunț lipsă`);
     }
@@ -88,7 +96,6 @@ export function validateQuestionBank(questions) {
   return errors;
 }
 
-const VALID_GRADES = new Set([5, 6, 7, 8]);
 const ROMAN_GRADES = { 5: "a V-a", 6: "a VI-a", 7: "a VII-a", 8: "a VIII-a" };
 
 /**
