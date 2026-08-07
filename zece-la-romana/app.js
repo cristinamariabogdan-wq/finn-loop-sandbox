@@ -206,6 +206,45 @@ export function formatGradeBadge(grades) {
 }
 
 /**
+ * Roman label for one school year: 5 → „a V-a”.
+ */
+export function formatGradeLabel(grade) {
+  return ROMAN_GRADES[grade] || "";
+}
+
+/**
+ * A stored or user-supplied filter value, reduced to something safe:
+ * a year in 5–8, or `null` meaning „toate clasele”.
+ */
+export function normalizeGradeFilter(value) {
+  return VALID_GRADES.has(value) ? value : null;
+}
+
+/**
+ * The filter is cumulative: at year N keep everything taught by then, because
+ * topics recur and deepen from one year to the next.
+ * @param {Array<{grade: number}>} questions
+ * @param {number | null} gradeFilter
+ */
+export function filterQuestionsByGrade(questions, gradeFilter) {
+  const level = normalizeGradeFilter(gradeFilter);
+  if (level === null) return questions;
+  return questions.filter((question) => question.grade <= level);
+}
+
+/**
+ * Same rule for lesson sheets, which carry a range rather than one year: a
+ * sheet counts as taught once its earliest year has passed.
+ * @param {Array<{grades: number[]}>} lessons
+ * @param {number | null} gradeFilter
+ */
+export function filterLessonsByGrade(lessons, gradeFilter) {
+  const level = normalizeGradeFilter(gradeFilter);
+  if (level === null) return lessons;
+  return lessons.filter((lesson) => Math.min(...lesson.grades) <= level);
+}
+
+/**
  * Fisher–Yates shuffle into a new array; `rng` is injectable for tests.
  * @template T @param {T[]} items @param {() => number} rng @returns {T[]}
  */
@@ -292,7 +331,13 @@ export function formatTime(totalSeconds) {
 }
 
 export function createProgress() {
-  return { categories: {}, wrongIds: [], lessons: {}, exam: { runs: 0, bestScore: 0 } };
+  return {
+    categories: {},
+    wrongIds: [],
+    lessons: {},
+    exam: { runs: 0, bestScore: 0 },
+    gradeFilter: null,
+  };
 }
 
 /**
@@ -475,6 +520,9 @@ export function deserializeProgress(raw) {
   ) {
     progress.exam = { runs: exam.runs, bestScore: exam.bestScore };
   }
+  // Absent on progress saved before the filter shipped, and anything unexpected
+  // falls back to „toate clasele” rather than hiding material.
+  progress.gradeFilter = normalizeGradeFilter(parsed.gradeFilter);
   return progress;
 }
 
@@ -505,6 +553,8 @@ if (typeof document !== "undefined") {
     summaryHome: document.getElementById("summary-home"),
     lessons: document.getElementById("view-lessons"),
     lesson: document.getElementById("view-lesson"),
+    gradeFilter: document.getElementById("grade-filter"),
+    lessonsHidden: document.getElementById("lessons-hidden"),
     lessonsCard: document.getElementById("lessons-card"),
     lessonsCount: document.getElementById("lessons-count"),
     lessonsOpen: document.getElementById("lessons-open"),
@@ -575,6 +625,17 @@ if (typeof document !== "undefined") {
     }
   }
 
+  // Everything the child practises comes through here, so the filter cannot be
+  // forgotten at a call site. The exam deliberately reads `bank` directly —
+  // that is what keeps AC-8 true by construction rather than by remembering.
+  function practiceBank() {
+    return filterQuestionsByGrade(bank, progress.gradeFilter);
+  }
+
+  function practiceLessons() {
+    return filterLessonsByGrade(lessons, progress.gradeFilter);
+  }
+
   function show(name) {
     els.start.hidden = name !== "start";
     els.quiz.hidden = name !== "quiz";
@@ -606,21 +667,52 @@ if (typeof document !== "undefined") {
       .replace(/'/g, "&#39;");
   }
 
+  function renderGradeFilter() {
+    const levels = [null, 5, 6, 7, 8];
+    els.gradeFilter.innerHTML = levels
+      .map((level) => {
+        const active = progress.gradeFilter === level;
+        const label = level === null ? "Toate" : formatGradeLabel(level);
+        return `
+        <button class="grade-chip${active ? " grade-chip--active" : ""}" type="button"
+                data-level="${level === null ? "" : level}" aria-pressed="${active}">${label}</button>`;
+      })
+      .join("");
+    els.gradeFilter.querySelectorAll("button[data-level]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const raw = button.dataset.level;
+        progress = { ...progress, gradeFilter: normalizeGradeFilter(raw === "" ? null : Number(raw)) };
+        saveProgress();
+        renderStart();
+      });
+    });
+  }
+
   function renderStart() {
+    renderGradeFilter();
+    const available = practiceBank();
     els.categoryList.innerHTML = CATEGORIES.map((category) => {
       const stats = describeCategoryProgress(progress, category.id);
+      const count = available.filter((question) => question.category === category.id).length;
+      const empty = count === 0;
+      const availability = empty
+        ? `Nimic din această arie până în clasa ${formatGradeLabel(progress.gradeFilter)}`
+        : progress.gradeFilter === null
+          ? `${formatQuestionCount(count)} disponibile`
+          : `${formatQuestionCount(count)} până în clasa ${formatGradeLabel(progress.gradeFilter)}`;
       return `
-        <article class="category-card">
+        <article class="category-card${empty ? " category-card--empty" : ""}">
           <h3 class="category-card__title">${category.label}</h3>
           <p class="category-card__tagline">${category.tagline}</p>
+          <p class="category-card__available">${availability}</p>
           <p class="category-card__stats">${stats || "Încă neexersat"}</p>
-          <button class="button" type="button" data-category="${category.id}">Începe o sesiune</button>
+          <button class="button" type="button" data-category="${category.id}"${empty ? " disabled" : ""}>Începe o sesiune</button>
         </article>`;
     }).join("");
     els.categoryList.querySelectorAll("button[data-category]").forEach((button) => {
       button.addEventListener("click", () => startCategorySession(button.dataset.category));
     });
-    const wrongCount = progress.wrongIds.length;
+    const wrongCount = available.filter((question) => progress.wrongIds.includes(question.id)).length;
     els.reviewCard.hidden = wrongCount === 0;
     if (wrongCount > 0) {
       els.reviewCount.textContent = `${formatQuestionCount(wrongCount)} de reluat`;
@@ -628,17 +720,28 @@ if (typeof document !== "undefined") {
     els.examCard.hidden = bank.length === 0;
     const examStats = describeExamProgress(progress);
     els.examStats.textContent = examStats || "Încă neîncercată";
-    els.lessonsCard.hidden = lessons.length === 0;
-    if (lessons.length > 0) {
-      els.lessonsCount.textContent = lessons.length === 1 ? "o fișă de teorie" : `${lessons.length} fișe de teorie`;
+    const visibleLessons = practiceLessons();
+    els.lessonsCard.hidden = visibleLessons.length === 0;
+    if (visibleLessons.length > 0) {
+      els.lessonsCount.textContent =
+        visibleLessons.length === 1 ? "o fișă de teorie" : `${visibleLessons.length} fișe de teorie`;
     }
     show("start");
   }
 
   function renderLessonList() {
+    const visible = practiceLessons();
+    const hiddenCount = lessons.length - visible.length;
+    els.lessonsHidden.hidden = hiddenCount === 0;
+    if (hiddenCount > 0) {
+      els.lessonsHidden.textContent =
+        hiddenCount === 1
+          ? "O fișă ascunsă de filtru."
+          : `${hiddenCount} fișe ascunse de filtru.`;
+    }
     const groups = CATEGORIES.map((category) => ({
       category,
-      items: lessons.filter((lesson) => lesson.theme === category.id),
+      items: visible.filter((lesson) => lesson.theme === category.id),
     })).filter((group) => group.items.length > 0);
 
     els.lessonGroups.innerHTML = groups
@@ -880,7 +983,7 @@ if (typeof document !== "undefined") {
   }
 
   function startCategorySession(categoryId) {
-    const questions = buildSession(bank, categoryId);
+    const questions = buildSession(practiceBank(), categoryId);
     if (questions.length === 0) return;
     session = { questions, categoryId, index: 0, score: 0, answered: false };
     renderQuestion();
@@ -888,7 +991,7 @@ if (typeof document !== "undefined") {
   }
 
   function startReviewSession() {
-    const questions = buildReviewSession(bank, progress.wrongIds);
+    const questions = buildReviewSession(practiceBank(), progress.wrongIds);
     if (questions.length === 0) {
       renderStart();
       return;
