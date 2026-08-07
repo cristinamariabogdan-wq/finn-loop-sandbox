@@ -2,6 +2,7 @@
   {
     "id": "m01",
     "category": "morfologie",
+    "grade": 7,
     "prompt": "„Copilul desenează frumos.” — ce valoare morfologică are cuvântul „frumos”?",
     "options": [
       "adjectiv propriu-zis",
@@ -15,6 +16,7 @@
   {
     "id": "m02",
     "category": "morfologie",
+    "grade": 7,
     "prompt": "„Am citit o carte despre munți.” — cuvântul „despre” este:",
     "options": [
       "conjuncție subordonatoare",
@@ -28,6 +30,7 @@
   {
     "id": "m03",
     "category": "morfologie",
+    "grade": 6,
     "prompt": "„Aș merge la mare.” — verbul „aș merge” este la modul:",
     "options": [
       "indicativ, timpul viitor",
@@ -41,6 +44,7 @@
   {
     "id": "m04",
     "category": "morfologie",
+    "grade": 5,
     "prompt": "„Cartea elevului este nouă.” — substantivul „elevului” este în cazul:",
     "options": [
       "dativ",
@@ -54,6 +58,7 @@
   {
     "id": "m05",
     "category": "morfologie",
+    "grade": 5,
     "prompt": "„I-am dat Mariei cartea.” — cuvântul „i-” este:",
     "options": [
       "pronume personal în dativ",
@@ -67,6 +72,7 @@
   {
     "id": "m06",
     "category": "morfologie",
+    "grade": 5,
     "prompt": "„Am cumpărat două caiete.” — cuvântul „două” este:",
     "options": [
       "numeral ordinal",
@@ -80,6 +86,7 @@
   {
     "id": "m07",
     "category": "morfologie",
+    "grade": 5,
     "prompt": "„Andrei este cel mai harnic din clasă.” — adjectivul „cel mai harnic” este la gradul:",
     "options": [
       "comparativ de superioritate",
@@ -93,6 +100,7 @@
   {
     "id": "m08",
     "category": "morfologie",
+    "grade": 6,
     "prompt": "„Frunzele căzute acoperă aleea.” — cuvântul „căzute” este:",
     "options": [
       "verb la participiu, cu funcție de predicat",
@@ -106,6 +114,7 @@
   {
     "id": "m09",
     "category": "morfologie",
+    "grade": 7,
     "prompt": "„Elevul care învață reușește.” — cuvântul „care” este:",
     "options": [
       "pronume interogativ",
@@ -119,6 +128,7 @@
   {
     "id": "m10",
     "category": "morfologie",
+    "grade": 7,
     "prompt": "„Hai, vino mai repede!” — cuvântul „hai” este:",
     "options": [
       "verb la imperativ",
@@ -132,6 +142,7 @@
   {
     "id": "m11",
     "category": "morfologie",
+    "grade": 6,
     "prompt": "„Caietul meu este albastru.” — cuvântul „meu” este:",
     "options": [
       "pronume posesiv",
@@ -145,6 +156,7 @@
   {
     "id": "m12",
     "category": "morfologie",
+    "grade": 7,
     "prompt": "„Învăț mult, dar obosesc repede.” — cuvântul „dar” este:",
     "options": [
       "conjuncție coordonatoare adversativă",
@@ -158,6 +170,7 @@
   {
     "id": "m13",
     "category": "morfologie",
+    "grade": 5,
     "prompt": "„Mergeam zilnic la bunici.” — verbul „mergeam” este la timpul:",
     "options": [
       "perfect compus",
@@ -171,6 +184,7 @@
   {
     "id": "m14",
     "category": "morfologie",
+    "grade": 6,
     "prompt": "„Se gândește la vacanță.” — cuvântul „se” este:",
     "options": [
       "pronume personal",
@@ -184,6 +198,7 @@
   {
     "id": "m15",
     "category": "morfologie",
+    "grade": 5,
     "prompt": "„O carte stă pe raft.” — cuvântul „o” este:",
     "options": [
       "numeral cardinal",
@@ -197,6 +212,7 @@
   {
     "id": "s01",
     "category": "sintaxa",
+    "grade": 5,
     "prompt": "„Mi-e dor de bunici.” — subiectul propoziției este:",
     "options": [
       "„mi”",
@@ -210,6 +226,7 @@
   {
     "id": "s02",
     "category": "sintaxa",
+    "grade": 5,
     "prompt": "„Maria este eleva mea.” — predicatul propoziției este:",
     "options": [
       "„este” — predicat verbal",
@@ -223,6 +240,7 @@
   {
     "id": "s03",
     "category": "sintaxa",
+    "grade": 6,
     "prompt": "„Cartea de povești e veche.” — „de povești” are funcția sintactică de:",
     "options": [
       "atribut substantival prepozițional",
@@ -236,6 +254,7 @@
   {
     "id": "s04",
     "category": "sintaxa",
+    "grade": 6,
     "prompt": "„Îl văd pe Andrei.” — „pe Andrei” are funcția sintactică de:",
     "options": [
       "complement indirect",
@@ -249,6 +268,7 @@
   {
     "id": "s05",
     "category": "sintaxa",
+    "grade": 6,
     "prompt": "„Mă gândesc la examen.” — „la examen” are funcția sintactică de:",
     "options": [
       "complement direct",
@@ -262,6 +282,7 @@
   {
     "id": "s06",
     "category": "sintaxa",
+    "grade": 6,
     "prompt": "„Le-am mulțumit colegilor.” — „colegilor” are funcția sintactică de:",
     "options": [
       "complement direct",
@@ -275,6 +296,7 @@
   {
     "id": "s07",
     "category": "sintaxa",
+    "grade": 6,
     "prompt": "„Mâine plecăm la munte.” — „mâine” are funcția sintactică de:",
     "options": [
       "circumstanțial de timp",
@@ -288,6 +310,7 @@
   {
     "id": "s08",
     "category": "sintaxa",
+    "grade": 7,
     "prompt": "„Știu că vei reuși.” — propoziția „că vei reuși” este:",
     "options": [
       "propoziție subiectivă",
@@ -301,6 +324,7 @@
   {
     "id": "s09",
     "category": "sintaxa",
+    "grade": 7,
     "prompt": "„Se spune că iarna va fi grea.” — propoziția „că iarna va fi grea” este:",
     "options": [
       "propoziție completivă directă",
@@ -314,6 +338,7 @@
   {
     "id": "s10",
     "category": "sintaxa",
+    "grade": 7,
     "prompt": "„Am citit cartea pe care mi-ai recomandat-o.” — propoziția „pe care mi-ai recomandat-o” este:",
     "options": [
       "propoziție completivă directă",
@@ -327,6 +352,7 @@
   {
     "id": "s11",
     "category": "sintaxa",
+    "grade": 8,
     "prompt": "„N-am ieșit afară pentru că ploua.” — propoziția „pentru că ploua” este:",
     "options": [
       "propoziție circumstanțială de cauză",
@@ -340,6 +366,7 @@
   {
     "id": "s12",
     "category": "sintaxa",
+    "grade": 7,
     "prompt": "„Cred că ai dreptate, dar vreau să verific.” — câte propoziții are fraza?",
     "options": [
       "două",
@@ -353,6 +380,7 @@
   {
     "id": "s13",
     "category": "sintaxa",
+    "grade": 5,
     "prompt": "„Mergem la teatru.” — subiectul propoziției este:",
     "options": [
       "exprimat: „noi”",
@@ -366,6 +394,7 @@
   {
     "id": "s14",
     "category": "sintaxa",
+    "grade": 5,
     "prompt": "„Fratele meu a devenit inginer.” — „inginer” are funcția sintactică de:",
     "options": [
       "complement direct",
@@ -379,6 +408,7 @@
   {
     "id": "s15",
     "category": "sintaxa",
+    "grade": 8,
     "prompt": "„A plecat în oraș ca să cumpere pâine.” — propoziția „ca să cumpere pâine” este:",
     "options": [
       "propoziție circumstanțială de scop",
@@ -392,6 +422,7 @@
   {
     "id": "v01",
     "category": "vocabular",
+    "grade": 5,
     "prompt": "Care este sinonimul potrivit pentru cuvântul „a rosti” din enunțul „A rostit cuvintele rar”?",
     "options": [
       "a pronunța",
@@ -405,6 +436,7 @@
   {
     "id": "v02",
     "category": "vocabular",
+    "grade": 5,
     "prompt": "Care este antonimul cuvântului „harnic”?",
     "options": [
       "silitor",
@@ -418,6 +450,7 @@
   {
     "id": "v03",
     "category": "vocabular",
+    "grade": 6,
     "prompt": "„Somnul de noapte” și „somnul din Dunăre” — ce relație există între cele două cuvinte „somn”?",
     "options": [
       "sunt sinonime",
@@ -431,6 +464,7 @@
   {
     "id": "v04",
     "category": "vocabular",
+    "grade": 7,
     "prompt": "„I-a făcut un compliment.” / „Propoziția are un complement direct.” — ce sunt „compliment” și „complement”?",
     "options": [
       "omonime",
@@ -444,6 +478,7 @@
   {
     "id": "v05",
     "category": "vocabular",
+    "grade": 5,
     "prompt": "În care enunț cuvântul „gură” este folosit cu sens figurat?",
     "options": [
       "S-a spălat pe gură.",
@@ -457,6 +492,7 @@
   {
     "id": "v06",
     "category": "vocabular",
+    "grade": 6,
     "prompt": "„A pus farfuria pe masă.” / „Familia s-a strâns la masă.” — cuvântul „masă” este:",
     "options": [
       "polisemantic",
@@ -470,6 +506,7 @@
   {
     "id": "v07",
     "category": "vocabular",
+    "grade": 6,
     "prompt": "Cuvântul „floricică” este format prin:",
     "options": [
       "derivare cu prefix",
@@ -483,6 +520,7 @@
   {
     "id": "v08",
     "category": "vocabular",
+    "grade": 6,
     "prompt": "Cuvântul „nedrept” este format prin:",
     "options": [
       "derivare cu sufix",
@@ -496,6 +534,7 @@
   {
     "id": "v09",
     "category": "vocabular",
+    "grade": 7,
     "prompt": "Cuvântul „untdelemn” este format prin:",
     "options": [
       "derivare",
@@ -509,6 +548,7 @@
   {
     "id": "v10",
     "category": "vocabular",
+    "grade": 7,
     "prompt": "„Bătrânul a plecat devreme.” — prin ce procedeu a devenit „bătrânul” substantiv?",
     "options": [
       "derivare cu sufix",
@@ -522,6 +562,7 @@
   {
     "id": "v11",
     "category": "vocabular",
+    "grade": 7,
     "prompt": "Care serie conține numai cuvinte din familia lexicală a lui „floare”?",
     "options": [
       "floare, trandafir, lalea, crin",
@@ -535,6 +576,7 @@
   {
     "id": "v12",
     "category": "vocabular",
+    "grade": 6,
     "prompt": "Seria „caiet, penar, ghiozdan, manual” formează:",
     "options": [
       "o familie lexicală",
@@ -548,6 +590,7 @@
   {
     "id": "v13",
     "category": "vocabular",
+    "grade": 7,
     "prompt": "Care dintre enunțuri conține un pleonasm?",
     "options": [
       "A urcat sus pe deal.",
@@ -561,6 +604,7 @@
   {
     "id": "v14",
     "category": "vocabular",
+    "grade": 7,
     "prompt": "Cuvântul „primul-ministru” este:",
     "options": [
       "derivat cu prefix",
@@ -574,6 +618,7 @@
   {
     "id": "v15",
     "category": "vocabular",
+    "grade": 7,
     "prompt": "„A evalua” și „a evolua” sunt:",
     "options": [
       "sinonime",
@@ -587,6 +632,7 @@
   {
     "id": "f01",
     "category": "fonetica",
+    "grade": 5,
     "prompt": "Câte litere și câte sunete are cuvântul „ceapă”?",
     "options": [
       "5 litere, 5 sunete",
@@ -600,6 +646,7 @@
   {
     "id": "f02",
     "category": "fonetica",
+    "grade": 5,
     "prompt": "În cuvântul „gheață”, grupul de litere „ghe”:",
     "options": [
       "notează trei sunete distincte",
@@ -613,6 +660,7 @@
   {
     "id": "f03",
     "category": "fonetica",
+    "grade": 5,
     "prompt": "Câte sunete notează litera „x” în cuvântul „examen”?",
     "options": [
       "unul singur",
@@ -626,6 +674,7 @@
   {
     "id": "f04",
     "category": "fonetica",
+    "grade": 5,
     "prompt": "Care dintre următoarele cuvinte conține un diftong?",
     "options": [
       "poet",
@@ -639,6 +688,7 @@
   {
     "id": "f05",
     "category": "fonetica",
+    "grade": 5,
     "prompt": "Cuvântul „leoaică” conține:",
     "options": [
       "un diftong",
@@ -652,6 +702,7 @@
   {
     "id": "f06",
     "category": "fonetica",
+    "grade": 5,
     "prompt": "În cuvântul „poezie”, secvența „oe” formează:",
     "options": [
       "un diftong",
@@ -665,6 +716,7 @@
   {
     "id": "f07",
     "category": "fonetica",
+    "grade": 5,
     "prompt": "Câte silabe are cuvântul „aeroport”?",
     "options": ["trei", "patru", "cinci", "două"],
     "correctIndex": 1,
@@ -673,6 +725,7 @@
   {
     "id": "f08",
     "category": "fonetica",
+    "grade": 5,
     "prompt": "Cum se desparte corect în silabe cuvântul „obiect”?",
     "options": ["o-bi-ect", "ob-iect", "o-biect", "obi-ect"],
     "correctIndex": 2,
@@ -681,6 +734,7 @@
   {
     "id": "f09",
     "category": "fonetica",
+    "grade": 5,
     "prompt": "Cum se desparte în silabe cuvântul „arbore”?",
     "options": ["ar-bo-re", "a-rbo-re", "arb-o-re", "ar-bor-e"],
     "correctIndex": 0,
@@ -689,6 +743,7 @@
   {
     "id": "f10",
     "category": "fonetica",
+    "grade": 5,
     "prompt": "Care este despărțirea corectă a cuvântului „inspector”?",
     "options": ["in-spec-tor", "ins-pec-tor", "i-nspec-tor", "insp-ec-tor"],
     "correctIndex": 0,
@@ -697,6 +752,7 @@
   {
     "id": "f11",
     "category": "fonetica",
+    "grade": 5,
     "prompt": "Ce fel de sunet este „i” din cuvântul „iarnă”?",
     "options": [
       "vocală",
@@ -710,6 +766,7 @@
   {
     "id": "f12",
     "category": "fonetica",
+    "grade": 5,
     "prompt": "Câte vocale are limba română?",
     "options": ["cinci", "șapte", "opt", "zece"],
     "correctIndex": 1,
@@ -718,6 +775,7 @@
   {
     "id": "f13",
     "category": "fonetica",
+    "grade": 5,
     "prompt": "În cuvântul „ochi”, litera „i” de la final:",
     "options": [
       "este vocală și formează silabă",
@@ -731,6 +789,7 @@
   {
     "id": "f14",
     "category": "fonetica",
+    "grade": 5,
     "prompt": "Care cuvânt conține un hiat?",
     "options": ["deal", "beau", "ideal", "soare"],
     "correctIndex": 2,
@@ -739,6 +798,7 @@
   {
     "id": "f15",
     "category": "fonetica",
+    "grade": 5,
     "prompt": "Accentul în limba română:",
     "options": [
       "cade întotdeauna pe ultima silabă",
