@@ -170,7 +170,7 @@ if (typeof document !== "undefined") {
         countEl.dataset.qty = String(next);
         countEl.textContent = String(next);
         row.classList.toggle("is-selected", next > 0);
-        updateOrderBar(menu);
+        updateOrderBar();
       };
       row.querySelector(".stepper__btn--minus").addEventListener("click", () => {
         setQty(Number(countEl.dataset.qty) - 1);
@@ -194,19 +194,16 @@ if (typeof document !== "undefined") {
   const orderBarEl = document.getElementById("order-bar");
   const orderBarSummaryEl = document.getElementById("order-bar-summary");
 
-  function updateOrderBar(menu) {
+  // Counts only, never a total: Anda quotes the price herself over WhatsApp,
+  // so the page must not put a number in front of the customer beforehand.
+  function updateOrderBar() {
     if (!orderBarEl || !orderBarSummaryEl) return;
-    const selections = gatherPizzaSelections();
-    const count = selections.reduce((sum, s) => sum + s.qty, 0);
+    const count = gatherPizzaSelections().reduce((sum, s) => sum + s.qty, 0);
     if (count === 0) {
       orderBarEl.hidden = true;
       return;
     }
-    const total = selections.reduce((sum, s) => {
-      const item = menu.find((menuItem) => menuItem.id === s.id);
-      return sum + (item ? item.price * s.qty : 0);
-    }, 0);
-    orderBarSummaryEl.innerHTML = `${count} pizza · <em>${formatPrice(total)}</em>`;
+    orderBarSummaryEl.textContent = count === 1 ? "1 pizza aleasă" : `${count} pizza alese`;
     orderBarEl.hidden = false;
   }
 
