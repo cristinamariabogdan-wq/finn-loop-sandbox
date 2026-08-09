@@ -400,10 +400,6 @@ textarea {
   text-overflow: ellipsis;
 }
 
-.order-bar__summary em {
-  font-style: normal;
-  color: var(--ember);
-}
 
 @media (prefers-reduced-motion: reduce) {
   .hero__photo,
