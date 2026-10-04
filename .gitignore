@@ -1,3 +1,6 @@
 node_modules/
 *.log
 .DS_Store
+
+# 51 MB build artifact — rebuild with `node build-share.js`, do not commit.
+maldivia/maldivia-share.html
