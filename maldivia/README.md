@@ -28,6 +28,20 @@ Four scroll-scrubbed sequences, listed in the `window.__SHEETS` manifest inside
 | studio | 267 | 1280×720 | 18 |
 | villa | 219 | 864×496 | 7 |
 
+## What loads when
+
+Only the hero's 32 sheets are fetched when the page parses. The three tours are
+the other 43 sheets and 19 MB of the 36, they sit behind a button, and most
+visitors never press it — so a tour is fetched and cut when someone asks for
+one, and a visitor who never opens a tour never pays for one. An opening screen
+went from 36 MB to 17.
+
+Cutting runs one film at a time, because two decoded sheets in memory at once is
+the thing to avoid. A tour that has just been pressed takes the cutter from the
+hero at its next sheet boundary and gives it back when it is done: queued behind
+the whole hero a tour opened in 21s, nearly all of it spent cutting frames the
+visitor had already scrolled past. It now opens in under a second.
+
 ## Running it
 
 It is plain static files, but `index.html` fetches the sheets, so opening it

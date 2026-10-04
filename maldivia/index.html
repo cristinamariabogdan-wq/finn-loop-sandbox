@@ -796,7 +796,6 @@ body.page .hdr{position:sticky}
 @media(min-width:820px){.homes.homes-two{grid-template-columns:repeat(2,1fr);max-width:900px}}
 .home-others .sect-head{margin-bottom:0}
 
-.tour-cta[disabled]{opacity:.5;cursor:progress}
 html:not(.pv-run) .beat{visibility:hidden}
 body.solid-hdr .route-view{padding-top:86px}</style>
 
@@ -2355,12 +2354,18 @@ body.solid-hdr .route-view{padding-top:86px}</style>
 window.__FRAMES = {};
 (function () {
   var M = window.__SHEETS, TD = window.__TOUR_DIRS, CONC = 8;
-  var ctas = [].slice.call(document.querySelectorAll('.tour-cta'));
-  ctas.forEach(function (b) { b.disabled = true; });
+  var HERO = 'assets/video/hero';
 
-  function enable(dir) {
-    ctas.forEach(function (b) { if (TD[b.dataset.tour] === dir) b.disabled = false; });
-  }
+  /* The tour buttons used to sit disabled until their footage had been cut, which
+     meant cutting all of it on every visit whether or not anyone asked. They are
+     live from the start now; the overlay already has a loading state, and that is
+     the honest place to wait. */
+
+  /* Every film's frame array has to exist before its Film is built — the engine
+     decides at construction whether it is playing sliced sheets or fetching
+     per-frame tiers off the server, and the tier folders are not in this export.
+     The arrays stay empty until something fills them. */
+  Object.keys(M).forEach(function (dir) { window.__FRAMES[dir] = new Array(M[dir].count); });
 
   /* Eight canvases, not one. toBlob encodes off the main thread, so the slicing is
      throughput-bound rather than latency-bound: measured 8.5ms a frame serially
@@ -2372,26 +2377,35 @@ window.__FRAMES = {};
      fired with frames still unwritten and two sets of workers fought over one pool. */
   function release(im) { im.onload = im.onerror = null; im.src = ''; }
 
-  /* External sheets are downloaded all at once, in page order, the moment the page
-     parses; decoding still walks them one at a time. Fetched sheet by sheet the hero
-     sat waiting ~10s on a 50 Mbps link for bytes that could have been arriving in
-     parallel. Inline (data:) sheets need no fetch. */
+  /* A film's sheets are downloaded all at once, in page order; decoding still walks
+     them one at a time. Fetched sheet by sheet the hero sat waiting ~10s on a 50 Mbps
+     link for bytes that could have been arriving in parallel. Inline (data:) sheets
+     need no fetch.
+
+     Only the hero is fetched when the page parses. The three tours are 43 of the 75
+     sheets and 19 MB of the 36, they are the same footage whichever home you are
+     looking at, and they sit behind a button most visitors never press — so they are
+     fetched when one is asked for. A visitor who never opens a tour never pays for
+     one, and the arithmetic on the opening screen goes 36 MB to 17. */
   var got = {};
-  Object.keys(M).forEach(function (dir) {
+  function fetchDir(dir) {
     M[dir].sheets.forEach(function (u) {
-      if (u.slice(0, 5) === 'data:') return;
+      if (u.slice(0, 5) === 'data:' || got[u]) return;
       got[u] = fetch(u).then(function (r) { if (!r.ok) throw new Error(u + ' ' + r.status); return r.blob(); })
                        .then(function (bl) { return URL.createObjectURL(bl); })
                        .catch(function (e) { console.error(e); return u; });
     });
-  });
+  }
+  fetchDir(HERO);
   function sheetURL(u, cb) { if (got[u]) got[u].then(cb); else cb(u); }
 
   function kick() { (window.__pvKick || []).forEach(function (f) { f(); }); }
 
   function sliceDir(dir, done, first) {
-    var m = M[dir], out = new Array(m.count), pool = [];
-    window.__FRAMES[dir] = out;
+    /* fill the array in place: a Film built before the cutting started is holding a
+       reference to it, and replacing it here would leave that Film reading an array
+       nothing ever writes to */
+    var m = M[dir], out = window.__FRAMES[dir], pool = [];
     for (var c = 0; c < CONC; c++) {
       var cv = document.createElement('canvas');
       cv.width = m.fw; cv.height = m.fh;
@@ -2399,6 +2413,8 @@ window.__FRAMES = {};
     }
     (function nextSheet(s) {
       if (s >= m.sheets.length) return done();
+      /* hand the cutter over between sheets if something more urgent is waiting */
+      if (s > 0 && yieldNow(dir)) return park(function () { nextSheet(s); });
       var im = new Image();
       im.onload = function () {
         var base = s * m.per, n = Math.min(m.per, m.count - base), next = 0, live = pool.length;
@@ -2432,24 +2448,57 @@ window.__FRAMES = {};
     })(0);
   }
 
-  var HERO = 'assets/video/hero';
-  var rest = Object.keys(M).filter(function (d) { return d !== HERO; });
-  function sliceRest(i) {
-    if (i >= rest.length) return;
-    sliceDir(rest[i], function () { sliceRest(i + 1); }, function () { enable(rest[i]); });
+  /* One film cut at a time, and each only ever once: two decoded sheets in memory
+     at once is the thing to avoid, since all of the hero's together would be ~315MB.
+
+     But a tour someone has just pressed should not wait out the rest of a film they
+     have already scrolled past — queued behind the whole hero it opened in 21s, all
+     of it spent on frames nobody was looking at. So the hero yields at its next sheet
+     boundary and resumes once the tour is cut, and the tour's bytes are already on
+     their way because the fetch starts when it is asked for, not when the cutter is
+     free. Downloading and decoding do not compete for the same thing. */
+  var asked = {}, cutting = false, queue = [], parkedHero = null;
+  function yieldNow(dir) { return dir === HERO && queue.length > 0; }
+  function park(resume) { parkedHero = resume; cutting = false; pumpQueue(); }
+  function pumpQueue() {
+    if (cutting) return;
+    if (queue.length) {
+      cutting = true;
+      sliceDir(queue.shift(), function () { cutting = false; pumpQueue(); });
+    } else if (parkedHero) {
+      var resume = parkedHero; parkedHero = null; cutting = true; resume();
+    }
   }
+  /* Asked for by the visitor: focusing the tour button or pressing it. Focus runs
+     a beat ahead of click on a mouse and is how the keyboard arrives, so it buys a
+     little of the wait back either way.
+
+     Deliberately not on hover. The button sits mid-page, so a cursor left where it
+     was while someone reads or scrolls lands on it without being aimed there, and
+     pointerenter would then fetch 7.7 MB nobody asked for — the thing this is here
+     to stop. The overlay has a loading state; that is the honest place to wait. */
+  window.__pvWant = function (key) {
+    var dir = TD[key];
+    if (!dir || asked[dir]) return;
+    asked[dir] = true;
+    fetchDir(dir);
+    queue.push(dir);
+    pumpQueue();
+  };
+  document.querySelectorAll('[data-tour]').forEach(function (btn) {
+    var want = function () { window.__pvWant(btn.dataset.tour); };
+    btn.addEventListener('focus', want, { once: true });
+    btn.addEventListener('click', want);
+  });
+
   /* the page starts as soon as the hero's first sheet is cut — its opening seconds —
      and the rest of the hero fills in behind it, sheet by sheet */
-  /* two lanes once the page is up: the rest of the hero, and the tours one after
-     another, so at most two sheets are decoded at a time. A tour opens as soon as its
-     first sheet is cut and fills in the same way the hero does. */
-  sliceDir(HERO, function () {}, function () {
-    /* the tours must still get cut even if the page's own scripts throw on start,
-       or one error upstream leaves every tour button dead for good */
+  sliceDir(HERO, function () { cutting = false; pumpQueue(); }, function () {
     document.documentElement.classList.add('pv-run');
     try { window.__RUN(); } catch (e) { console.error(e); }
-    sliceRest(0);
   });
+  /* the hero holds the cutter until it is done, so a tour asked for during it queues */
+  cutting = true;
 })();
 </script>
 
