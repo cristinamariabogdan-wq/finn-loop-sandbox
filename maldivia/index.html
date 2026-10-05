@@ -671,12 +671,20 @@ body.page .hdr{position:sticky}
 .req{display:grid;grid-template-columns:1fr;min-height:100svh}
 @media(min-width:1000px){.req{grid-template-columns:46fr 54fr}}
 
+/* Stacked above the form on a phone, this height is what is left for the picture
+   once the copy has taken what it needs. At 52svh the copy filled 359 of 422px and
+   left a 64px sliver of photograph, which reads as a stripe rather than a place. */
 .req-aside{position:relative;overflow:hidden;background:var(--navy-900);
-  min-height:52svh;display:flex;align-items:flex-end}
+  min-height:64svh;display:flex;align-items:flex-end}
 @media(min-width:1000px){.req-aside{position:sticky;top:0;height:100svh;min-height:0}}
 .req-aside img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+/* Lifted through the middle, where the copy actually sits. The stops as written
+   cleared 3.5:1 on the eyebrow against the darkest frame available, and a 12px
+   uppercase label wants 4.5. This holds 4.96 on the eyebrow and 5.37 on the
+   heading while leaving the top 54% of the frame alone — the picture is still
+   the point. */
 .req-aside-scrim{position:absolute;inset:0;
-  background:linear-gradient(to top,rgba(14,21,38,.86) 0%,rgba(14,21,38,.42) 42%,rgba(14,21,38,.12) 74%,rgba(14,21,38,.2) 100%)}
+  background:linear-gradient(to top,rgba(14,21,38,.88) 0%,rgba(14,21,38,.56) 46%,rgba(14,21,38,.18) 74%,rgba(14,21,38,.2) 100%)}
 .req-aside-copy{position:relative;padding:clamp(32px,5vw,64px);color:var(--ivory);max-width:56ch}
 .req-aside-copy .eyebrow{color:var(--sky-200);margin-bottom:18px}
 .req-aside-copy .lead{margin-top:22px;color:rgba(241,237,228,.9);max-width:38ch}
@@ -685,6 +693,14 @@ body.page .hdr{position:sticky}
   line-height:1.6;color:rgba(241,237,228,.82);max-width:44ch}
 .req-points li::before{content:"";position:absolute;left:0;top:.72em;width:10px;height:1px;
   background:var(--sky)}
+
+/* These styles were written for a page of its own, where the header scrolls away
+   with the document. Reached as a route it sits under the fixed bar instead, and
+   under the 86px of padding that clears it — so a 100svh aside overhangs the screen
+   by exactly that much and the last of the points falls off the bottom edge. */
+@media(min-width:1000px){
+  body.solid-hdr .req-aside{top:86px;height:calc(100svh - 86px)}
+}
 
 .req-form-wrap{background:var(--bg);padding:clamp(48px,8vh,104px) var(--gut)}
 .req-form-inner{max-width:620px;margin:0 auto}
@@ -821,7 +837,7 @@ body.solid-hdr .route-view{padding-top:86px}</style>
     <a href="#homes">Homes</a>
     <a href="#life">Life at Maldivia</a>
     <a href="#ownership">Ownership</a>
-    <a class="nav-cta" href="https://claude.ai/code/artifact/84849e1c-e8c5-4aa0-9cef-4cdebbb19992"><span>Request a Private Presentation</span></a>
+    <a class="nav-cta" href="#/request"><span>Request a Private Presentation</span></a>
   </nav>
   <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="menu">
     <svg width="26" height="14" viewBox="0 0 26 14" aria-hidden="true"><rect y="0" width="26" height="1"/><rect y="6.5" width="26" height="1"/><rect y="13" width="26" height="1"/></svg>
@@ -835,7 +851,7 @@ body.solid-hdr .route-view{padding-top:86px}</style>
     <a href="#life"><span>Life at Maldivia</span></a>
     <a href="#ownership"><span>Ownership</span></a>
   </nav>
-  <a class="menu-cta" href="https://claude.ai/code/artifact/84849e1c-e8c5-4aa0-9cef-4cdebbb19992">Request a Private Presentation</a>
+  <a class="menu-cta" href="#/request">Request a Private Presentation</a>
   <p class="menu-foot">Meemu Atoll &middot; The Maldives</p>
 </div>
 
@@ -973,7 +989,7 @@ body.solid-hdr .route-view{padding-top:86px}</style>
   <div class="statement-inner reveal">
     <h2 class="h1">A home is only<br>the beginning.</h2>
     <p class="lead">Maldivia is conceived as a place to live, work, move, gather, and return to &mdash; again and again.</p>
-    <a class="btn" href="https://claude.ai/code/artifact/84849e1c-e8c5-4aa0-9cef-4cdebbb19992">Request a Private Presentation</a>
+    <a class="btn" href="#/request">Request a Private Presentation</a>
   </div>
 </section>
 
@@ -1067,14 +1083,14 @@ body.solid-hdr .route-view{padding-top:86px}</style>
 <!-- ============ INVITATION ============ -->
 <section class="invite" id="invitation">
   <div class="plate">
-    <img src="img/lagoon-dusk.webp" alt="The lagoon at dusk" loading="lazy" decoding="async" id="inviteImg">
+    <img src="img/lagoon-dusk.webp" alt="The lagoon at dusk" loading="lazy" decoding="async">
   </div>
   <div class="scrim"></div>
   <div class="inner reveal">
     <p class="eyebrow" style="color:var(--sky-200)">An invitation</p>
     <h2 class="h1" style="margin-top:20px">See Maldivia in private.</h2>
     <p class="lead">Explore the masterplan, the homes, and the way life here could fit your household.</p>
-    <a class="btn" href="https://claude.ai/code/artifact/84849e1c-e8c5-4aa0-9cef-4cdebbb19992" id="cta">Request a Private Presentation</a>
+    <a class="btn" href="#/request">Request a Private Presentation</a>
   </div>
 </section>
 
@@ -1149,11 +1165,11 @@ body.solid-hdr .route-view{padding-top:86px}</style>
 </section>
 
 <!-- ============ THE OTHER HOMES ============ -->
-<section class="pad sandy home-others" aria-labelledby="h-others">
+<section class="pad sandy home-others" aria-labelledby="h-others-studio">
   <div class="wrap">
     <div class="sect-head reveal">
       <p class="eyebrow">Compare</p>
-      <h2 class="h2" id="h-others">The other homes</h2>
+      <h2 class="h2" id="h-others-studio">The other homes</h2>
     </div>
     <ul class="homes homes-two reveal" data-d="1">
       <li>
@@ -1195,14 +1211,14 @@ body.solid-hdr .route-view{padding-top:86px}</style>
 <!-- ============ INVITATION ============ -->
 <section class="invite">
   <div class="plate">
-    <img src="img/lagoon-dusk.webp" alt="The lagoon at dusk" loading="lazy" decoding="async" id="inviteImg">
+    <img src="img/lagoon-dusk.webp" alt="The lagoon at dusk" loading="lazy" decoding="async">
   </div>
   <div class="scrim"></div>
   <div class="inner reveal">
     <p class="eyebrow" style="color:var(--sky-200)">An invitation</p>
     <h2 class="h1" style="margin-top:20px">See Maldivia in private.</h2>
     <p class="lead">Explore the masterplan, the homes, and the way life here could fit your household.</p>
-    <a class="btn" href="https://claude.ai/code/artifact/84849e1c-e8c5-4aa0-9cef-4cdebbb19992" id="cta">Request a Private Presentation</a>
+    <a class="btn" href="#/request">Request a Private Presentation</a>
   </div>
 </section>
 </div>
@@ -1276,11 +1292,11 @@ body.solid-hdr .route-view{padding-top:86px}</style>
 </section>
 
 <!-- ============ THE OTHER HOMES ============ -->
-<section class="pad sandy home-others" aria-labelledby="h-others">
+<section class="pad sandy home-others" aria-labelledby="h-others-residence">
   <div class="wrap">
     <div class="sect-head reveal">
       <p class="eyebrow">Compare</p>
-      <h2 class="h2" id="h-others">The other homes</h2>
+      <h2 class="h2" id="h-others-residence">The other homes</h2>
     </div>
     <ul class="homes homes-two reveal" data-d="1">
       <li>
@@ -1322,14 +1338,14 @@ body.solid-hdr .route-view{padding-top:86px}</style>
 <!-- ============ INVITATION ============ -->
 <section class="invite">
   <div class="plate">
-    <img src="img/lagoon-dusk.webp" alt="The lagoon at dusk" loading="lazy" decoding="async" id="inviteImg">
+    <img src="img/lagoon-dusk.webp" alt="The lagoon at dusk" loading="lazy" decoding="async">
   </div>
   <div class="scrim"></div>
   <div class="inner reveal">
     <p class="eyebrow" style="color:var(--sky-200)">An invitation</p>
     <h2 class="h1" style="margin-top:20px">See Maldivia in private.</h2>
     <p class="lead">Explore the masterplan, the homes, and the way life here could fit your household.</p>
-    <a class="btn" href="https://claude.ai/code/artifact/84849e1c-e8c5-4aa0-9cef-4cdebbb19992" id="cta">Request a Private Presentation</a>
+    <a class="btn" href="#/request">Request a Private Presentation</a>
   </div>
 </section>
 </div>
@@ -1404,11 +1420,11 @@ body.solid-hdr .route-view{padding-top:86px}</style>
 </section>
 
 <!-- ============ THE OTHER HOMES ============ -->
-<section class="pad sandy home-others" aria-labelledby="h-others">
+<section class="pad sandy home-others" aria-labelledby="h-others-villa">
   <div class="wrap">
     <div class="sect-head reveal">
       <p class="eyebrow">Compare</p>
-      <h2 class="h2" id="h-others">The other homes</h2>
+      <h2 class="h2" id="h-others-villa">The other homes</h2>
     </div>
     <ul class="homes homes-two reveal" data-d="1">
       <li>
@@ -1450,17 +1466,98 @@ body.solid-hdr .route-view{padding-top:86px}</style>
 <!-- ============ INVITATION ============ -->
 <section class="invite">
   <div class="plate">
-    <img src="img/lagoon-dusk.webp" alt="The lagoon at dusk" loading="lazy" decoding="async" id="inviteImg">
+    <img src="img/lagoon-dusk.webp" alt="The lagoon at dusk" loading="lazy" decoding="async">
   </div>
   <div class="scrim"></div>
   <div class="inner reveal">
     <p class="eyebrow" style="color:var(--sky-200)">An invitation</p>
     <h2 class="h1" style="margin-top:20px">See Maldivia in private.</h2>
     <p class="lead">Explore the masterplan, the homes, and the way life here could fit your household.</p>
-    <a class="btn" href="https://claude.ai/code/artifact/84849e1c-e8c5-4aa0-9cef-4cdebbb19992" id="cta">Request a Private Presentation</a>
+    <a class="btn" href="#/request">Request a Private Presentation</a>
   </div>
 </section>
 </div>
+<!-- The one place the site asks for anything. Reached from every "Request a
+     Private Presentation" on the page, and it carries which home the visitor was
+     looking at when they pressed it, so the first reply can be about that home
+     rather than asking. -->
+<div class="route-view" data-route="request" data-title="Request a Private Presentation — Maldivia" hidden>
+
+<section class="req">
+  <aside class="req-aside">
+    <!-- The dusk frame, not the bright lagoon. Ivory type over the lit water and the
+         white facades of the daylight shots measured 1.7:1 on the eyebrow, and the
+         only way to rescue those was a scrim heavy enough to veil half the picture. -->
+    <img src="img/lit-boardwalk-dusk.webp" alt="The boardwalk between the homes, lit at dusk"
+         loading="lazy" decoding="async">
+    <div class="req-aside-scrim"></div>
+    <div class="req-aside-copy">
+      <p class="eyebrow">A private presentation</p>
+      <!-- The scrim on this aside is built for copy sitting at the foot of the frame:
+           it is heavy at the bottom and nearly clear by three quarters up. So the
+           block stays short. A lead here as well pushed the heading up onto the
+           lit water, where ivory type has nothing to hold on to. -->
+      <h1 class="h2">An hour, and the whole of Maldivia.</h1>
+      <ul class="req-points">
+        <li>The masterplan, the six clusters and where each home sits in the lagoon.</li>
+        <li>Layouts, areas and finishes for the home you are drawn to.</li>
+        <li>What ownership means here, and what it asks of you once you have it.</li>
+      </ul>
+    </div>
+  </aside>
+
+  <div class="req-form-wrap">
+    <div class="req-form-inner">
+      <p class="eyebrow">Enquire</p>
+      <h2 class="h2">Tell us where to reach you.</h2>
+      <p class="body" style="margin-top:20px;color:var(--fg-muted)">We will come back to you
+        ourselves, usually within two working days. Nothing is automated and nothing is shared.</p>
+
+      <form class="form" id="reqForm" novalidate>
+        <!-- Set by the router from the home the visitor pressed the button on; shown
+             rather than hidden, because a form should not carry anything its sender
+             cannot see. -->
+        <p class="form-alert note" id="reqAbout" hidden></p>
+
+        <p class="field" id="f-name">
+          <label for="req-name">Name</label>
+          <input type="text" id="req-name" name="name" autocomplete="name" required
+                 aria-describedby="e-name">
+          <span class="err" id="e-name" aria-live="polite"></span>
+        </p>
+
+        <p class="field" id="f-email">
+          <label for="req-email">Email</label>
+          <input type="email" id="req-email" name="email" autocomplete="email" required
+                 aria-describedby="e-email">
+          <span class="err" id="e-email" aria-live="polite"></span>
+        </p>
+
+        <p class="field" id="f-message">
+          <label for="req-message">Anything you would like us to know <span class="opt">(optional)</span></label>
+          <textarea id="req-message" name="message" rows="4"></textarea>
+        </p>
+
+        <p class="form-alert bad" id="reqError" role="alert" hidden></p>
+
+        <button class="btn solid submit" type="submit" id="reqSubmit">Request a presentation</button>
+        <p class="form-foot">We only use this to get in touch with you about Maldivia.</p>
+      </form>
+
+      <div class="form-done" id="reqDone" hidden tabindex="-1">
+        <p class="eyebrow">Thank you</p>
+        <h2 class="h2" style="margin-top:18px">We have it.</h2>
+        <p class="body" style="margin-top:20px;color:var(--fg-muted)">Someone from the team will
+          write to you within two working days. If it is easier to talk sooner, say so in your
+          reply and we will call.</p>
+        <a class="btn" href="#top">Back to Maldivia</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+
 <div class="tour" id="tour" inert role="dialog" aria-modal="true" aria-label="Virtual tour">
   <div class="tour-scroll" id="tourScroll">
     <div class="tour-driver" id="tourDriver">
@@ -1508,9 +1605,8 @@ body.solid-hdr .route-view{padding-top:86px}</style>
       <div>
         <h4>Enquire</h4>
         <ul>
-          <li><a href="https://claude.ai/code/artifact/84849e1c-e8c5-4aa0-9cef-4cdebbb19992">Request a private presentation</a></li>
-          <li><a href="https://claude.ai/code/artifact/84849e1c-e8c5-4aa0-9cef-4cdebbb19992#contact">Talk with the team</a></li>
-          <li><a href="https://claude.ai/code/artifact/84849e1c-e8c5-4aa0-9cef-4cdebbb19992#share">Share a home or cluster</a></li>
+          <li><a href="#/request">Request a private presentation</a></li>
+          <li><a href="#/request">Talk with the team</a></li>
         </ul>
       </div>
     </div>
@@ -1678,6 +1774,134 @@ body.solid-hdr .route-view{padding-top:86px}</style>
 
 
 
+})();
+
+/* Maldivia — the enquiry form.
+   Lives on its own route and is the only place the site asks for anything. */
+(function () {
+  'use strict';
+
+  /* ------------------------------------------------------------------
+     WHERE ENQUIRIES GO. Paste the endpoint from whichever form service you
+     use — Formspree, Basin, Getform — and nothing else here changes. It is
+     given the form as JSON and only a 2xx is treated as sent.
+
+     Left empty the form says so, plainly, and refuses to pretend it sent
+     anything: a form that swallows an enquiry is worse than one that admits
+     it is not connected.
+     ------------------------------------------------------------------ */
+  var ENQUIRY_ENDPOINT = '';
+
+  var form = document.getElementById('reqForm');
+  if (!form) return;
+  var submit = document.getElementById('reqSubmit');
+  var errBox = document.getElementById('reqError');
+  var done = document.getElementById('reqDone');
+  var about = document.getElementById('reqAbout');
+
+  var HOMES = { 'ocean-studio': 'Ocean Studio', 'ocean-residence': 'Ocean Residence',
+                'ocean-villa': 'Ocean Villa' };
+  var subject = '';
+
+  /* Which home they were looking at when they pressed the button. Recorded on the
+     way out of a home page rather than read from the referrer, which a hash route
+     does not change. */
+  addEventListener('hashchange', function (e) {
+    var from = /#\/([a-z-]+)$/.exec(e.oldURL || '');
+    if (location.hash === '#/request' && from && HOMES[from[1]]) setSubject(HOMES[from[1]]);
+    else if (location.hash === '#/request' && !from) setSubject('');
+  });
+  function setSubject(name) {
+    subject = name;
+    about.textContent = name ? 'Your enquiry will say it is about the ' + name + '.' : '';
+    about.hidden = !name;
+  }
+
+  function fieldOf(input) { return input.closest('.field'); }
+  function setErr(input, msg) {
+    var f = fieldOf(input), slot = f.querySelector('.err');
+    f.classList.toggle('has-err', !!msg);
+    if (slot) slot.textContent = msg || '';
+    if (msg) input.setAttribute('aria-invalid', 'true');
+    else input.removeAttribute('aria-invalid');
+  }
+
+  var name = document.getElementById('req-name');
+  var email = document.getElementById('req-email');
+  var message = document.getElementById('req-message');
+
+  /* Deliberately loose. The only thing worth checking here is that someone has
+     typed an address rather than a sentence; anything stricter turns away real
+     addresses, and the only test that settles it is sending to it. */
+  function emailLooksLikeOne(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v); }
+
+  function validate() {
+    var bad = null;
+    if (!name.value.trim()) { setErr(name, 'Please tell us your name.'); bad = bad || name; }
+    else setErr(name, '');
+    if (!email.value.trim()) { setErr(email, 'We need an email to reply to.'); bad = bad || email; }
+    else if (!emailLooksLikeOne(email.value.trim())) {
+      setErr(email, 'That does not look like an email address.'); bad = bad || email;
+    } else setErr(email, '');
+    return bad;
+  }
+
+  /* Re-check a field once it has been wrong, so a correction clears the message as
+     it is typed rather than only on the next attempt. */
+  [name, email].forEach(function (el) {
+    el.addEventListener('input', function () {
+      if (fieldOf(el).classList.contains('has-err')) validate();
+    });
+  });
+
+  if (!ENQUIRY_ENDPOINT) {
+    submit.disabled = true;
+    errBox.className = 'form-alert note';
+    errBox.textContent = 'This form is not connected to an inbox yet, so it cannot be sent. ' +
+      'Set ENQUIRY_ENDPOINT in index.html to the address your form service gives you.';
+    errBox.hidden = false;
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!ENQUIRY_ENDPOINT) return;
+
+    var bad = validate();
+    if (bad) { bad.focus(); return; }
+
+    errBox.hidden = true;
+    submit.disabled = true;
+    var label = submit.textContent;
+    submit.textContent = 'Sending';
+
+    fetch(ENQUIRY_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        name: name.value.trim(),
+        email: email.value.trim(),
+        message: message.value.trim(),
+        about: subject || 'No particular home',
+        page: location.href
+      })
+    }).then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      form.hidden = true;
+      done.hidden = false;
+      done.focus();
+    }).catch(function (err) {
+      console.error(err);
+      /* The answers stay in the form. Losing what someone has written because a
+         request failed is the one thing this must never do. */
+      submit.disabled = false;
+      submit.textContent = label;
+      errBox.className = 'form-alert bad';
+      errBox.textContent = 'That did not send — please try again. If it keeps failing, ' +
+        'it is us rather than you.';
+      errBox.hidden = false;
+      errBox.focus();
+    });
+  });
 })();
 
 /* Maldivia — scroll engine.

@@ -66,6 +66,22 @@ so it costs a decode.
 | hero and one tour | ~95 MB | 30.4 MB |
 | decoded frames held | all 473 | ~300 at most |
 
+## The enquiry form
+
+`#/request` is the only place the site asks for anything, and every "Request a
+Private Presentation" leads to it. It asks for a name, an email and an optional
+message, and it carries the home the visitor was looking at when they pressed
+the button, so the first reply can be about that home rather than asking.
+
+**It needs one thing before it works.** GitHub Pages is static, so there is no
+server to receive a post. Open `index.html`, find `ENQUIRY_ENDPOINT`, and set it
+to the address your form service gives you — Formspree, Basin, Getform; the form
+posts JSON and treats only a 2xx as sent. Left empty it says so on the page and
+refuses to send, rather than pretending an enquiry went somewhere.
+
+A failed send keeps everything the visitor typed. Losing someone's words to a
+dropped request is the one thing it must never do.
+
 ## Running it
 
 It is plain static files, but `index.html` fetches the sheets, so opening it
