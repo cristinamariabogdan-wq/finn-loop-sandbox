@@ -42,6 +42,30 @@ hero at its next sheet boundary and gives it back when it is done: queued behind
 the whole hero a tour opened in 21s, nearly all of it spent cutting frames the
 visitor had already scrolled past. It now opens in under a second.
 
+## What it costs to run
+
+The sheets are cut into frames in the browser, and those frames are what the
+film plays. They never travel, so the only thing their quality costs is memory.
+At JPEG 0.92 the hero's 473 frames came to 60.8 MB — three and a half times the
+17 MB of WebP they were cut out of. They are cut as WebP 0.82 now: 20.8 MB, for
+a mean error of 1.5/255 against the frame that was being shipped. Safari only
+learned to encode WebP in 16.4, and `toBlob` answers a type it cannot encode
+with a PNG without saying so, so the format is checked at runtime and older
+browsers keep the JPEG.
+
+Decoded frames are released once the playhead is more than 120 frames away.
+That window was 300, which is wider than the hero is long, so nothing was ever
+let go of on a film someone had scrolled through — all 473 frames stayed decoded
+at once. 300 was the right number for frames that come off the network, where
+wanting one back costs a request; a frame cut from a sheet is already in a blob,
+so it costs a decode.
+
+| | before | after |
+|---|---|---|
+| hero only | 60.8 MB | 20.8 MB |
+| hero and one tour | ~95 MB | 30.4 MB |
+| decoded frames held | all 473 | ~300 at most |
+
 ## Running it
 
 It is plain static files, but `index.html` fetches the sheets, so opening it

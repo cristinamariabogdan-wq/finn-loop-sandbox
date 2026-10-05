@@ -1771,7 +1771,13 @@ body.solid-hdr .route-view{padding-top:86px}</style>
     /* the published preview inlines one set per film; the real site serves tiers */
     var PV = window.__FRAMES && window.__FRAMES[opts.dir];
 
-    var MAX = 10, LO_SLOTS = 4, KEEP = SAVE ? 96 : 300;
+    /* How far either side of the playhead a decoded frame is kept. 300 was sized for
+       frames that come off the network, where letting one go and wanting it back costs
+       a request. A film cut out of sprite sheets has already paid for its bytes and
+       holds them in a blob, so the same mistake costs a decode and nothing else — and
+       at 300 the window is wider than the hero is long (473 frames), so nothing was
+       ever released on a film the visitor had scrolled through. Tighter, it bites. */
+    var MAX = 10, LO_SLOTS = 4, KEEP = SAVE ? 96 : (PV ? 120 : 300);
     /* ?filmdebug: count which tier drew each render, for measuring, never shipped on */
     var STATS = /filmdebug/.test(location.search) ? (window.__filmStats = window.__filmStats || {}) : null;
     function Tier(name, w) {
@@ -1891,9 +1897,13 @@ body.solid-hdr .route-view{padding-top:86px}</style>
       }
     }
 
-    /* sharp frames far from the playhead are let go; the bytes stay in the HTTP cache */
+    /* Sharp frames far from the playhead are let go; the bytes stay in the HTTP
+       cache, or, for a film cut out of sprite sheets, in the blob the cut produced —
+       either way the frame comes back without a download. Without this a full scrub
+       of the hero left all 473 decoded frames alive at once, which is the shape of
+       memory use that ends a tab on a phone. */
     function evict() {
-      if (!HI || PV || Math.abs(head - lastEvict) < 32) return;
+      if (!HI || Math.abs(head - lastEvict) < 32) return;
       lastEvict = head;
       for (var i = 0; i < N; i++) {
         if (HI.imgs[i] && Math.abs(i - head) > KEEP + 32) HI.imgs[i] = HI.ok[i] = HI.dec[i] = null;
@@ -2377,6 +2387,26 @@ window.__FRAMES = {};
      fired with frames still unwritten and two sets of workers fought over one pool. */
   function release(im) { im.onload = im.onerror = null; im.src = ''; }
 
+  /* A cut frame never travels, so the only thing its quality costs is memory — and
+     at JPEG 0.92 the hero's 473 frames came to 60.8 MB, three and a half times the
+     17 MB of WebP they were cut out of. WebP at 0.82 is 59 KB a frame against 150,
+     for a mean error of 1.5/255 against the frame we were shipping: a second lossy
+     generation nobody can see, at 2.5x less memory.
+
+     Checked rather than assumed, because toBlob answers a type it cannot encode with
+     a PNG and says nothing — and a PNG frame is an order of magnitude larger than the
+     JPEG it would be replacing, which is the opposite of the point. Safari only
+     learned to encode WebP in 16.4; older ones keep the JPEG. */
+  var FMT = 'image/jpeg', Q = 0.92;
+  function pickFormat(cb) {
+    var c = document.createElement('canvas');
+    c.width = c.height = 1;
+    c.toBlob(function (b) {
+      if (b && b.type === 'image/webp') { FMT = 'image/webp'; Q = 0.82; }
+      cb();
+    }, 'image/webp', 0.82);
+  }
+
   /* A film's sheets are downloaded all at once, in page order; decoding still walks
      them one at a time. Fetched sheet by sheet the hero sat waiting ~10s on a 50 Mbps
      link for bytes that could have been arriving in parallel. Inline (data:) sheets
@@ -2427,12 +2457,10 @@ window.__FRAMES = {};
             }
             w.g.drawImage(im, (k % m.cols) * m.fw, ((k / m.cols) | 0) * m.fh, m.fw, m.fh,
                               0, 0, m.fw, m.fh);
-            /* quality is high because these blobs never travel — they cost runtime
-               memory only, and the page weight was already paid in the sheet */
             w.cv.toBlob(function (bl) {
               if (bl) out[base + k] = URL.createObjectURL(bl);
               step();
-            }, 'image/jpeg', 0.92);
+            }, FMT, Q);
           })();
         });
       };
@@ -2491,14 +2519,18 @@ window.__FRAMES = {};
     btn.addEventListener('click', want);
   });
 
-  /* the page starts as soon as the hero's first sheet is cut — its opening seconds —
-     and the rest of the hero fills in behind it, sheet by sheet */
-  sliceDir(HERO, function () { cutting = false; pumpQueue(); }, function () {
-    document.documentElement.classList.add('pv-run');
-    try { window.__RUN(); } catch (e) { console.error(e); }
-  });
-  /* the hero holds the cutter until it is done, so a tour asked for during it queues */
+  /* The cutter is held from the start: nothing may cut before the format is settled,
+     and then the hero holds it, so a tour asked for meanwhile queues rather than
+     racing it. */
   cutting = true;
+  pickFormat(function () {
+    /* the page starts as soon as the hero's first sheet is cut — its opening seconds —
+       and the rest of the hero fills in behind it, sheet by sheet */
+    sliceDir(HERO, function () { cutting = false; pumpQueue(); }, function () {
+      document.documentElement.classList.add('pv-run');
+      try { window.__RUN(); } catch (e) { console.error(e); }
+    });
+  });
 })();
 </script>
 
