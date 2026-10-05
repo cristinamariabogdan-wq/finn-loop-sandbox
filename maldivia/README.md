@@ -1,0 +1,112 @@
+# Maldivia — A private life on the water
+
+A scroll film: the page is one continuous shot that scrubs as you scroll.
+Exported from the published Claude artifact
+(`claude.ai/artifact/2j3yoNhPLwFL3AKeNH5QXz`, version `1789762343-9f55`).
+
+## What's here
+
+| Path | Size | What it is |
+|---|---|---|
+| `index.html` | 180 KB | The whole page — markup, styles, script and two base64 webfonts (Marcellus, Poppins) |
+| `img/` | 1.3 MB | 28 photographs — the posters, the masterplan, the home cards and the interior galleries |
+| `sheets/` | 36 MB | 75 WebP sprite sheets holding 1227 animation frames |
+
+The photographs used to be pasted into `index.html` as base64, which made the
+document 3.1 MB. Every visitor paid for all forty of them before the page could
+render, `loading="lazy"` had nothing to defer, and twelve were byte-identical
+copies of a picture already in the file. As files they are 1.3 MB in all, and a
+first screen now fetches one.
+
+Four scroll-scrubbed sequences, listed in the `window.__SHEETS` manifest inside
+`index.html`:
+
+| Sequence | Frames | Frame size | Sheets |
+|---|---|---|---|
+| hero | 473 | 1280×720 | 32 |
+| residence | 268 | 1280×720 | 18 |
+| studio | 267 | 1280×720 | 18 |
+| villa | 219 | 864×496 | 7 |
+
+## What loads when
+
+Only the hero's 32 sheets are fetched when the page parses. The three tours are
+the other 43 sheets and 19 MB of the 36, they sit behind a button, and most
+visitors never press it — so a tour is fetched and cut when someone asks for
+one, and a visitor who never opens a tour never pays for one. An opening screen
+went from 36 MB to 17.
+
+Cutting runs one film at a time, because two decoded sheets in memory at once is
+the thing to avoid. A tour that has just been pressed takes the cutter from the
+hero at its next sheet boundary and gives it back when it is done: queued behind
+the whole hero a tour opened in 21s, nearly all of it spent cutting frames the
+visitor had already scrolled past. It now opens in under a second.
+
+## What it costs to run
+
+The sheets are cut into frames in the browser, and those frames are what the
+film plays. They never travel, so the only thing their quality costs is memory.
+At JPEG 0.92 the hero's 473 frames came to 60.8 MB — three and a half times the
+17 MB of WebP they were cut out of. They are cut as WebP 0.82 now: 20.8 MB, for
+a mean error of 1.5/255 against the frame that was being shipped. Safari only
+learned to encode WebP in 16.4, and `toBlob` answers a type it cannot encode
+with a PNG without saying so, so the format is checked at runtime and older
+browsers keep the JPEG.
+
+Decoded frames are released once the playhead is more than 120 frames away.
+That window was 300, which is wider than the hero is long, so nothing was ever
+let go of on a film someone had scrolled through — all 473 frames stayed decoded
+at once. 300 was the right number for frames that come off the network, where
+wanting one back costs a request; a frame cut from a sheet is already in a blob,
+so it costs a decode.
+
+| | before | after |
+|---|---|---|
+| hero only | 60.8 MB | 20.8 MB |
+| hero and one tour | ~95 MB | 30.4 MB |
+| decoded frames held | all 473 | ~300 at most |
+
+## The enquiry form
+
+`#/request` is the only place the site asks for anything, and every "Request a
+Private Presentation" leads to it. It asks for a name, an email and an optional
+message, and it carries the home the visitor was looking at when they pressed
+the button, so the first reply can be about that home rather than asking.
+
+**It needs one thing before it works.** GitHub Pages is static, so there is no
+server to receive a post. Open `index.html`, find `ENQUIRY_ENDPOINT`, and set it
+to the address your form service gives you — Formspree, Basin, Getform; the form
+posts JSON and treats only a 2xx as sent. Left empty it says so on the page and
+refuses to send, rather than pretending an enquiry went somewhere.
+
+A failed send keeps everything the visitor typed. Losing someone's words to a
+dropped request is the one thing it must never do.
+
+## Running it
+
+It is plain static files, but `index.html` fetches the sheets, so opening it
+off disk shows the copy without its film. Serve the folder instead:
+
+```bash
+python3 -m http.server 8000
+```
+
+## Publishing
+
+`.github/workflows/pages.yml` publishes `maldivia/` as the site root on every
+push to `main` that touches it. Enable it once under
+**Settings → Pages → Source → GitHub Actions**. No build step — the workflow
+uploads the folder as-is.
+
+## Single-file export
+
+`node build-share.js` inlines all 75 sheets and all 28 photographs as `data:`
+URIs and writes `maldivia-share.html`, which runs from a double-click with
+nothing beside it.
+
+The catch is the size. Base64 costs a third more than raw bytes, so 36 MB of
+WebP becomes ~49 MB of text and the file lands at **51.4 MB** — slow to open,
+too large to email, over the 50 MB at which GitHub warns on push, and over the
+16 MB an Artifact accepts. It is gitignored for that reason; rebuild it when
+you actually need the film to travel as one object. For everything else, serve
+the folder.

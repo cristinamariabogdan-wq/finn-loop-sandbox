@@ -1,0 +1,41 @@
+# Publish the Maldivia scroll film to GitHub Pages on every push to main.
+#
+# Needs one manual step first: Settings → Pages → Source → "GitHub Actions".
+name: Pages
+
+on:
+  push:
+    branches: [main]
+    paths: ["maldivia/**", ".github/workflows/pages.yml"]
+  workflow_dispatch:
+
+# Only the deploy job needs write scope; everything else stays read-only.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never let two deploys race, but let a queued one finish rather than
+# cancelling it mid-publish.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: deploy
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      # The site is static — no build, no dependencies. Ship maldivia/ as the
+      # site root so the page sits at / rather than /maldivia/, which keeps the
+      # sheets/ paths inside index.html working unchanged.
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: maldivia
+      - id: deploy
+        uses: actions/deploy-pages@v4
